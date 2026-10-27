@@ -101,26 +101,33 @@ def stream_text(text: str, time_to_sleep: float = 0.03):
     streamed.append(text)
 
 
-def handle_repas():
+def handle_repas(penalty: int = 3, gold_cost: int = 0, hunting: bool = True):
     """
-    Le Loup Solitaire doit prendre un Repas : la Chasse l'en dispense, sinon un Repas est retiré
-    du Sac à Dos, et à défaut il perd 3 points d'ENDURANCE.
+    Le Loup Solitaire doit prendre un Repas : la Chasse l'en dispense (si `hunting`), sinon il mange
+    un Repas du Sac à Dos (ou sa Moisson de Laumspur, qui rend aussi 3 points d'ENDURANCE), sinon il
+    paie `gold_cost` Couronnes s'il le peut (repas à l'auberge), et à défaut il perd `penalty` points
+    d'ENDURANCE.
     """
-    from inventory import change_endurance, has_kai, is_new_page, remove_from_inventory
+    from inventory import change_endurance, has_kai, is_new_page, remove_from_inventory, spend_gold
 
     if not is_new_page():
         return
 
-    if has_kai("La Chasse"):
+    if hunting and has_kai("La Chasse"):
         st.success(
             "*Grâce à votre Discipline Kaï de la Chasse, vous trouvez votre nourriture par vous-même.*"
         )
     elif remove_from_inventory("REPAS"):
         st.success("Vous avez mangé. 1 Repas vous a été retiré.")
+    elif remove_from_inventory("MOISSON DE LAUMSPUR"):
+        st.success("Vous mangez votre Moisson de Laumspur : +3 points d'ENDURANCE.")
+        change_endurance(3)
+    elif gold_cost and spend_gold(gold_cost):
+        st.success(f"Vous payez votre repas {gold_cost} Couronne(s).")
     else:
-        st.error("Vous n'aviez pas de Repas. Vous perdez 3 points d'ENDURANCE.")
-        st.metric(label="Endurance", value=max(0, st.session_state.endurance - 3), delta=-3)
-        change_endurance(-3)
+        st.error(f"Vous n'aviez pas de Repas. Vous perdez {penalty} points d'ENDURANCE.")
+        st.metric(label="Endurance", value=max(0, st.session_state.endurance - penalty), delta=-penalty)
+        change_endurance(-penalty)
 
 
 def ai_generate_page(page_text: str, page_number: int):

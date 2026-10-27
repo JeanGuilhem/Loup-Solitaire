@@ -1,0 +1,528 @@
+[
+ {
+  "file": "p4_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 4,
+  "pdf_page": 26,
+  "size": [
+   275,
+   178
+  ]
+ },
+ {
+  "file": "p9_planche.jpeg",
+  "type": "planche",
+  "paragraph": 9,
+  "pdf_page": 29,
+  "size": [
+   641,
+   1242
+  ],
+  "caption": "Au centre même d'Hammardal, la Tour du Roi s'élève sur une colline."
+ },
+ {
+  "file": "p12_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 12,
+  "pdf_page": 30,
+  "size": [
+   371,
+   364
+  ]
+ },
+ {
+  "file": "p18_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 18,
+  "pdf_page": 33,
+  "size": [
+   627,
+   291
+  ]
+ },
+ {
+  "file": "p26_planche.jpeg",
+  "type": "planche",
+  "paragraph": 26,
+  "pdf_page": 36,
+  "size": [
+   807,
+   1385
+  ],
+  "caption": "Le capitaine zombie tend vers vous une main aux doigts brisés."
+ },
+ {
+  "file": "p31_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 31,
+  "pdf_page": 40,
+  "size": [
+   529,
+   399
+  ]
+ },
+ {
+  "file": "p37_planche.jpeg",
+  "type": "planche",
+  "paragraph": 37,
+  "pdf_page": 43,
+  "size": [
+   722,
+   1387
+  ],
+  "caption": "Vous remarquez trois autres passagers : deux femmes et un homme qui ronfle avec bruit."
+ },
+ {
+  "file": "p40_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 40,
+  "pdf_page": 45,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p41_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 41,
+  "pdf_page": 46,
+  "size": [
+   447,
+   295
+  ]
+ },
+ {
+  "file": "p56_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 56,
+  "pdf_page": 51,
+  "size": [
+   732,
+   427
+  ]
+ },
+ {
+  "file": "p62_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 62,
+  "pdf_page": 53,
+  "size": [
+   654,
+   319
+  ]
+ },
+ {
+  "file": "p69_planche.jpeg",
+  "type": "planche",
+  "paragraph": 69,
+  "pdf_page": 56,
+  "size": [
+   915,
+   1360
+  ],
+  "caption": "D'un cône d'acier fixé à l'extrémité de l'épieu s'échappe soudain une flamme bleuâtre."
+ },
+ {
+  "file": "p74_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 74,
+  "pdf_page": 59,
+  "size": [
+   643,
+   277
+  ]
+ },
+ {
+  "file": "p79_planche.jpeg",
+  "type": "planche",
+  "paragraph": 79,
+  "pdf_page": 62,
+  "size": [
+   730,
+   1351
+  ],
+  "caption": "Un rayon de soleil vient frapper l'extrémité de la lame."
+ },
+ {
+  "file": "p100_planche.jpeg",
+  "type": "planche",
+  "paragraph": 100,
+  "pdf_page": 70,
+  "size": [
+   725,
+   1321
+  ],
+  "caption": "Le vaisseau amiral fait voile vers vous, pointant son rostre immense."
+ },
+ {
+  "file": "p109_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 109,
+  "pdf_page": 75,
+  "size": [
+   506,
+   407
+  ]
+ },
+ {
+  "file": "p114_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 114,
+  "pdf_page": 77,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p118_planche.jpeg",
+  "type": "planche",
+  "paragraph": 118,
+  "pdf_page": 79,
+  "size": [
+   850,
+   1343
+  ],
+  "caption": "Le rat géant porte une magnifique veste de cuir en patchwork et tient une lance dans sa patte."
+ },
+ {
+  "file": "p123_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 123,
+  "pdf_page": 82,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p132_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 132,
+  "pdf_page": 86,
+  "size": [
+   438,
+   303
+  ]
+ },
+ {
+  "file": "p134_planche.jpeg",
+  "type": "planche",
+  "paragraph": 134,
+  "pdf_page": 87,
+  "size": [
+   914,
+   1385
+  ],
+  "caption": "Vous vous retrouvez face à un Monstre d'Enfer aux yeux étincelants."
+ },
+ {
+  "file": "p140_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 140,
+  "pdf_page": 89,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p155_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 155,
+  "pdf_page": 96,
+  "size": [
+   484,
+   256
+  ]
+ },
+ {
+  "file": "p160_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 160,
+  "pdf_page": 98,
+  "size": [
+   307,
+   271
+  ]
+ },
+ {
+  "file": "p166_planche.jpeg",
+  "type": "planche",
+  "paragraph": 166,
+  "pdf_page": 101,
+  "size": [
+   952,
+   1356
+  ],
+  "caption": "Vous voyez avec horreur les soldats alliés sauter du pont, leurs cheveux en flammes."
+ },
+ {
+  "file": "p173_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 173,
+  "pdf_page": 104,
+  "size": [
+   707,
+   415
+  ]
+ },
+ {
+  "file": "p176_planche.jpeg",
+  "type": "planche",
+  "paragraph": 176,
+  "pdf_page": 106,
+  "size": [
+   785,
+   1314
+  ],
+  "caption": "Le Lieutenant Général Rhygar ordonne à ses hommes de passer à l'attaque."
+ },
+ {
+  "file": "p191_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 191,
+  "pdf_page": 112,
+  "size": [
+   407,
+   237
+  ]
+ },
+ {
+  "file": "p200_planche.jpeg",
+  "type": "planche",
+  "paragraph": 200,
+  "pdf_page": 117,
+  "size": [
+   1385,
+   1779
+  ]
+ },
+ {
+  "file": "p215_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 215,
+  "pdf_page": 123,
+  "size": [
+   617,
+   225
+  ]
+ },
+ {
+  "file": "p222_planche.jpeg",
+  "type": "planche",
+  "paragraph": 222,
+  "pdf_page": 126,
+  "size": [
+   1024,
+   1387
+  ],
+  "caption": "Le capitaine ouvre son mystérieux paquet et en répand le contenu sur une table."
+ },
+ {
+  "file": "p230_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 230,
+  "pdf_page": 131,
+  "size": [
+   643,
+   407
+  ]
+ },
+ {
+  "file": "p238_planche.jpeg",
+  "type": "planche",
+  "paragraph": 238,
+  "pdf_page": 135,
+  "size": [
+   793,
+   1325
+  ],
+  "caption": "Une jeune femme fort séduisante fait tourner une sorte de disque noir…"
+ },
+ {
+  "file": "p241_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 241,
+  "pdf_page": 137,
+  "size": [
+   336,
+   234
+  ]
+ },
+ {
+  "file": "p249_planche.jpeg",
+  "type": "planche",
+  "paragraph": 249,
+  "pdf_page": 140,
+  "size": [
+   787,
+   1277
+  ],
+  "caption": "1. Ganon · 2. Dorier · 3. Halvorc · 4. Parsion · 5. Viveka"
+ },
+ {
+  "file": "p254_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 254,
+  "pdf_page": 143,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p257_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 257,
+  "pdf_page": 144,
+  "size": [
+   549,
+   418
+  ]
+ },
+ {
+  "file": "p262_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 262,
+  "pdf_page": 146,
+  "size": [
+   494,
+   347
+  ]
+ },
+ {
+  "file": "p267_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 267,
+  "pdf_page": 149,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p268_planche.jpeg",
+  "type": "planche",
+  "paragraph": 268,
+  "pdf_page": 150,
+  "size": [
+   658,
+   1249
+  ],
+  "caption": "Vous vous retrouvez face à trois Brigands qui s'avancent dans votre direction."
+ },
+ {
+  "file": "p276_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 276,
+  "pdf_page": 153,
+  "size": [
+   621,
+   366
+  ]
+ },
+ {
+  "file": "p284_planche.jpeg",
+  "type": "planche",
+  "paragraph": 284,
+  "pdf_page": 157,
+  "size": [
+   761,
+   1404
+  ],
+  "caption": "Le chevalier Lord Axim de Ryner."
+ },
+ {
+  "file": "p300_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 300,
+  "pdf_page": 166,
+  "size": [
+   731,
+   493
+  ]
+ },
+ {
+  "file": "p303_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 303,
+  "pdf_page": 167,
+  "size": [
+   453,
+   307
+  ]
+ },
+ {
+  "file": "p309_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 309,
+  "pdf_page": 169,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p314_planche.jpeg",
+  "type": "planche",
+  "paragraph": 314,
+  "pdf_page": 172,
+  "size": [
+   765,
+   1301
+  ],
+  "caption": "L'aubergiste, un vieil homme sec et borgne, vous apporte un repas chaud."
+ },
+ {
+  "file": "p322_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 322,
+  "pdf_page": 175,
+  "size": [
+   531,
+   399
+  ]
+ },
+ {
+  "file": "p326_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 326,
+  "pdf_page": 177,
+  "size": [
+   769,
+   1375
+  ]
+ },
+ {
+  "file": "p326_vignette_2.jpeg",
+  "type": "vignette",
+  "paragraph": 326,
+  "pdf_page": 178,
+  "size": [
+   501,
+   143
+  ]
+ },
+ {
+  "file": "p335_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 335,
+  "pdf_page": 181,
+  "size": [
+   482,
+   352
+  ]
+ },
+ {
+  "file": "p342_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 342,
+  "pdf_page": 184,
+  "size": [
+   673,
+   450
+  ]
+ }
+]

@@ -76,6 +76,54 @@ ITEMS = {
         "type": "special",
         "description": "Vingt Pierres Précieuses, rangées dans votre bourse.",
     },
+    # --- Tome 2 : Sac à Dos ---
+    "PETITE POTION DE GUÉRISON": {
+        "type": "backpack",
+        "heal": 3,
+        "description": "Potion de Guérison : une dose qui vous redonne 3 points d'ENDURANCE si vous la buvez après un combat.",
+    },
+    "FIOLE DE LAUMSPUR": {
+        "type": "backpack",
+        "heal": 5,
+        "description": "Une puissante potion de guérison : 5 points d'ENDURANCE si vous la buvez après un combat. Une seule dose.",
+    },
+    "MOISSON DE LAUMSPUR": {
+        "type": "backpack",
+        "description": "L'équivalent d'un Repas, qui vous rendra 3 points d'ENDURANCE lorsque vous le prendrez.",
+    },
+    "COUVERTURE": {"type": "backpack", "description": "Une couverture."},
+    "COUVERTURE DE FOURRURE": {"type": "backpack", "description": "Une chaude couverture de fourrure."},
+    "CORDE": {"type": "backpack", "description": "100 mètres de corde."},
+    "ANNEAU D'OR": {"type": "backpack", "description": "Un anneau d'or."},
+    "FIOLE DE LIQUIDE ORANGE": {"type": "backpack", "description": "Une fiole d'un liquide orange."},
+    # --- Tome 2 : Objets Spéciaux ---
+    "GLAIVE DE SOMMER": {
+        "type": "special",
+        "weapon": True,
+        "mastery": "ÉPÉE",
+        "combat_bonus": 8,
+        "description": "L'Épée du Soleil : +8 points d'HABILETÉ au combat (+10 avec la Maîtrise de l'Épée). "
+        "Elle annule la magie ennemie et double les pertes d'ENDURANCE des morts vivants.",
+    },
+    "LANCE MAGIQUE": {
+        "type": "special",
+        "weapon": True,
+        "mastery": "LANCE",
+        "description": "Une lance de métal gravée de runes, aussi légère que du bois. Elle peut blesser les Monstres d'Enfer.",
+    },
+    "BILLET DE DILIGENCE": {"type": "special", "description": "Un billet de diligence pour Port Bax."},
+    "LAISSEZ-PASSER BLANC": {
+        "type": "special",
+        "description": "Un laissez-passer de marchand, valable sept jours.",
+    },
+    "LAISSEZ-PASSER ROUGE": {
+        "type": "special",
+        "description": "Le laissez-passer qui ouvre le quartier maritime de Port Bax.",
+    },
+    "DOCUMENTS": {
+        "type": "special",
+        "description": "Une enveloppe de papiers officiels (ou qui semblent tels) pour obtenir un laissez-passer rouge.",
+    },
     "SCEAU D'HAMMARDAL": {
         "type": "special",
         "description": "Un anneau que vous portez à un doigt de votre main droite.",

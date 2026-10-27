@@ -333,6 +333,25 @@ def empty_backpack() -> None:
     st.session_state.backpack = []
 
 
+def lose_gold() -> None:
+    """« Il ne vous reste plus une seule Pièce d'Or »."""
+    st.session_state.purse = 0
+
+
+def lose_special_items() -> None:
+    """Tous les Objets Spéciaux sont perdus (avec les bonus d'ENDURANCE qu'ils donnaient)."""
+    for item in list(st.session_state.special):
+        remove_from_inventory(item)
+
+
+def lose_everything() -> None:
+    """« On vous a tout volé : Or, Sac à Dos, Armes, ainsi que tous vos Objets Spéciaux »."""
+    lose_gold()
+    lose_backpack()
+    lose_all_weapons()
+    lose_special_items()
+
+
 def choose_item_to_lose(
     candidates: list, key: str = "lose", label: str = "Choisissez l'objet que vous perdez :"
 ) -> bool:
@@ -364,6 +383,55 @@ def choose_item_to_lose(
     return False
 
 
+def has_room_for(name: str, quantity: int = 1) -> bool:
+    """True si l'objet peut être rangé (2 armes, 8 objets dans le Sac à Dos, Sac à Dos possédé)."""
+    item = canonical_item(name)
+    kind = item_info(item)["type"]
+    if item == BACKPACK_ITEM:
+        return not st.session_state.has_backpack
+    if kind == "weapon":
+        return len(st.session_state.weapons) + quantity <= MAX_WEAPONS
+    if kind == "backpack":
+        return st.session_state.has_backpack and len(st.session_state.backpack) + quantity <= MAX_BACKPACK
+    return True
+
+
+def choose_gifts(options: dict, count: int, key: str = "gifts", label: str = None) -> bool:
+    """
+    « Choisissez N objets dans la liste suivante » : une seule fois par visite de la page.
+    options : {libellé: (NOM, quantité)}, NOM = None pour des Couronnes.
+        choose_gifts({"Glaive": ("GLAIVE", 1), "3 Repas": ("REPAS", 3), "12 Pièces d'Or": (None, 12)}, 1)
+    Renvoie True une fois le choix fait.
+    """
+    flag = f"visibility_{key}"
+    if st.session_state.get(flag):
+        st.write("*Vous avez choisi : " + ", ".join(st.session_state[flag]) + ".*")
+        return True
+    chosen = st.multiselect(
+        label or f"Choisissez {count} objet(s)", list(options), max_selections=count, key=f"{key}_select"
+    )
+    missing = [
+        choice for choice in chosen
+        if options[choice][0] is not None and not has_room_for(*options[choice])
+    ]
+    if missing:
+        st.warning(
+            "Pas assez de place pour : " + ", ".join(missing)
+            + ". Jetez un objet depuis l'onglet Inventaire ou faites un autre choix."
+        )
+    if st.button("Prendre", key=f"{key}_confirm", disabled=len(chosen) != count or bool(missing)):
+        if not st.session_state.get(flag):
+            for choice in chosen:
+                name, quantity = options[choice]
+                if name is None:
+                    add_gold(quantity)
+                else:
+                    add_to_inventory(name, quantity=quantity)
+            st.session_state[flag] = chosen
+            st.rerun()
+    return False
+
+
 def use_item(name: str) -> bool:
     """Utilise un objet consommable hors combat (Potion, Laumspur...)."""
     item = canonical_item(name)
@@ -389,6 +457,41 @@ def pickup_button(name: str, key: str, label: str = None) -> None:
         if add_to_inventory(name):
             st.session_state[flag] = True
             st.rerun()
+
+
+def buy_button(name: str, price: int, key: str, label: str = None, quantity: int = 1) -> None:
+    """
+    Bouton « Acheter » d'une boutique : paie `price` Couronnes et ajoute l'objet, une seule fois
+    par visite de la page. Grisé si la bourse ne suffit pas ; rien n'est payé si la place manque.
+    """
+    flag = f"visibility_buy_{key}"
+    bought = st.session_state.get(flag, False)
+    clicked = st.button(
+        label or f"Acheter : {name} ({price} Couronnes)",
+        key=f"buy_{key}",
+        disabled=bought or st.session_state.purse < price,
+    )
+    if clicked and not st.session_state.get(flag, False):
+        if add_to_inventory(name, quantity=quantity) and spend_gold(price):
+            st.session_state[flag] = True
+            st.toast(f"**{name}** acheté pour {price} Couronne(s)", icon="🛒")
+            st.rerun()
+
+
+def sell_button(name: str, price: int, key: str, label: str = None) -> None:
+    """Bouton « Vendre » : retire l'objet possédé et rapporte `price` Couronnes (une fois par visite)."""
+    flag = f"visibility_sell_{key}"
+    sold = st.session_state.get(flag, False)
+    clicked = st.button(
+        label or f"Vendre : {name} ({price} Couronnes)",
+        key=f"sell_{key}",
+        disabled=sold or not has_item(name),
+    )
+    if clicked and not st.session_state.get(flag, False) and remove_from_inventory(name):
+        st.session_state[flag] = True
+        add_gold(price)
+        st.toast(f"**{name}** vendu pour {price} Couronne(s)", icon="💰")
+        st.rerun()
 
 
 def pickup_gold(amount: int, key: str = "gold") -> None:
