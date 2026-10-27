@@ -1,4 +1,5 @@
 import streamlit as st
+from environments import apply_environment
 from inventory import display_inventory, init_state
 from save import save_game
 from utils import called_cookies
@@ -12,6 +13,7 @@ init_state()
 st.session_state.game_phase = "playing"
 st.session_state.book = 1
 st.session_state.current_page_number = 0
+apply_environment("foret")  # les ruines du monastère Kaï, au cœur de la forêt
 st.session_state.last_page_number = 0
 
 fr_text = """

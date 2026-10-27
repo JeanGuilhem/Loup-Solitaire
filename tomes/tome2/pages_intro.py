@@ -1,6 +1,7 @@
 import os
 
 import streamlit as st
+from environments import apply_environment
 from inventory import display_inventory, init_state
 from save import save_game
 from utils import called_cookies
@@ -18,6 +19,7 @@ st.session_state.game_phase = "playing"
 st.session_state.book = BOOK
 st.session_state.current_page_number = 0
 st.session_state.last_page_number = 0
+apply_environment("ville")  # Holmgard, avant l'embarquement
 
 st.title(f"📜 Tome {BOOK} — {BOOKS[BOOK]['title']}")
 

@@ -15,6 +15,7 @@ import unicodedata
 
 import streamlit as st
 
+from environments import apply_page_environment
 from game_stats import record_page
 from save import delete_save, page_path, save_game
 from utils import ls_death
@@ -176,6 +177,7 @@ def check_inventory(is_fighting: bool = False, current_page_number: int = 0, boo
     st.session_state.book = book
     st.session_state.current_page_number = current_page_number
     st.set_page_config(page_title=f"Paragraphe {current_page_number}", page_icon="📜")
+    apply_page_environment(book, current_page_number)
     st.header(f"📜 Paragraphe {current_page_number}", divider="gray")
     if is_new_page():
         _reset_page_flags()
