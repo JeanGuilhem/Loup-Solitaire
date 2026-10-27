@@ -112,15 +112,19 @@ def determine_kai_mastery() -> bool:
     return False
 
 
+STARTING_KIT = "Tome 1 : équipement de départ du Seigneur Kaï."
+MONASTERY = "Tome 1 : trouvé dans les ruines du monastère Kaï."
+
+
 def apply_starting_item(number: int) -> None:
     """Objet trouvé dans les ruines du monastère (appliqué une seule fois)."""
     found = STARTING_ITEM_TABLE[number]
     if isinstance(found, int):
         add_gold(found)
     elif found == "REPAS":
-        add_to_inventory("REPAS", quantity=2)
+        add_to_inventory("REPAS", quantity=2, origin=MONASTERY)
     else:
-        add_to_inventory(found)
+        add_to_inventory(found, origin=MONASTERY)
 
 
 STARTING_ITEM_TEXT = {
@@ -142,9 +146,9 @@ def first_inventory_check() -> bool:
     write_once("text_first_items", fr_first_items)
 
     if "starting_kit" not in st.session_state:
-        add_to_inventory("HACHE")
-        add_to_inventory("REPAS")
-        add_to_inventory("CARTE GÉOGRAPHIQUE")
+        add_to_inventory("HACHE", origin=STARTING_KIT)
+        add_to_inventory("REPAS", origin=STARTING_KIT)
+        add_to_inventory("CARTE GÉOGRAPHIQUE", origin=STARTING_KIT)
         st.session_state.starting_kit = True
 
     col1, col2 = st.columns(2)

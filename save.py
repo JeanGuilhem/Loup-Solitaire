@@ -31,6 +31,7 @@ SAVED_KEYS = [
     "completed_books",
     "game_id",  # statistiques (cf. game_stats.py)
     "pages_visited",
+    "provenance",
 ]
 
 

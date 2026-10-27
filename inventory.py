@@ -38,6 +38,7 @@ DEFAULT_STATE = {
     "last_page_number": 0,
     "book": 1,  # tome en cours
     "completed_books": [],
+    "provenance": {},  # objet -> d'où il vient (fiche de l'écran d'équipement)
     "done_fighting": False,
     "flee": False,
     "page_has_fight": False,
@@ -95,7 +96,7 @@ def init_state() -> None:
     """Crée les clés manquantes de st.session_state avec leurs valeurs par défaut."""
     for key, value in DEFAULT_STATE.items():
         if key not in st.session_state:
-            st.session_state[key] = list(value) if isinstance(value, list) else value
+            st.session_state[key] = type(value)(value) if isinstance(value, (list, dict)) else value
     for i in range(1, MAX_VISIBILITY_FLAGS + 1):
         if f"visibility_{i}" not in st.session_state:
             st.session_state[f"visibility_{i}"] = False
@@ -119,6 +120,7 @@ def _reset_page_flags() -> None:
             st.session_state[key] = False
         elif key.startswith(("combat_", "hazard_")):
             del st.session_state[key]
+    st.session_state.pop("artifact_choice", None)  # objet examiné dans l'écran d'équipement
     st.session_state.flee = False
     st.session_state.page_has_fight = False
     st.session_state.streamed_texts = []
@@ -253,10 +255,19 @@ def has_weapon() -> bool:
     return len(st.session_state.weapons) > 0
 
 
-def add_to_inventory(name: str, quantity: int = 1) -> bool:
+def _record_origin(item: str, origin: str = None) -> None:
+    """Note d'où vient un objet (fiche de l'écran d'équipement) : par défaut le tome et le paragraphe."""
+    book = st.session_state.get("book", 1)
+    page = st.session_state.get("current_page_number", 0)
+    default = f"Tome {book}, paragraphe {page}." if page else f"Tome {book}."
+    st.session_state.setdefault("provenance", {})[item] = origin or default
+
+
+def add_to_inventory(name: str, quantity: int = 1, origin: str = None) -> bool:
     """
     Ajoute un objet là où il doit aller (Armes, Sac à Dos ou Objets Spéciaux).
     Renvoie False (et affiche pourquoi) si la place manque : l'objet n'est alors pas pris.
+    origin : provenance affichée dans la fiche de l'objet (par défaut le tome et le paragraphe en cours).
     """
     item = canonical_item(name)
     info = item_info(item)
@@ -266,6 +277,7 @@ def add_to_inventory(name: str, quantity: int = 1) -> bool:
             st.warning("Vous avez déjà un Sac à Dos.")
             return False
         st.session_state.has_backpack = True
+        _record_origin(item, origin)
         return True
 
     for _ in range(quantity):
@@ -296,6 +308,7 @@ def add_to_inventory(name: str, quantity: int = 1) -> bool:
                 return False
             st.session_state.backpack.append(item)
 
+    _record_origin(item, origin)
     return True
 
 
@@ -575,6 +588,13 @@ def change_endurance(delta: int) -> int:
 # Affichage (onglet Inventaire)
 # --------------------------------------------------------------------------------------
 def display_inventory() -> None:
+    from artifacts import render_equipment
+
+    render_equipment(
+        {key: st.session_state[key] for key in ("weapons", "special", "backpack", "has_backpack", "purse")},
+        st.session_state.get("provenance", {}),
+    )
+    st.divider()
     col1, col2, col3 = st.columns(3)
     col1.metric(label="Couronnes", value=f"{st.session_state.purse}/{MAX_PURSE}")
     col2.metric(

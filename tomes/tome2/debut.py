@@ -32,6 +32,8 @@ from variable import (
 
 BOOK = 2
 WEAPON_MASTERY = "La Maîtrise des armes"
+ARSENAL = "Tome 2 : Arsenal du Palais de Holmgard, avant le départ pour Durenor."
+GIVEN_BY_KING = "Tome 2 : confié par le roi du Sommerlund pour obtenir l'aide de Durenor."
 
 st.set_page_config(page_title=f"Tome {BOOK}", page_icon="📜")
 st.title(f"📜 Tome {BOOK} — {BOOKS[BOOK]['title']}")
@@ -195,10 +197,10 @@ def receive_equipment() -> bool:
         for weapon in [current_weapons[index] for index in left_behind]:
             remove_from_inventory(weapon)
         for item in chosen:
-            add_to_inventory(item, quantity=2 if item == "REPAS" else 1)
+            add_to_inventory(item, quantity=2 if item == "REPAS" else 1, origin=ARSENAL)
         for item in BOOK2_EQUIPMENT["special"]:
             if not has_item(item):
-                add_to_inventory(item)
+                add_to_inventory(item, origin=GIVEN_BY_KING if item == "SCEAU D'HAMMARDAL" else ARSENAL)
         st.session_state.book2_items = chosen
         st.rerun()
     return False

@@ -9,6 +9,7 @@ from variable import BOOK2_EQUIPMENT, ITEMS, KAI, MAX_BACKPACK, MAX_PURSE, MAX_W
 
 WEAPON_MASTERY = "La Maîtrise des armes"
 PREVIOUS_BOOK_DISCIPLINES = 5
+RECREATED = "Tome 1 (héros recréé à partir de sa Feuille d'Aventure)."
 
 st.set_page_config(page_title="Recréer mon héros", page_icon="📝")
 st.title("📝 Recréer mon héros du tome 1")
@@ -69,9 +70,9 @@ if st.button("Valider mon héros", type="primary", disabled=bool(problems)):
     st.session_state.weapon_mastery = [mastered] if mastered else []
     st.session_state.has_backpack = has_backpack
     for item in weapons + backpack + special:
-        add_to_inventory(item)  # les bonus d'ENDURANCE des Objets Spéciaux sont appliqués ici
+        add_to_inventory(item, origin=RECREATED)  # les bonus d'ENDURANCE des Objets Spéciaux sont appliqués ici
     if meals:
-        add_to_inventory("REPAS", quantity=int(meals))
+        add_to_inventory("REPAS", quantity=int(meals), origin=RECREATED)
     # comme un héros qui vient d'atteindre le paragraphe 350 du tome 1
     st.session_state.book = 1
     st.session_state.completed_books = [1]
