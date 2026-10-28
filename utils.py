@@ -57,9 +57,33 @@ def ls_death():
     st.error(
         "Vous êtes mort ! Votre aventure s'arrête ici, ainsi que la lignée des Kai."
     )
+    show_adventure_stats()
     checkpoint_button(book=st.session_state.get("book"))
     st.page_link("tomes/tome1/crafting_hero.py", label="Démarrer mon aventure", icon="⚔️")
     st.stop()
+
+
+def track_lowest_endurance() -> None:
+    """Retient l'ENDURANCE la plus basse du tome en cours (bilan de fin de partie)."""
+    lowest = st.session_state.get("lowest_endurance")
+    endurance = max(0, st.session_state.get("endurance", 0))
+    if lowest is None or endurance < lowest:
+        st.session_state.lowest_endurance = endurance
+
+
+def show_adventure_stats() -> None:
+    """Bilan du tome en cours, affiché à la mort du héros et au dernier paragraphe du tome."""
+    track_lowest_endurance()
+    pages = st.session_state.get("pages_visited", 0)
+    here = (st.session_state.get("book"), st.session_state.get("current_page_number"))
+    if st.session_state.get("last_recorded_page") != list(here):
+        pages += 1  # la page de mort s'arrête avant d'être comptée
+    st.subheader(f"Votre aventure dans le tome {st.session_state.get('book', 1)}")
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Paragraphes parcourus", pages)
+    col2.metric("Combats", st.session_state.get("fights", 0))
+    col3.metric("Ennemis vaincus", st.session_state.get("enemies_defeated", 0))
+    col4.metric("Endurance la plus basse", st.session_state.lowest_endurance)
 
 
 def checkpoint_button(book: int = None) -> None:

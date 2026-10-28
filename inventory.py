@@ -19,7 +19,7 @@ import streamlit as st
 from environments import apply_page_environment
 from game_stats import record_page
 from save import delete_save, page_path, save_game
-from utils import ls_death
+from utils import ls_death, show_adventure_stats, track_lowest_endurance
 from variable import BOOKS, ITEMS, KAI, MAX_BACKPACK, MAX_PURSE, MAX_WEAPONS
 
 BACKPACK_ITEM = "SAC À DOS"
@@ -242,6 +242,7 @@ def end_page() -> None:
         )
         st.session_state.purse = MAX_PURSE
 
+    track_lowest_endurance()
     if st.session_state.endurance <= 0:
         ls_death()
 
@@ -251,6 +252,9 @@ def end_page() -> None:
             if book not in st.session_state.completed_books:
                 st.session_state.completed_books.append(book)
         record_page()
+    if st.session_state.current_page_number == BOOKS[st.session_state.book]["final_page"]:
+        st.divider()
+        show_adventure_stats()
     st.session_state.last_page_number = st.session_state.current_page_number
     save_game()
 
@@ -624,6 +628,7 @@ def change_endurance(delta: int) -> int:
     st.session_state.endurance = min(
         st.session_state.endurance + delta, st.session_state.total_endurance
     )
+    track_lowest_endurance()
     if st.session_state.endurance <= 0:
         st.session_state.endurance = 0
         ls_death()

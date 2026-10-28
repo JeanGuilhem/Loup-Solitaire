@@ -21,7 +21,7 @@ from inventory import (
     item_info,
     remove_from_inventory,
 )
-from utils import table_des_hasards
+from utils import table_des_hasards, track_lowest_endurance
 
 SOMMERSWERD = "GLAIVE DE SOMMER"
 
@@ -230,6 +230,7 @@ def combat(
                 if remove_from_inventory(item):
                     fight["item_bonus"] += item_info(item)["combat_hability"]
             fight["status"] = "fighting"
+            st.session_state.fights = st.session_state.get("fights", 0) + 1  # bilan du tome
             st.rerun()
         if flee_after == 0 and col2.button("🏃 Prendre la fuite", key=f"{state_key}_flee_now"):
             fight["status"], fight["outcome"] = "over", "fled"
@@ -325,6 +326,7 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
     enemy_loss = min(enemy_loss, fight["enemy_endurance"])
 
     st.session_state.endurance = max(0, st.session_state.endurance - ls_loss)
+    track_lowest_endurance()
     fight["enemy_endurance"] -= enemy_loss
     entry = {"round": fight["round"], "enemy": name, "enemy_index": enemy_index, "quotient": quotient, "dice": dice,
              "ls_loss": ls_loss, "enemy_loss": enemy_loss, "fleeing": fleeing}
@@ -345,6 +347,7 @@ def _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wound
         fight["status"], fight["outcome"] = "over", "fled"
         return
     if fight["enemy_endurance"] <= 0:
+        st.session_state.enemies_defeated = st.session_state.get("enemies_defeated", 0) + 1
         fight["enemy"] += 1
         if fight["enemy"] >= len(enemies):
             fight["status"], fight["outcome"] = "over", "win"

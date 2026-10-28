@@ -35,6 +35,10 @@ SAVED_KEYS = [
     "completed_books",
     "game_id",  # statistiques (cf. game_stats.py)
     "pages_visited",
+    "fights",  # bilan du tome (cf. utils.show_adventure_stats)
+    "enemies_defeated",
+    "lowest_endurance",
+    "last_recorded_page",
     "provenance",
 ]
 

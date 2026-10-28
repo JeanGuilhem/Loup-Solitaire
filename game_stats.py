@@ -69,7 +69,12 @@ def record(event: str, page: int = None, data: dict = None) -> None:
 def record_start(**details) -> None:
     """Nouvelle partie : nouvel identifiant, puis le profil du héros et `details` (objet de départ...)."""
     st.session_state.game_id = str(uuid.uuid4())
+    # bilan du tome affiché au joueur en fin de partie (cf. utils.show_adventure_stats)
     st.session_state.pages_visited = 0
+    st.session_state.fights = 0
+    st.session_state.enemies_defeated = 0
+    st.session_state.lowest_endurance = st.session_state.get("endurance", 0)
+    st.session_state.last_recorded_page = None
     record(
         "start",
         data={
@@ -87,6 +92,7 @@ def record_page() -> None:
     page = st.session_state.current_page_number
     book = st.session_state.get("book", 1)
     st.session_state.pages_visited = st.session_state.get("pages_visited", 0) + 1
+    st.session_state.last_recorded_page = [book, page]
     record("page", page, {"endurance": st.session_state.endurance, "purse": st.session_state.purse})
     if page == BOOKS[book]["final_page"]:
         record(
