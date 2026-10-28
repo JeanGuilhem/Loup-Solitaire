@@ -87,8 +87,8 @@ total = len(games)
 outcomes = games.outcome.value_counts()
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Parties", total)
-col2.metric("Victoires", outcomes.get("Victoire", 0), f"{outcomes.get('Victoire', 0) / total:.0%} des parties", delta_color="off")
-col3.metric("Morts", outcomes.get("Mort", 0), f"{outcomes.get('Mort', 0) / total:.0%} des parties", delta_color="off")
+col2.metric("Victoires", outcomes.get("Victoire", 0), f"{outcomes.get('Victoire', 0) / total:.0%} des parties", delta_color="off", delta_arrow="off")
+col3.metric("Morts", outcomes.get("Mort", 0), f"{outcomes.get('Mort', 0) / total:.0%} des parties", delta_color="off", delta_arrow="off")
 col4.metric("En cours / abandons", outcomes.get("En cours / abandon", 0))
 
 finished = games[games.outcome != "En cours / abandon"]
@@ -96,7 +96,7 @@ winners = games[games.outcome == "Victoire"]
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Paragraphes par partie terminée", f"{finished.pages.mean():.0f}" if len(finished) else "—")
 col2.metric("Paragraphes pour gagner", f"{winners.pages.mean():.0f}" if len(winners) else "—",
-            f"de {winners.pages.min()} à {winners.pages.max()}" if len(winners) else None, delta_color="off")
+            f"de {winners.pages.min()} à {winners.pages.max()}" if len(winners) else None, delta_color="off", delta_arrow="off")
 heroes = pd.json_normalize(starts.data.tolist()).assign(game_id=starts.game_id.values)
 if not heroes.empty:
     heroes["outcome"] = heroes.game_id.map(games.outcome)
@@ -114,8 +114,11 @@ if not heroes.empty:
     kai["% des parties"] = kai["sélections"] / len(heroes)
     kai["victoires"] = disciplines[disciplines.outcome == "Victoire"].kai.value_counts().reindex(kai.index, fill_value=0)
     kai["morts"] = disciplines[disciplines.outcome == "Mort"].kai.value_counts().reindex(kai.index, fill_value=0)
-    kai["taux de victoire"] = (kai.victoires / kai["sélections"]).where(kai["sélections"] > 0)
-    table(kai, percent=("% des parties", "taux de victoire"))
+    # une Discipline jamais choisie n'a pas de taux de victoire : « — » plutôt que « None »
+    kai["taux de victoire"] = [
+        f"{won / chosen:.0%}" if chosen else "—" for won, chosen in zip(kai.victoires, kai["sélections"])
+    ]
+    table(kai, percent=("% des parties",))
 
     left, right = st.columns(2)
     with left:

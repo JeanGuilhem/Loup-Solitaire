@@ -4,6 +4,7 @@ import streamlit as st
 
 from game_stats import record_start
 from inventory import add_gold, add_to_inventory, display_inventory, reset_state
+from kai_cards import choose_disciplines
 from text import (
     fr_determine_ability_endurance,
     fr_first_items,
@@ -92,11 +93,8 @@ def determine_kai_mastery() -> bool:
             )
         return True
 
-    choices = st.multiselect(
-        "Quelles Disciplines Kaï choisissez-vous ? (5 au maximum)",
-        options=list(KAI.keys()),
-        max_selections=5,
-    )
+    st.write("Quelles Disciplines Kaï choisissez-vous ? Cliquez sur 5 cartes.")
+    choices = choose_disciplines(list(KAI), 5, key="kai_cards")
     if st.button(
         "Valider mes Disciplines Kaï",
         disabled=len(choices) != 5,

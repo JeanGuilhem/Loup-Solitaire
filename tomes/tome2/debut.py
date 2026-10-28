@@ -18,6 +18,7 @@ from inventory import (
     item_info,
     remove_from_inventory,
 )
+from kai_cards import choose_disciplines
 from save import apply_save, read_save
 from utils import table_des_hasards
 from variable import (
@@ -122,9 +123,12 @@ def choose_new_discipline() -> bool:
         "choisissez une nouvelle Discipline Kaï."
     )
     choices = [name for name in KAI if name not in st.session_state.kai]
-    choice = st.selectbox("Nouvelle Discipline Kaï", choices)
-    st.caption(KAI[choice].strip())
-    if st.button("Valider ma nouvelle Discipline", type="primary"):
+    picked = choose_disciplines(choices, 1, key="new_kai_cards")
+    choice = picked[0] if picked else None
+    if choice:
+        with st.expander(f"En savoir plus : {choice}"):
+            st.write(KAI[choice].strip())
+    if st.button("Valider ma nouvelle Discipline", type="primary", disabled=choice is None):
         st.session_state.kai.append(choice)
         st.session_state.new_kai = choice
         if choice == WEAPON_MASTERY:

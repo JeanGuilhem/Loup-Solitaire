@@ -1,5 +1,10 @@
-streamlit # last version
-extra-streamlit-components-better-cookie-manager # for cookies
-# google-genai  optional: if we want to autmaticaly use gemini to generate chapter
-pandas
-PyMuPDF
+# Versions fixées : la prod (Streamlit Cloud) installe exactement ce qui a été testé en local.
+# Le CSS des ambiances (environments.py) vise des éléments internes de Streamlit : revérifier
+# le rendu avant de monter la version de streamlit.
+streamlit==1.65.0
+streamlit-extras==1.6.0  # card_selector (choix des Disciplines Kaï)
+extra-streamlit-components-better-cookie-manager==0.0.10  # sauvegarde dans les cookies
+requests==2.32.5  # statistiques (game_stats.py)
+pandas==2.3.3  # page de statistiques
+PyMuPDF==1.26.4  # extraction des paragraphes et des illustrations depuis les PDF
+# google-genai  optionnel : génération automatique des paragraphes avec Gemini

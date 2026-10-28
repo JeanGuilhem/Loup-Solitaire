@@ -5,6 +5,7 @@ puis l'envoyer à la page de départ du tome 2 comme s'il venait du paragraphe 3
 import streamlit as st
 
 from inventory import add_to_inventory, reset_state
+from kai_cards import choose_disciplines
 from variable import BOOK2_EQUIPMENT, ITEMS, KAI, MAX_BACKPACK, MAX_PURSE, MAX_WEAPONS, WEAPON_MASTERY_TABLE
 
 WEAPON_MASTERY = "La Maîtrise des armes"
@@ -33,25 +34,23 @@ hability = col1.number_input("Habileté de base", min_value=10, max_value=19, va
 endurance = col2.number_input("Endurance de base", min_value=20, max_value=29, value=25)
 purse = col3.number_input("Couronnes", min_value=0, max_value=MAX_PURSE, value=0)
 
-kai = st.multiselect(
-    f"Vos {PREVIOUS_BOOK_DISCIPLINES} Disciplines Kaï",
-    list(KAI),
-    max_selections=PREVIOUS_BOOK_DISCIPLINES,
-)
+st.write(f"Vos {PREVIOUS_BOOK_DISCIPLINES} Disciplines Kaï :")
+kai = choose_disciplines(list(KAI), PREVIOUS_BOOK_DISCIPLINES, key="import_kai_cards")
 mastered = None
 if WEAPON_MASTERY in kai:
     mastered = st.selectbox("Arme maîtrisée", sorted(set(WEAPON_MASTERY_TABLE)))
 
-weapons = st.multiselect("Armes", items_of("weapon"), max_selections=MAX_WEAPONS)
+weapons = st.multiselect("Armes", items_of("weapon"), max_selections=MAX_WEAPONS, placeholder="Choisir des armes")
 has_backpack = st.checkbox("J'ai toujours mon Sac à Dos", value=True)
 meals, backpack = 0, []
 if has_backpack:
     col1, col2 = st.columns([1, 3])
     meals = col1.number_input("Repas", min_value=0, max_value=MAX_BACKPACK, value=0)
     backpack = col2.multiselect(
-        "Autres objets du Sac à Dos", [item for item in items_of("backpack") if item != "REPAS"]
+        "Autres objets du Sac à Dos", [item for item in items_of("backpack") if item != "REPAS"],
+        placeholder="Choisir des objets",
     )
-special = st.multiselect("Objets Spéciaux", items_of("special"))
+special = st.multiselect("Objets Spéciaux", items_of("special"), placeholder="Choisir des Objets Spéciaux")
 
 problems = []
 if len(kai) != PREVIOUS_BOOK_DISCIPLINES:
