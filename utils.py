@@ -65,7 +65,6 @@ def table_des_hasards() -> int:
     Chose between 0 et 9 (for the book, here 1 to 10)
     """
     res = random.randint(1, 10)
-    print(f"Tables des hasards: {res}")
     return res
 
 

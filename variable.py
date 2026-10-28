@@ -297,6 +297,21 @@ grandira chaque fois que vous aurez accompli une mission : vous
 pourrez, de cette façon, espérer atteindre un jour la complète
 maîtrise de l'art et de la science des Moines Kaï."""
 }
+
+# Cartes du choix des Disciplines Kaï (création du héros) : icône et résumé d'une ligne.
+# Le texte complet de chaque Discipline reste dans KAI (onglet « Maîtrise Kaï »).
+KAI_CARDS = {
+    "Le Camouflage": ("🍃", "Vous fondre dans le paysage ou passer pour un habitant."),
+    "La Chasse": ("🏹", "Ne jamais manquer de nourriture, et vous déplacer sans bruit."),
+    "Le Sixième Sens": ("👁️", "Pressentir les dangers et deviner les intentions cachées."),
+    "L'Orientation": ("🧭", "Toujours trouver le bon chemin, même sans carte."),
+    "La Guérison": ("🌿", "Regagner 1 point d'ENDURANCE à chaque paragraphe sans combat."),
+    "La Maîtrise des armes": ("⚔️", "+2 HABILETÉ avec l'arme tirée au sort pendant votre initiation."),
+    "Bouclier psychique": ("🛡️", "Ne rien perdre face aux attaques mentales de l'ennemi."),
+    "Puissance psychique": ("🧠", "+2 HABILETÉ en combat en frappant aussi par la pensée."),
+    "Communication Animale": ("🐺", "Comprendre certains animaux et leur parler."),
+    "Maîtrise Psychique de la Matière": ("🔮", "Déplacer de petits objets par la seule force de l'esprit."),
+}
 AI_INSTRUCTION = """
 Vous êtes un expert Python/Streamlit. 
 Votre tâche est de convertir le contenu brut d'un chapitre du livre "Loup Solitaire" en un script Python 3 formaté pour Streamlit. Vous devez respecter STRICTEMENT toutes les règles de formatage ci-dessous.
