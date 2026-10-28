@@ -75,9 +75,9 @@ with tab1:
         st.balloons()
     st.success(
         "**Mission accomplie !** Grâce au Glaive de Sommer, Zagarna est terrassé et Holmgard est libérée. "
-        "L'aventure du Loup Solitaire se poursuivra dans le tome 3, *Les Grottes de Kalte* "
-        "(pas encore adapté)."
+        "Le Loup Solitaire peut reprendre la route dans le tome 3, *Les Grottes de Kalte*."
     )
+    st.page_link("tomes/tome3/debut.py", label="Continuer avec le tome 3", icon="📜")
     st.page_link("accueil.py", label="Retour à l'accueil", icon="🏠")
 
     show_illustrations()

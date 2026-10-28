@@ -13,6 +13,7 @@ MAX_PURSE = 50
 #   combat_hability : bonus d'HABILETÉ pour la durée d'un combat (consommé)
 #   combat_bonus    : bonus d'HABILETÉ à chaque combat tant que l'objet est porté (non consommé)
 #   endurance_bonus : bonus au total d'ENDURANCE tant que l'objet est porté
+#   slots           : {tome: places} places prises dans le Sac à Dos à partir de ce tome (1 sinon)
 ITEMS = {
     # --- Armes ---
     "POIGNARD": {"type": "weapon", "mastery": "POIGNARD", "description": "Arme."},
@@ -53,7 +54,7 @@ ITEMS = {
     # --- Objets Spéciaux ---
     "CARTE GÉOGRAPHIQUE": {
         "type": "special",
-        "description": "Une carte des Fins de Terre, rangée dans une poche intérieure de votre tunique.",
+        "description": "Une carte de la région, rangée dans une poche intérieure de votre tunique.",
     },
     "CASQUE": {
         "type": "special",
@@ -92,8 +93,16 @@ ITEMS = {
         "description": "L'équivalent d'un Repas, qui vous rendra 3 points d'ENDURANCE lorsque vous le prendrez.",
     },
     "COUVERTURE": {"type": "backpack", "description": "Une couverture."},
-    "COUVERTURE DE FOURRURE": {"type": "backpack", "description": "Une chaude couverture de fourrure."},
-    "CORDE": {"type": "backpack", "description": "100 mètres de corde."},
+    "COUVERTURE DE FOURRURE": {
+        "type": "backpack",
+        "slots": {3: 2},
+        "description": "De chaudes couvertures de fourrure. À Kalte, elles prennent la place de 2 objets.",
+    },
+    "CORDE": {
+        "type": "backpack",
+        "slots": {3: 2},
+        "description": "Un long rouleau de corde. À Kalte, elle prend la place de 2 objets.",
+    },
     "ANNEAU D'OR": {"type": "backpack", "description": "Un anneau d'or."},
     "FIOLE DE LIQUIDE ORANGE": {"type": "backpack", "description": "Une fiole d'un liquide orange."},
     # --- Tome 2 : Objets Spéciaux ---
@@ -134,6 +143,70 @@ ITEMS = {
         "description": "Il vous donne 2 points d'HABILETÉ supplémentaires lorsque vous en faites usage "
         "au cours d'un combat.",
     },
+    # --- Tome 3 : Sac à Dos ---
+    "POTION DE LAUMSPUR": {
+        "type": "backpack",
+        "heal": 4,
+        "description": "Potion de Guérison : 4 points d'ENDURANCE si vous la buvez à la fin d'un combat. Une seule dose.",
+    },
+    "TENTE": {"type": "backpack", "slots": {3: 3}, "description": "Une tente polaire. Elle prend la place de 3 objets."},
+    "POTION D'ALETHER": {
+        "type": "backpack",
+        "combat_hability": 4,
+        "description": "Potion de Force : +4 points d'HABILETÉ pour la durée d'un seul combat. À boire juste avant.",
+    },
+    "POTION DE BROSSE À POTENCES": {
+        "type": "backpack",
+        "description": "Potion verte de « Dent de Sommeil » : un puissant somnifère.",
+    },
+    "POTION DE RONCES DES CIMETIÈRES": {
+        "type": "backpack",
+        "description": "Potion noire de Ronces des Cimetières distillées : un poison puissant.",
+    },
+    # --- Tome 3 : Objets Spéciaux ---
+    "GILET DE CUIR MATELASSÉ": {
+        "type": "special",
+        "endurance_bonus": 2,
+        "description": "Il ajoute 2 points d'ENDURANCE à votre total. Vous le portez sur vous.",
+    },
+    "POTION ROUGE DE LAUMSPUR": {
+        "type": "special",
+        "heal": 5,
+        "description": "Décoction concentrée de Laumspur : 5 points d'ENDURANCE. Une seule dose.",
+    },
+    "CASQUE D'ARGENT": {
+        "type": "special",
+        "combat_bonus": 2,
+        "description": "Un casque magique, léger malgré sa taille : +2 points d'HABILETÉ au combat.",
+    },
+    "ÉPÉE D'OS": {
+        "type": "special",
+        "weapon": True,
+        "mastery": "ÉPÉE",
+        "description": "Une épée taillée dans l'os par les Barbares des Glaces.",
+    },
+    "DISQUE DE PIERRE BLEUE": {"type": "special", "description": "Un étrange disque de pierre bleue."},
+    "TRIANGLE DE PIERRE BLEUE": {
+        "type": "special",
+        "description": "Un petit triangle de pierre bleue, attaché à une chaînette passée à votre cou.",
+    },
+    "BRACELET D'OR": {
+        "type": "special",
+        "description": "Un bracelet lisse, sans marque ni inscription, en or massif. Vous le portez au poignet.",
+    },
+    "EFFIGIE": {
+        "type": "special",
+        "description": "Une statuette de pierre représentant une étrange créature dotée de tentacules.",
+    },
+    "DIAMANT": {
+        "type": "special",
+        "description": "Un magnifique diamant qui vaudrait des milliers de Couronnes au Sommerlund.",
+    },
+    "SPHÈRE DE FEU": {
+        "type": "special",
+        "description": "Deux demi-sphères de métal qui renferment un feu perpétuel.",
+    },
+    "PIERRE RAYONNANTE": {"type": "special", "description": "Une pierre tiède aux facettes étincelantes."},
     "ESSENCE D'ALETHER": {
         "type": "special",
         "combat_hability": 2,
@@ -173,27 +246,66 @@ STARTING_ITEM_TABLE = {
 BOOKS = {
     1: {"title": "Les Maîtres des Ténèbres", "final_page": 350},
     2: {"title": "La Traversée Infernale", "final_page": 350},
+    3: {"title": "Les Grottes de Kalte", "final_page": 350},
 }
 
-# Équipement reçu au début du tome 2 (cf. « Équipement »), par les héros venus du tome 1 comme
-# par les nouveaux. Les héros du tome 1 peuvent échanger une ou deux de leurs armes.
-BOOK2_EQUIPMENT = {
-    "gold_base": 10,  # Couronnes : 10 + Table de Hasard, ajoutées à celles déjà possédées
-    "items_to_choose": 2,
-    "items": [
-        "ÉPÉE",
-        "SABRE",
-        "REPAS",  # deux Repas
-        "COTTE DE MAILLES",
-        "MASSE D'ARMES",
-        "POTION DE GUÉRISON",
-        "BÂTON",
-        "LANCE",
-        "GLAIVE",
-        "BOUCLIER",
-    ],
-    # « Au départ de votre quête, vous êtes en possession du Sceau d'Hammardal » et d'une carte
-    "special": ["SCEAU D'HAMMARDAL", "CARTE GÉOGRAPHIQUE"],
+# Équipement reçu au début de chaque tome à partir du 2 (cf. « Équipement »), par les héros venus
+# du tome précédent comme par les nouveaux (cf. book_start.py).
+#   gold_base       : Couronnes = gold_base + Table de Hasard, ajoutées à celles déjà possédées
+#   items           : {libellé du choix: (NOM, quantité)}, items_to_choose au choix
+#   special         : Objets Spéciaux remis d'office (sauf s'ils sont déjà possédés)
+#   origin          : provenance des objets (fiche de l'écran d'équipement), special_origins par objet
+#   place, journey, start_label : textes de la page de départ
+BOOK_EQUIPMENT = {
+    2: {
+        "gold_base": 10,
+        "items_to_choose": 2,
+        "items": {
+            "ÉPÉE": ("ÉPÉE", 1),
+            "SABRE": ("SABRE", 1),
+            "2 REPAS": ("REPAS", 2),
+            "COTTE DE MAILLES": ("COTTE DE MAILLES", 1),
+            "MASSE D'ARMES": ("MASSE D'ARMES", 1),
+            "POTION DE GUÉRISON": ("POTION DE GUÉRISON", 1),
+            "BÂTON": ("BÂTON", 1),
+            "LANCE": ("LANCE", 1),
+            "GLAIVE": ("GLAIVE", 1),
+            "BOUCLIER": ("BOUCLIER", 1),
+        },
+        # « Au départ de votre quête, vous êtes en possession du Sceau d'Hammardal » et d'une carte
+        "special": ["SCEAU D'HAMMARDAL", "CARTE GÉOGRAPHIQUE"],
+        "origin": "Tome 2 : Arsenal du Palais de Holmgard, avant le départ pour Durenor.",
+        "special_origins": {
+            "SCEAU D'HAMMARDAL": "Tome 2 : confié par le roi du Sommerlund pour obtenir l'aide de Durenor.",
+        },
+        "place": "l'Arsenal",
+        "journey": "partir à Durenor",
+        "start_label": "Partir pour Durenor",
+    },
+    3: {
+        "gold_base": 10,
+        "items_to_choose": 2,
+        "items": {
+            "ÉPÉE": ("ÉPÉE", 1),
+            "SABRE": ("SABRE", 1),
+            "GILET DE CUIR MATELASSÉ": ("GILET DE CUIR MATELASSÉ", 1),
+            "LANCE": ("LANCE", 1),
+            "MASSE D'ARMES": ("MASSE D'ARMES", 1),
+            "MARTEAU DE GUERRE": ("MARTEAU DE GUERRE", 1),
+            "HACHE": ("HACHE", 1),
+            "POTION DE LAUMSPUR": ("POTION DE LAUMSPUR", 1),
+            "BÂTON": ("BÂTON", 1),
+            "RATIONS SPÉCIALES (1 Repas)": ("REPAS", 1),
+            "GLAIVE": ("GLAIVE", 1),
+        },
+        # bottes, tunique, cape et moufles polaires (sans effet de jeu) et une carte de Kalte
+        "special": ["CARTE GÉOGRAPHIQUE"],
+        "origin": "Tome 3 : remis à l'Hôtel de Ville d'Anskaven, avant le départ pour Kalte.",
+        "special_origins": {},
+        "place": "l'Hôtel de Ville",
+        "journey": "partir pour Kalte",
+        "start_label": "Embarquer pour Kalte",
+    },
 }
 
 KAI = {

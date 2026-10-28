@@ -1,0 +1,721 @@
+[
+ {
+  "file": "p1_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 1,
+  "pdf_page": 27,
+  "size": [
+   247,
+   209
+  ]
+ },
+ {
+  "file": "p5_planche.jpeg",
+  "type": "planche",
+  "paragraph": 5,
+  "pdf_page": 29,
+  "size": [
+   461,
+   844
+  ],
+  "caption": "Deux hommes vieux et édentés, vêtus de haillons, assis devant un feu…"
+ },
+ {
+  "file": "p13_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 13,
+  "pdf_page": 34,
+  "size": [
+   156,
+   142
+  ]
+ },
+ {
+  "file": "p19_planche.jpeg",
+  "type": "planche",
+  "paragraph": 19,
+  "pdf_page": 36,
+  "size": [
+   447,
+   860
+  ],
+  "caption": "Il lâche prise et tombe dans le vide béant."
+ },
+ {
+  "file": "p21_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 21,
+  "pdf_page": 38,
+  "size": [
+   166,
+   182
+  ]
+ },
+ {
+  "file": "p26_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 26,
+  "pdf_page": 40,
+  "size": [
+   310,
+   214
+  ]
+ },
+ {
+  "file": "p31_planche.jpeg",
+  "type": "planche",
+  "paragraph": 31,
+  "pdf_page": 42,
+  "size": [
+   494,
+   846
+  ],
+  "caption": "La Statue lentement s'avance vers vous."
+ },
+ {
+  "file": "p32_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 32,
+  "pdf_page": 43,
+  "size": [
+   242,
+   68
+  ]
+ },
+ {
+  "file": "p36_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 36,
+  "pdf_page": 46,
+  "size": [
+   249,
+   198
+  ]
+ },
+ {
+  "file": "p45_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 45,
+  "pdf_page": 50,
+  "size": [
+   215,
+   192
+  ]
+ },
+ {
+  "file": "p48_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 48,
+  "pdf_page": 51,
+  "size": [
+   298,
+   69
+  ]
+ },
+ {
+  "file": "p56_planche.jpeg",
+  "type": "planche",
+  "paragraph": 56,
+  "pdf_page": 55,
+  "size": [
+   450,
+   830
+  ],
+  "caption": "Je suis l'un des Anciens de la Guilde des Magiciens de Toran."
+ },
+ {
+  "file": "p56_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 56,
+  "pdf_page": 56,
+  "size": [
+   399,
+   111
+  ]
+ },
+ {
+  "file": "p58_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 58,
+  "pdf_page": 57,
+  "size": [
+   240,
+   103
+  ]
+ },
+ {
+  "file": "p61_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 61,
+  "pdf_page": 59,
+  "size": [
+   292,
+   168
+  ]
+ },
+ {
+  "file": "p66_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 66,
+  "pdf_page": 61,
+  "size": [
+   285,
+   209
+  ]
+ },
+ {
+  "file": "p68_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 68,
+  "pdf_page": 62,
+  "size": [
+   352,
+   37
+  ]
+ },
+ {
+  "file": "p71_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 71,
+  "pdf_page": 63,
+  "size": [
+   138,
+   30
+  ]
+ },
+ {
+  "file": "p77_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 77,
+  "pdf_page": 65,
+  "size": [
+   341,
+   22
+  ]
+ },
+ {
+  "file": "p78_planche.jpeg",
+  "type": "planche",
+  "paragraph": 78,
+  "pdf_page": 66,
+  "size": [
+   486,
+   821
+  ],
+  "caption": "Sorti de l'ombre, le Bakanal bondit sur vous."
+ },
+ {
+  "file": "p83_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 83,
+  "pdf_page": 69,
+  "size": [
+   299,
+   193
+  ]
+ },
+ {
+  "file": "p88_planche.jpeg",
+  "type": "planche",
+  "paragraph": 88,
+  "pdf_page": 72,
+  "size": [
+   703,
+   1309
+  ],
+  "caption": "Le serpent à deux têtes rampe vers vous."
+ },
+ {
+  "file": "p102_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 102,
+  "pdf_page": 78,
+  "size": [
+   189,
+   180
+  ]
+ },
+ {
+  "file": "p103_planche.jpeg",
+  "type": "planche",
+  "paragraph": 103,
+  "pdf_page": 79,
+  "size": [
+   499,
+   824
+  ],
+  "caption": "Trois gros Bakanals se jettent sur vos traîneaux."
+ },
+ {
+  "file": "p110_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 110,
+  "pdf_page": 83,
+  "size": [
+   308,
+   149
+  ]
+ },
+ {
+  "file": "p117_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 117,
+  "pdf_page": 86,
+  "size": [
+   209,
+   167
+  ]
+ },
+ {
+  "file": "p125_planche.jpeg",
+  "type": "planche",
+  "paragraph": 125,
+  "pdf_page": 90,
+  "size": [
+   445,
+   845
+  ],
+  "caption": "Soudain, vous entendez le grognement d'un Languabarb."
+ },
+ {
+  "file": "p133_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 133,
+  "pdf_page": 95,
+  "size": [
+   191,
+   125
+  ]
+ },
+ {
+  "file": "p138_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 138,
+  "pdf_page": 97,
+  "size": [
+   254,
+   78
+  ]
+ },
+ {
+  "file": "p139_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 139,
+  "pdf_page": 97,
+  "size": [
+   43,
+   109
+  ]
+ },
+ {
+  "file": "p142_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 142,
+  "pdf_page": 98,
+  "size": [
+   289,
+   215
+  ]
+ },
+ {
+  "file": "p145_planche.jpeg",
+  "type": "planche",
+  "paragraph": 145,
+  "pdf_page": 100,
+  "size": [
+   486,
+   849
+  ],
+  "caption": "Vous distinguez le squelette d'un ancien gardien de tombes."
+ },
+ {
+  "file": "p150_planche.jpeg",
+  "type": "planche",
+  "paragraph": 150,
+  "pdf_page": 103,
+  "size": [
+   485,
+   844
+  ],
+  "caption": "Cette terrifiante créature a l'intention de vous anéantir."
+ },
+ {
+  "file": "p157_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 157,
+  "pdf_page": 107,
+  "size": [
+   182,
+   181
+  ]
+ },
+ {
+  "file": "p160_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 160,
+  "pdf_page": 109,
+  "size": [
+   205,
+   179
+  ]
+ },
+ {
+  "file": "p172_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 172,
+  "pdf_page": 114,
+  "size": [
+   247,
+   87
+  ]
+ },
+ {
+  "file": "p173_planche.jpeg",
+  "type": "planche",
+  "paragraph": 173,
+  "pdf_page": 116,
+  "size": [
+   473,
+   846
+  ],
+  "caption": "Un monstre énorme, verdâtre, répugnant, rampe hors de l'ombre."
+ },
+ {
+  "file": "p184_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 184,
+  "pdf_page": 121,
+  "size": [
+   255,
+   153
+  ]
+ },
+ {
+  "file": "p191_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 191,
+  "pdf_page": 124,
+  "size": [
+   215,
+   142
+  ]
+ },
+ {
+  "file": "p194_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 194,
+  "pdf_page": 125,
+  "size": [
+   171,
+   152
+  ]
+ },
+ {
+  "file": "p199_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 199,
+  "pdf_page": 127,
+  "size": [
+   216,
+   142
+  ]
+ },
+ {
+  "file": "p200_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 200,
+  "pdf_page": 128,
+  "size": [
+   210,
+   190
+  ]
+ },
+ {
+  "file": "p216_planche.jpeg",
+  "type": "planche",
+  "paragraph": 216,
+  "pdf_page": 134,
+  "size": [
+   763,
+   1299
+  ],
+  "caption": "Chaque Barbare porte un enfant sur le dos, armé de petits arcs en os."
+ },
+ {
+  "file": "p221_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 221,
+  "pdf_page": 137,
+  "size": [
+   183,
+   125
+  ]
+ },
+ {
+  "file": "p223_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 223,
+  "pdf_page": 139,
+  "size": [
+   265,
+   204
+  ]
+ },
+ {
+  "file": "p225_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 225,
+  "pdf_page": 140,
+  "size": [
+   222,
+   131
+  ]
+ },
+ {
+  "file": "p228_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 228,
+  "pdf_page": 141,
+  "size": [
+   139,
+   137
+  ]
+ },
+ {
+  "file": "p235_planche.jpeg",
+  "type": "planche",
+  "paragraph": 235,
+  "pdf_page": 144,
+  "size": [
+   484,
+   853
+  ],
+  "caption": "Vous arrivez dans une vaste grotte remplie de stalactites et de stalagmites."
+ },
+ {
+  "file": "p252_planche.jpeg",
+  "type": "planche",
+  "paragraph": 252,
+  "pdf_page": 152,
+  "size": [
+   488,
+   848
+  ],
+  "caption": "En un instant, l'infâme bossu se trouve prisonnier dans un enchevêtrement de plantes."
+ },
+ {
+  "file": "p263_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 263,
+  "pdf_page": 157,
+  "size": [
+   299,
+   68
+  ]
+ },
+ {
+  "file": "p265_planche.jpeg",
+  "type": "planche",
+  "paragraph": 265,
+  "pdf_page": 159,
+  "size": [
+   767,
+   1285
+  ],
+  "caption": "Cette étrange créature est un Serpent de Cristal, un nécrophage."
+ },
+ {
+  "file": "p272_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 272,
+  "pdf_page": 162,
+  "size": [
+   241,
+   68
+  ]
+ },
+ {
+  "file": "p285_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 285,
+  "pdf_page": 167,
+  "size": [
+   230,
+   177
+  ]
+ },
+ {
+  "file": "p292_planche.jpeg",
+  "type": "planche",
+  "paragraph": 292,
+  "pdf_page": 171,
+  "size": [
+   650,
+   1239
+  ],
+  "caption": "Cette caverne est un endroit maléfique, un laboratoire de cauchemar."
+ },
+ {
+  "file": "p293_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 293,
+  "pdf_page": 172,
+  "size": [
+   348,
+   35
+  ]
+ },
+ {
+  "file": "p294_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 294,
+  "pdf_page": 172,
+  "size": [
+   301,
+   130
+  ]
+ },
+ {
+  "file": "p296_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 296,
+  "pdf_page": 174,
+  "size": [
+   294,
+   70
+  ]
+ },
+ {
+  "file": "p298_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 298,
+  "pdf_page": 174,
+  "size": [
+   239,
+   161
+  ]
+ },
+ {
+  "file": "p303_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 303,
+  "pdf_page": 177,
+  "size": [
+   97,
+   85
+  ]
+ },
+ {
+  "file": "p305_planche.jpeg",
+  "type": "planche",
+  "paragraph": 305,
+  "pdf_page": 178,
+  "size": [
+   481,
+   853
+  ],
+  "caption": "Ils ont déjà dépecé le cadavre du Bakanal que vous avez tué…"
+ },
+ {
+  "file": "p317_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 317,
+  "pdf_page": 184,
+  "size": [
+   198,
+   110
+  ]
+ },
+ {
+  "file": "p320_planche.jpeg",
+  "type": "planche",
+  "paragraph": 320,
+  "pdf_page": 186,
+  "size": [
+   765,
+   1281
+  ],
+  "caption": "Les Barbares des Glaces vous ont encerclé."
+ },
+ {
+  "file": "p327_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 327,
+  "pdf_page": 190,
+  "size": [
+   216,
+   141
+  ]
+ },
+ {
+  "file": "p330_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 330,
+  "pdf_page": 192,
+  "size": [
+   198,
+   221
+  ]
+ },
+ {
+  "file": "p331_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 331,
+  "pdf_page": 193,
+  "size": [
+   247,
+   183
+  ]
+ },
+ {
+  "file": "p333_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 333,
+  "pdf_page": 193,
+  "size": [
+   255,
+   73
+  ]
+ },
+ {
+  "file": "p334_planche.jpeg",
+  "type": "planche",
+  "paragraph": 334,
+  "pdf_page": 194,
+  "size": [
+   697,
+   1295
+  ],
+  "caption": "Un panneau s'ouvre découvrant une magnifique Pierre Rayonnante."
+ },
+ {
+  "file": "p339_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 339,
+  "pdf_page": 196,
+  "size": [
+   174,
+   143
+  ]
+ },
+ {
+  "file": "p346_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 346,
+  "pdf_page": 199,
+  "size": [
+   174,
+   143
+  ]
+ },
+ {
+  "file": "p350_planche.jpeg",
+  "type": "planche",
+  "paragraph": 350,
+  "pdf_page": 201,
+  "size": [
+   691,
+   575
+  ]
+ }
+]

@@ -36,6 +36,7 @@ def called_cookies() -> bool:
         st.error(
             "Aucune sauvegarde trouvée. Si vous étiez en cours de partie, il vous faudra recommencer."
         )
+        checkpoint_button()
         st.page_link("tomes/tome1/crafting_hero.py", label="Démarrer mon aventure", icon="⚔️")
         return False
 
@@ -56,8 +57,30 @@ def ls_death():
     st.error(
         "Vous êtes mort ! Votre aventure s'arrête ici, ainsi que la lignée des Kai."
     )
+    checkpoint_button(book=st.session_state.get("book"))
     st.page_link("tomes/tome1/crafting_hero.py", label="Démarrer mon aventure", icon="⚔️")
     st.stop()
+
+
+def checkpoint_button(book: int = None) -> None:
+    """
+    « Recommencer le tome N avec mon héros » : repart du point de reprise (le héros au début du
+    tome, cf. save.CHECKPOINT_COOKIE), s'il y en a un (et s'il est de ce tome quand book est donné).
+    """
+    from game_stats import record_start
+    from inventory import init_state
+    from save import apply_save, page_path, read_checkpoint
+
+    data = read_checkpoint()
+    if not isinstance(data, dict) or (book and data.get("book") != book):
+        return
+    if st.button(f"Recommencer le tome {data['book']} avec mon héros", icon="🔁", type="primary"):
+        st.session_state.pop("death_recorded", None)
+        init_state()
+        apply_save(data)
+        st.session_state.game_phase = "playing"
+        record_start(continued=True, retry=True)
+        st.switch_page(page_path(0, data["book"]))
 
 
 def table_des_hasards() -> int:

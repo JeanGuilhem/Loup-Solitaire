@@ -132,6 +132,8 @@ def combat(
     psychic_damage: int = 0,
     undead: bool = False,
     ls_immune_rounds: int = 0,
+    potions_allowed: bool = True,
+    ally_damage: int = 0,
 ):
     """
     enemies               : [(NOM, HABILETÉ, ENDURANCE), ...] combattus l'un après l'autre.
@@ -151,6 +153,9 @@ def combat(
                             pertes d'ENDURANCE sont multipliées par 2.
     ls_immune_rounds      : le Loup Solitaire ne perd aucun point d'ENDURANCE pendant les N premiers
                             assauts (ennemi surpris, incapable de se défendre).
+    potions_allowed       : False si le texte interdit d'avaler une potion avant le combat (Alether...).
+    ally_damage           : ENDURANCE perdue en plus par l'ennemi à chaque assaut, blessé par un allié
+                            (« Fenor lui fait perdre 3 points d'ENDURANCE à chaque assaut »).
     """
     st.session_state.page_has_fight = True  # pas de Guérison sur ce paragraphe
     state_key = f"combat_{key}"
@@ -171,6 +176,7 @@ def combat(
         "psychic_damage": 0 if protected_from_magic() else psychic_damage,
         "enemy_multiplier": 2 if undead and has_item(SOMMERSWERD) else 1,
         "ls_immune_rounds": ls_immune_rounds,
+        "ally_damage": ally_damage,
     }
 
     def round_hability(round_number: int) -> int:
@@ -201,6 +207,8 @@ def combat(
             )
         if rules["enemy_multiplier"] > 1:
             details.append("Glaive de Sommer : pertes du mort vivant ×2")
+        if ally_damage:
+            details.append(f"Votre allié blesse l'ennemi : -{ally_damage} ENDURANCE par assaut")
         if ls_immune_rounds:
             details.append(f"Effet de surprise : aucune perte d'ENDURANCE pendant {ls_immune_rounds} assaut(s)")
         st.caption(" · ".join(details))
@@ -208,7 +216,7 @@ def combat(
         fight_items = [
             item
             for item in st.session_state.backpack + st.session_state.special
-            if item_info(item).get("combat_hability")
+            if item_info(item).get("combat_hability") and potions_allowed
         ]
         chosen = []
         for index, item in enumerate(fight_items):
@@ -313,7 +321,7 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
     elif enemy_loss is KILL:
         enemy_loss = fight["enemy_endurance"]
     else:
-        enemy_loss *= rules.get("enemy_multiplier", 1)
+        enemy_loss = enemy_loss * rules.get("enemy_multiplier", 1) + rules.get("ally_damage", 0)
     enemy_loss = min(enemy_loss, fight["enemy_endurance"])
 
     st.session_state.endurance = max(0, st.session_state.endurance - ls_loss)

@@ -184,13 +184,17 @@ with tab1:
         st.divider()
         if determine_kai_mastery():
             st.divider()
-            if st.session_state.creation_book == 2:
-                # l'équipement du tome 2 est remis sur sa page de départ
-                st.page_link("tomes/tome2/debut.py", label="Recevoir mon équipement", icon="🎒")
+            if st.session_state.creation_book > 1:
+                # l'équipement des tomes suivants est remis sur leur page de départ
+                st.page_link(
+                    f"tomes/tome{st.session_state.creation_book}/debut.py",
+                    label="Recevoir mon équipement",
+                    icon="🎒",
+                )
             elif first_inventory_check():
                 st.divider()
                 with st.expander(label="Afficher mon inventaire"):
-                    display_inventory()
+                    display_inventory(collapsible=False)
                 st.page_link(
                     "tomes/tome1/pages_intro.py", label="Commencez votre aventure", icon="📜"
                 )

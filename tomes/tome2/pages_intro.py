@@ -3,7 +3,7 @@ import os
 import streamlit as st
 from environments import apply_environment
 from inventory import display_inventory, init_state
-from save import save_game
+from save import save_checkpoint, save_game
 from utils import called_cookies
 from variable import BOOKS
 
@@ -109,4 +109,6 @@ with tab1:
 with tab2:
     display_inventory()
 
+if st.session_state.pop("checkpoint_pending", False):
+    save_checkpoint()  # le héros pourra retenter ce tome depuis ici s'il meurt
 save_game()

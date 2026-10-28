@@ -24,6 +24,7 @@ RARITY = {
     "CASQUE": "peu_commun",
     "COTTE DE MAILLES": "peu_commun",
     "BOUCLIER": "peu_commun",
+    "GILET DE CUIR MATELASSÉ": "peu_commun",
     # Unique
     "ÉPÉE DU PRINCE": "unique",
     "SCEAU D'HAMMARDAL": "unique",
@@ -37,6 +38,14 @@ RARITY = {
     "LAISSEZ-PASSER BLANC": "unique",
     "LAISSEZ-PASSER ROUGE": "unique",
     "DOCUMENTS": "unique",
+    "CASQUE D'ARGENT": "unique",
+    "DISQUE DE PIERRE BLEUE": "unique",
+    "TRIANGLE DE PIERRE BLEUE": "unique",
+    "BRACELET D'OR": "unique",
+    "EFFIGIE": "unique",
+    "DIAMANT": "unique",
+    "SPHÈRE DE FEU": "unique",
+    "PIERRE RAYONNANTE": "unique",
     # Légendaire
     "GLAIVE DE SOMMER": "legendaire",
 }
@@ -123,6 +132,8 @@ def icon_of(item: str) -> str:
     return {
         "CASQUE": "helmet", "COTTE DE MAILLES": "mail", "BOUCLIER": "shield", "SCEAU D'HAMMARDAL": "ring",
         "PENDENTIF À L'ÉTOILE DE CRISTAL": "pendant", "CARTE GÉOGRAPHIQUE": "map",
+        "CASQUE D'ARGENT": "helmet", "GILET DE CUIR MATELASSÉ": "mail", "BRACELET D'OR": "ring",
+        "TRIANGLE DE PIERRE BLEUE": "pendant",
     }.get(item, "scroll")
 
 
@@ -161,8 +172,12 @@ def equipment_slots(hero: dict) -> tuple:
     for item in HIDDEN:
         if item in special:
             special.remove(item)
-    take("head", "CASQUE")
+    take("head", "CASQUE D'ARGENT")
+    if slots["head"] is None:
+        take("head", "CASQUE")
     take("body", "COTTE DE MAILLES")
+    if slots["body"] is None:
+        take("body", "GILET DE CUIR MATELASSÉ")
     take("scabbard", "GLAIVE DE SOMMER")
     if slots["scabbard"] is None:
         take("scabbard", "LANCE MAGIQUE")  # sans le Glaive de Sommer, la Lance Magique prend sa place

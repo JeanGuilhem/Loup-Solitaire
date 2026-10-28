@@ -1,7 +1,7 @@
 import streamlit as st
 from environments import apply_environment
 from inventory import display_inventory, init_state
-from save import save_game
+from save import save_checkpoint, save_game
 from utils import called_cookies
 
 if "weapon_mastery" not in st.session_state:
@@ -10,6 +10,7 @@ if "weapon_mastery" not in st.session_state:
         st.stop()
 
 init_state()
+new_hero = st.session_state.get("game_phase") == "creation"  # on arrive de la création du héros
 st.session_state.game_phase = "playing"
 st.session_state.book = 1
 st.session_state.current_page_number = 0
@@ -101,4 +102,6 @@ with tab1:
 with tab2:
     display_inventory()
 
+if new_hero:
+    save_checkpoint()  # le héros pourra retenter le tome 1 depuis ici s'il meurt
 save_game()

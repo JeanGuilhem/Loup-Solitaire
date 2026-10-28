@@ -11,6 +11,7 @@ Cycle de vie d'une page de paragraphe :
 """
 import functools
 import json
+import os
 import unicodedata
 
 import streamlit as st
@@ -40,6 +41,7 @@ DEFAULT_STATE = {
     "book": 1,  # tome en cours
     "completed_books": [],
     "provenance": {},  # objet -> d'où il vient (fiche de l'écran d'équipement)
+    "story_flags": [],  # faits du tome en cours testés plus loin (ex: "huile de Bakanal")
     "done_fighting": False,
     "flee": False,
     "page_has_fight": False,
@@ -86,6 +88,18 @@ def item_info(name: str) -> dict:
     return ITEMS.get(canonical_item(name), {"type": "backpack", "description": ""})
 
 
+def item_slots(name: str) -> int:
+    """Places prises dans le Sac à Dos (la Corde en prend 2 à Kalte, la Tente 3...)."""
+    slots = item_info(name).get("slots", {})
+    book = st.session_state.get("book", 1)
+    return max((count for since, count in slots.items() if book >= since), default=1)
+
+
+def backpack_used() -> int:
+    """Places occupées dans le Sac à Dos (sur MAX_BACKPACK)."""
+    return sum(item_slots(item) for item in st.session_state.backpack)
+
+
 def canonical_kai(name: str):
     return _KAI_INDEX.get(_strip_article(_normalize(name)))
 
@@ -122,6 +136,8 @@ def _reset_page_flags() -> None:
         elif key.startswith(("combat_", "hazard_")):
             del st.session_state[key]
     st.session_state.pop("artifact_choice", None)  # objet examiné dans l'écran d'équipement
+    for key in [key for key in st.session_state if key.startswith("inv_section_")]:
+        del st.session_state[key]  # sections de l'inventaire repliées à chaque nouveau paragraphe
     st.session_state.flee = False
     st.session_state.page_has_fight = False
     st.session_state.streamed_texts = []
@@ -155,6 +171,17 @@ def show_illustrations() -> None:
     book = st.session_state.book
     for entry in _illustrations_index(book).get(st.session_state.current_page_number, []):
         st.image(f"{illustrations_dir(book)}/{entry['file']}", caption=entry.get("caption"))
+
+
+def show_map() -> None:
+    """Onglet Carte : static/map_<tome>.jpg (ou .png), s'il existe."""
+    book = st.session_state.book
+    for extension in ("jpg", "png"):
+        path = f"static/map_{book}.{extension}"
+        if os.path.exists(path):
+            st.image(path)
+            return
+    st.info("La carte de ce tome n'est pas encore disponible.")
 
 
 @functools.lru_cache(maxsize=None)
@@ -240,6 +267,22 @@ def has_kai(name: str) -> bool:
 # --------------------------------------------------------------------------------------
 # Objets
 # --------------------------------------------------------------------------------------
+def set_flag(name: str) -> None:
+    """Retient un fait du tome en cours, testé dans un paragraphe suivant (ex: "huile de Bakanal")."""
+    flags = st.session_state.setdefault("story_flags", [])
+    if name not in flags:
+        flags.append(name)
+
+
+def has_flag(name: str) -> bool:
+    return name in st.session_state.get("story_flags", [])
+
+
+def kai_rank() -> int:
+    """Nombre de Disciplines Kaï maîtrisées (6 = Aspirant, 7 = Gardien...)."""
+    return len(st.session_state.kai)
+
+
 def has_item(name: str) -> bool:
     return count_item(name) > 0
 
@@ -302,10 +345,11 @@ def add_to_inventory(name: str, quantity: int = 1, origin: str = None) -> bool:
             if not st.session_state.has_backpack:
                 st.error("Vous n'avez plus de Sac à Dos pour ranger cet objet.")
                 return False
-            if len(st.session_state.backpack) >= MAX_BACKPACK:
+            if backpack_used() + item_slots(item) > MAX_BACKPACK:
                 st.error(
-                    f"Votre Sac à Dos ne peut contenir que {MAX_BACKPACK} objets. "
-                    "Jetez un objet depuis l'onglet Inventaire pour prendre celui-ci."
+                    f"Votre Sac à Dos ne peut contenir que {MAX_BACKPACK} objets"
+                    + (f" (cet objet en occupe {item_slots(item)})" if item_slots(item) > 1 else "")
+                    + ". Jetez un objet depuis l'onglet Inventaire pour prendre celui-ci."
                 )
                 return False
             st.session_state.backpack.append(item)
@@ -407,7 +451,7 @@ def has_room_for(name: str, quantity: int = 1) -> bool:
     if kind == "weapon":
         return len(st.session_state.weapons) + quantity <= MAX_WEAPONS
     if kind == "backpack":
-        return st.session_state.has_backpack and len(st.session_state.backpack) + quantity <= MAX_BACKPACK
+        return st.session_state.has_backpack and backpack_used() + quantity * item_slots(item) <= MAX_BACKPACK
     return True
 
 
@@ -589,7 +633,21 @@ def change_endurance(delta: int) -> int:
 # --------------------------------------------------------------------------------------
 # Affichage (onglet Inventaire)
 # --------------------------------------------------------------------------------------
-def display_inventory() -> None:
+def _inventory_section(title: str, icon: str, key: str, collapsible: bool):
+    """Une section de l'inventaire : repliée par défaut, ou simple titre si on est déjà dans un expander."""
+    if collapsible:
+        return st.expander(title, icon=icon, key=f"inv_section_{key}")
+    container = st.container()
+    container.subheader(title)
+    return container
+
+
+def display_inventory(collapsible: bool = True) -> None:
+    """
+    Onglet Inventaire : l'équipement dessiné, les caractéristiques, puis les sections Armes, Sac à Dos,
+    Objets Spéciaux et Disciplines Kaï, repliées par défaut (collapsible=False quand l'inventaire est
+    lui-même affiché dans un expander : Streamlit interdit les expanders imbriqués).
+    """
     from artifacts import render_equipment
 
     render_equipment(
@@ -605,68 +663,71 @@ def display_inventory() -> None:
     )
     col3.metric(label="Habileté", value=st.session_state.hability)
 
-    st.divider()
-    st.subheader(f"Armes ({len(st.session_state.weapons)}/{MAX_WEAPONS})")
-    if not st.session_state.weapons:
-        st.error(
-            "*Ne possédant aucune arme, vous subirez un malus de -4 points d'HABILETÉ au combat.*"
-        )
-    for index, weapon in enumerate(st.session_state.weapons):
-        col1, col2 = st.columns([3, 1])
-        mastered = " ⭐ *(maîtrisée)*" if is_mastered(weapon) else ""
-        col1.write(f"**{weapon}**{mastered}")
-        if col2.button("Jeter", key=f"drop_weapon_{index}"):
-            st.session_state.weapons.pop(index)
-            st.rerun()
-
-    st.divider()
-    if st.session_state.has_backpack:
-        st.subheader(f"Sac à Dos ({len(st.session_state.backpack)}/{MAX_BACKPACK})")
-        if not st.session_state.backpack:
-            st.caption("Votre Sac à Dos est vide.")
-    else:
-        st.subheader("Sac à Dos")
-        st.caption("Vous n'avez plus de Sac à Dos.")
-    for index, item in enumerate(st.session_state.backpack):
-        info = item_info(item)
-        col1, col2, col3 = st.columns([2, 1, 1])
-        col1.write(f"**{item}**")
-        if info.get("description"):
-            col1.caption(info["description"])
-        if info.get("heal"):
-            if col2.button("Utiliser", key=f"use_{index}"):
-                use_item(item)
+    title = f"Armes ({len(st.session_state.weapons)}/{MAX_WEAPONS})"
+    with _inventory_section(title, "⚔️", "weapons", collapsible):
+        if not st.session_state.weapons:
+            st.error(
+                "*Ne possédant aucune arme, vous subirez un malus de -4 points d'HABILETÉ au combat.*"
+            )
+        for index, weapon in enumerate(st.session_state.weapons):
+            col1, col2 = st.columns([3, 1])
+            mastered = " ⭐ *(maîtrisée)*" if is_mastered(weapon) else ""
+            col1.write(f"**{weapon}**{mastered}")
+            if col2.button("Jeter", key=f"drop_weapon_{index}"):
+                st.session_state.weapons.pop(index)
                 st.rerun()
-        if col3.button("Jeter", key=f"drop_{index}"):
-            st.session_state.backpack.pop(index)
-            st.rerun()
+        if st.session_state.weapon_mastery:
+            st.caption(
+                f"Vous maîtrisez : {', '.join(st.session_state.weapon_mastery)}. Combattre avec "
+                "une arme que vous maîtrisez augmente votre HABILETÉ de 2 points."
+            )
 
-    st.divider()
-    st.subheader("Objets Spéciaux")
-    if not st.session_state.special:
-        st.caption("Aucun Objet Spécial.")
-    for index, item in enumerate(st.session_state.special):
-        info = item_info(item)
-        col1, col2 = st.columns([3, 1])
-        col1.write(f"**{item}**")
-        if info.get("description"):
-            col1.caption(info["description"])
-        if col2.button("Jeter", key=f"drop_special_{index}"):
-            remove_from_inventory(item)
-            st.rerun()
+    if st.session_state.has_backpack:
+        title = f"Sac à Dos ({backpack_used()}/{MAX_BACKPACK})"
+    else:
+        title = "Sac à Dos (perdu)"
+    with _inventory_section(title, "🎒", "backpack", collapsible):
+        if not st.session_state.has_backpack:
+            st.caption("Vous n'avez plus de Sac à Dos.")
+        elif not st.session_state.backpack:
+            st.caption("Votre Sac à Dos est vide.")
+        for index, item in enumerate(st.session_state.backpack):
+            info = item_info(item)
+            col1, col2, col3 = st.columns([2, 1, 1])
+            col1.write(f"**{item}**" + (f" *({item_slots(item)} places)*" if item_slots(item) > 1 else ""))
+            if info.get("description"):
+                col1.caption(info["description"])
+            if info.get("heal"):
+                if col2.button("Utiliser", key=f"use_{index}"):
+                    use_item(item)
+                    st.rerun()
+            if col3.button("Jeter", key=f"drop_{index}"):
+                st.session_state.backpack.pop(index)
+                st.rerun()
 
-    if st.session_state.weapon_mastery:
-        st.divider()
-        st.write(
-            f"Vous maîtrisez : {', '.join(st.session_state.weapon_mastery)}. Combattre avec "
-            "une arme que vous maîtrisez augmente votre HABILETÉ de 2 points."
-        )
+    title = f"Objets Spéciaux ({len(st.session_state.special)})"
+    with _inventory_section(title, "✨", "special", collapsible):
+        if not st.session_state.special:
+            st.caption("Aucun Objet Spécial.")
+        for index, item in enumerate(st.session_state.special):
+            info = item_info(item)
+            col1, col2, col3 = st.columns([2, 1, 1])
+            col1.write(f"**{item}**")
+            if info.get("description"):
+                col1.caption(info["description"])
+            if info.get("heal"):
+                if col2.button("Utiliser", key=f"use_special_{index}"):
+                    use_item(item)
+                    st.rerun()
+            if col3.button("Jeter", key=f"drop_special_{index}"):
+                remove_from_inventory(item)
+                st.rerun()
 
-    st.divider()
-    st.subheader("Vos Disciplines Kaï")
-    for discipline in st.session_state.kai:
-        st.write(f"**{discipline}**")
-        st.caption(KAI.get(discipline))
+    title = f"Disciplines Kaï ({len(st.session_state.kai)})"
+    with _inventory_section(title, "🐺", "kai", collapsible):
+        for discipline in st.session_state.kai:
+            st.write(f"**{discipline}**")
+            st.caption(KAI.get(discipline))
 
 
 def is_mastered(weapon: str) -> bool:
