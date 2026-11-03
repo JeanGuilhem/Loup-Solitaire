@@ -75,8 +75,9 @@ with tab1:
         st.balloons()
     st.success(
         "**Mission accomplie !** Vonotar le Traître a été capturé et précipité dans l'Aveugloir : le Sommerlund "
-        "est libéré de sa menace. L'aventure se poursuivra dans le tome 4, *Le Gouffre Maudit* (pas encore adapté)."
+        "est libéré de sa menace. Le Loup Solitaire peut reprendre la route dans le tome 4, *Le Gouffre Maudit*."
     )
+    st.page_link("tomes/tome4/debut.py", label="Continuer avec le tome 4", icon="📜")
     st.page_link("accueil.py", label="Retour à l'accueil", icon="🏠")
 
     show_illustrations()

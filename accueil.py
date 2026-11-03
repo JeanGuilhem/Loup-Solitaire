@@ -41,6 +41,7 @@ st.page_link(
 )
 st.page_link("tomes/tome2/debut.py", label=f"Tome 2 — {BOOKS[2]['title']}", icon="⛵")
 st.page_link("tomes/tome3/debut.py", label=f"Tome 3 — {BOOKS[3]['title']}", icon="❄️")
+st.page_link("tomes/tome4/debut.py", label=f"Tome 4 — {BOOKS[4]['title']}", icon="⛰️")
 st.page_link("tomes/tome1/rules.py", label="Règles", icon="🧙‍♂️")
 
 st.caption(

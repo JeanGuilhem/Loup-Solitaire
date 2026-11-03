@@ -1,0 +1,632 @@
+[
+ {
+  "file": "p10_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 10,
+  "pdf_page": 30,
+  "size": [
+   245,
+   175
+  ]
+ },
+ {
+  "file": "p14_planche.jpeg",
+  "type": "planche",
+  "paragraph": 14,
+  "pdf_page": 32,
+  "size": [
+   764,
+   1325
+  ],
+  "caption": "Votre adversaire est un redoutable guerrier."
+ },
+ {
+  "file": "p20_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 20,
+  "pdf_page": 35,
+  "size": [
+   264,
+   164
+  ]
+ },
+ {
+  "file": "p26_planche.jpeg",
+  "type": "planche",
+  "paragraph": 26,
+  "pdf_page": 38,
+  "size": [
+   506,
+   853
+  ],
+  "caption": "Le Ver de Pierre ondule dans votre direction à une allure terrifiante."
+ },
+ {
+  "file": "p31_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 31,
+  "pdf_page": 40,
+  "size": [
+   190,
+   148
+  ]
+ },
+ {
+  "file": "p34_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 34,
+  "pdf_page": 42,
+  "size": [
+   312,
+   76
+  ]
+ },
+ {
+  "file": "p37_planche.jpeg",
+  "type": "planche",
+  "paragraph": 37,
+  "pdf_page": 44,
+  "size": [
+   485,
+   836
+  ],
+  "caption": "Le petit homme trébuche et tombe sur le sol."
+ },
+ {
+  "file": "p39_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 39,
+  "pdf_page": 46,
+  "size": [
+   349,
+   30
+  ]
+ },
+ {
+  "file": "p44_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 44,
+  "pdf_page": 48,
+  "size": [
+   291,
+   131
+  ]
+ },
+ {
+  "file": "p55_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 55,
+  "pdf_page": 52,
+  "size": [
+   145,
+   129
+  ]
+ },
+ {
+  "file": "p67_planche.jpeg",
+  "type": "planche",
+  "paragraph": 67,
+  "pdf_page": 57,
+  "size": [
+   755,
+   1288
+  ],
+  "caption": "Un disque d'acier vient de s'enfoncer dans sa poitrine."
+ },
+ {
+  "file": "p68_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 68,
+  "pdf_page": 58,
+  "size": [
+   312,
+   76
+  ]
+ },
+ {
+  "file": "p71_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 71,
+  "pdf_page": 60,
+  "size": [
+   193,
+   188
+  ]
+ },
+ {
+  "file": "p78_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 78,
+  "pdf_page": 63,
+  "size": [
+   313,
+   66
+  ]
+ },
+ {
+  "file": "p80_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 80,
+  "pdf_page": 64,
+  "size": [
+   197,
+   160
+  ]
+ },
+ {
+  "file": "p84_planche.jpeg",
+  "type": "planche",
+  "paragraph": 84,
+  "pdf_page": 67,
+  "size": [
+   494,
+   831
+  ],
+  "caption": "L'homme détache lentement son regard d'une sphère de cristal."
+ },
+ {
+  "file": "p88_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 88,
+  "pdf_page": 69,
+  "size": [
+   233,
+   41
+  ]
+ },
+ {
+  "file": "p89_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 89,
+  "pdf_page": 69,
+  "size": [
+   349,
+   30
+  ]
+ },
+ {
+  "file": "p94_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 94,
+  "pdf_page": 72,
+  "size": [
+   208,
+   144
+  ]
+ },
+ {
+  "file": "p100_planche.jpeg",
+  "type": "planche",
+  "paragraph": 100,
+  "pdf_page": 74,
+  "size": [
+   746,
+   1315
+  ],
+  "caption": "Une procession de prêtres fait son entrée."
+ },
+ {
+  "file": "p107_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 107,
+  "pdf_page": 77,
+  "size": [
+   285,
+   177
+  ]
+ },
+ {
+  "file": "p114_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 114,
+  "pdf_page": 81,
+  "size": [
+   239,
+   144
+  ]
+ },
+ {
+  "file": "p121_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 121,
+  "pdf_page": 85,
+  "size": [
+   155,
+   95
+  ]
+ },
+ {
+  "file": "p124_planche.jpeg",
+  "type": "planche",
+  "paragraph": 124,
+  "pdf_page": 87,
+  "size": [
+   500,
+   841
+  ],
+  "caption": "Les flèches se fichent dans le panneau de bois."
+ },
+ {
+  "file": "p126_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 126,
+  "pdf_page": 88,
+  "size": [
+   149,
+   31
+  ]
+ },
+ {
+  "file": "p132_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 132,
+  "pdf_page": 90,
+  "size": [
+   191,
+   135
+  ]
+ },
+ {
+  "file": "p142_planche.jpeg",
+  "type": "planche",
+  "paragraph": 142,
+  "pdf_page": 95,
+  "size": [
+   477,
+   847
+  ],
+  "caption": "La crypte est gardée par deux guerriers vassagoniens."
+ },
+ {
+  "file": "p146_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 146,
+  "pdf_page": 98,
+  "size": [
+   150,
+   148
+  ]
+ },
+ {
+  "file": "p148_planche.jpeg",
+  "type": "planche",
+  "paragraph": 148,
+  "pdf_page": 99,
+  "size": [
+   453,
+   823
+  ],
+  "caption": "Un héraut vassagonien, le visage ensanglanté, sonne la retraite."
+ },
+ {
+  "file": "p159_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 159,
+  "pdf_page": 104,
+  "size": [
+   229,
+   228
+  ]
+ },
+ {
+  "file": "p168_planche.jpeg",
+  "type": "planche",
+  "paragraph": 168,
+  "pdf_page": 108,
+  "size": [
+   493,
+   859
+  ],
+  "caption": "Son regard diabolique suit chacun de vos mouvements."
+ },
+ {
+  "file": "p173_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 173,
+  "pdf_page": 110,
+  "size": [
+   311,
+   62
+  ]
+ },
+ {
+  "file": "p183_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 183,
+  "pdf_page": 115,
+  "size": [
+   255,
+   179
+  ]
+ },
+ {
+  "file": "p192_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 192,
+  "pdf_page": 118,
+  "size": [
+   311,
+   62
+  ]
+ },
+ {
+  "file": "p193_planche.jpeg",
+  "type": "planche",
+  "paragraph": 193,
+  "pdf_page": 119,
+  "size": [
+   519,
+   851
+  ],
+  "caption": "Les Chiens de Guerre bondissent sur la barricade."
+ },
+ {
+  "file": "p196_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 196,
+  "pdf_page": 122,
+  "size": [
+   202,
+   203
+  ]
+ },
+ {
+  "file": "p198_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 198,
+  "pdf_page": 122,
+  "size": [
+   243,
+   69
+  ]
+ },
+ {
+  "file": "p200_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 200,
+  "pdf_page": 124,
+  "size": [
+   240,
+   227
+  ]
+ },
+ {
+  "file": "p207_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 207,
+  "pdf_page": 127,
+  "size": [
+   303,
+   69
+  ]
+ },
+ {
+  "file": "p209_planche.jpeg",
+  "type": "planche",
+  "paragraph": 209,
+  "pdf_page": 128,
+  "size": [
+   497,
+   840
+  ],
+  "caption": "Il lance un cri de guerre, puis arrive sur vous au galop."
+ },
+ {
+  "file": "p215_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 215,
+  "pdf_page": 132,
+  "size": [
+   159,
+   163
+  ]
+ },
+ {
+  "file": "p223_planche.jpeg",
+  "type": "planche",
+  "paragraph": 223,
+  "pdf_page": 135,
+  "size": [
+   479,
+   858
+  ],
+  "caption": "Un guerrier vêtu d'une armure d'acier est assis à califourchon sur la créature."
+ },
+ {
+  "file": "p231_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 231,
+  "pdf_page": 139,
+  "size": [
+   216,
+   160
+  ]
+ },
+ {
+  "file": "p249_planche.jpeg",
+  "type": "planche",
+  "paragraph": 249,
+  "pdf_page": 147,
+  "size": [
+   463,
+   846
+  ],
+  "caption": "Le chef de la cavalerie ennemie est un guerrier de haute taille à la peau sombre."
+ },
+ {
+  "file": "p249_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 249,
+  "pdf_page": 148,
+  "size": [
+   180,
+   44
+  ]
+ },
+ {
+  "file": "p257_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 257,
+  "pdf_page": 151,
+  "size": [
+   240,
+   143
+  ]
+ },
+ {
+  "file": "p258_planche.jpeg",
+  "type": "planche",
+  "paragraph": 258,
+  "pdf_page": 152,
+  "size": [
+   541,
+   847
+  ],
+  "caption": "Les brigands marchent dans votre direction, la lance sur l'épaule."
+ },
+ {
+  "file": "p265_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 265,
+  "pdf_page": 155,
+  "size": [
+   138,
+   171
+  ]
+ },
+ {
+  "file": "p273_planche.jpeg",
+  "type": "planche",
+  "paragraph": 273,
+  "pdf_page": 158,
+  "size": [
+   515,
+   827
+  ],
+  "caption": "Vous apercevez un convoi de roulottes tirées par des bœufs."
+ },
+ {
+  "file": "p276_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 276,
+  "pdf_page": 160,
+  "size": [
+   354,
+   30
+  ]
+ },
+ {
+  "file": "p287_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 287,
+  "pdf_page": 167,
+  "size": [
+   241,
+   68
+  ]
+ },
+ {
+  "file": "p289_planche.jpeg",
+  "type": "planche",
+  "paragraph": 289,
+  "pdf_page": 168,
+  "size": [
+   493,
+   855
+  ],
+  "caption": "Vous voyez avec horreur se déverser une pluie d'huile enflammée."
+ },
+ {
+  "file": "p299_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 299,
+  "pdf_page": 173,
+  "size": [
+   173,
+   145
+  ]
+ },
+ {
+  "file": "p301_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 301,
+  "pdf_page": 174,
+  "size": [
+   241,
+   68
+  ]
+ },
+ {
+  "file": "p308_planche.jpeg",
+  "type": "planche",
+  "paragraph": 308,
+  "pdf_page": 178,
+  "size": [
+   470,
+   819
+  ],
+  "caption": "Un sifflement sonore retentit comme un jet de vapeur s'échappant d'un geyser."
+ },
+ {
+  "file": "p315_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 315,
+  "pdf_page": 182,
+  "size": [
+   186,
+   187
+  ]
+ },
+ {
+  "file": "p318_planche.jpeg",
+  "type": "planche",
+  "paragraph": 318,
+  "pdf_page": 184,
+  "size": [
+   458,
+   828
+  ],
+  "caption": "« Il a tout perdu, son château, ses terres, sa ville et sa famille. »"
+ },
+ {
+  "file": "p328_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 328,
+  "pdf_page": 189,
+  "size": [
+   205,
+   161
+  ]
+ },
+ {
+  "file": "p336_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 336,
+  "pdf_page": 192,
+  "size": [
+   331,
+   273
+  ]
+ },
+ {
+  "file": "p343_planche.jpeg",
+  "type": "planche",
+  "paragraph": 343,
+  "pdf_page": 195,
+  "size": [
+   497,
+   845
+  ],
+  "caption": "Les deux malheureux sont emportés dans les profondeurs bouillonnantes."
+ },
+ {
+  "file": "p343_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 343,
+  "pdf_page": 196,
+  "size": [
+   355,
+   32
+  ]
+ }
+]

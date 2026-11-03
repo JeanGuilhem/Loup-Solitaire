@@ -13,7 +13,7 @@ MAX_PURSE = 50
 #   combat_hability : bonus d'HABILETÉ pour la durée d'un combat (consommé)
 #   combat_bonus    : bonus d'HABILETÉ à chaque combat tant que l'objet est porté (non consommé)
 #   endurance_bonus : bonus au total d'ENDURANCE tant que l'objet est porté
-#   slots           : {tome: places} places prises dans le Sac à Dos à partir de ce tome (1 sinon)
+#   slots           : {tome: places} places prises dans le Sac à Dos dans ce tome (1 sinon)
 ITEMS = {
     # --- Armes ---
     "POIGNARD": {"type": "weapon", "mastery": "POIGNARD", "description": "Arme."},
@@ -207,6 +207,40 @@ ITEMS = {
         "description": "Deux demi-sphères de métal qui renferment un feu perpétuel.",
     },
     "PIERRE RAYONNANTE": {"type": "special", "description": "Une pierre tiède aux facettes étincelantes."},
+    # --- Tome 4 : Sac à Dos ---
+    "FOUET": {"type": "backpack", "description": "Un fouet trouvé suspendu à une porte de fer."},
+    "PELLE": {"type": "backpack", "slots": {4: 2}, "description": "Une pelle de mineur. Elle prend la place de 2 objets."},
+    "PIOCHE": {"type": "backpack", "slots": {4: 2}, "description": "Une pioche de mineur. Elle prend la place de 2 objets."},
+    "SABLIER": {"type": "backpack", "description": "Un sablier."},
+    "FIOLE D'ALÉTHER": {
+        "type": "backpack",
+        "combat_hability": 2,
+        "description": "Potion d'Aléther : +2 points d'HABILETÉ pour la durée d'un seul combat.",
+    },
+    # --- Tome 4 : Armes ---
+    "ÉPÉE DE GAYAL": {
+        "type": "weapon",
+        "mastery": "ÉPÉE",
+        "description": "Une épée de la cavalerie du Sommerlund gravée « Capitaine Rinir Gayal, régiment de la Garde du Roi ».",
+    },
+    "AMULETTE DE BOIS": {
+        "type": "backpack",
+        "description": "Un petit poisson de bois, symbole de l'Ordre Saint des Rédempteurs.",
+    },
+    # --- Tome 4 : Objets Spéciaux ---
+    "MÉDAILLON D'ONYX": {"type": "special", "description": "Un magnifique médaillon d'onyx, arraché à l'armure d'un guerrier ennemi."},
+    "EAU BÉNITE": {"type": "special", "description": "Un petit flacon de terre cuite rempli d'Eau Bénite."},
+    "ROULEAU DE PARCHEMIN": {
+        "type": "special",
+        "description": "Le parchemin du vieux devin : une prophétie sur la vierge aux cheveux blonds et les morts du gouffre de Maaken.",
+    },
+    "CLÉ DE CUIVRE": {"type": "special", "description": "Une clé de cuivre."},
+    "CLÉ DE FER": {"type": "special", "description": "Une clé de fer."},
+    "POIGNARD DE VASHNA": {
+        "type": "special",
+        "description": "L'arme maudite de Vashna : tant que vous la possédez, le Maître des Ténèbres et ses légions "
+        "restent prisonniers du gouffre maudit.",
+    },
     "ESSENCE D'ALETHER": {
         "type": "special",
         "combat_hability": 2,
@@ -247,12 +281,14 @@ BOOKS = {
     1: {"title": "Les Maîtres des Ténèbres", "final_page": 350},
     2: {"title": "La Traversée Infernale", "final_page": 350},
     3: {"title": "Les Grottes de Kalte", "final_page": 350},
+    4: {"title": "Le Gouffre Maudit", "final_page": 350},
 }
 
 # Équipement reçu au début de chaque tome à partir du 2 (cf. « Équipement »), par les héros venus
 # du tome précédent comme par les nouveaux (cf. book_start.py).
 #   gold_base       : Couronnes = gold_base + Table de Hasard, ajoutées à celles déjà possédées
 #   items           : {libellé du choix: (NOM, quantité)}, items_to_choose au choix
+#                     (up_to : « jusqu'à » items_to_choose, sinon exactement)
 #   special         : Objets Spéciaux remis d'office (sauf s'ils sont déjà possédés)
 #   origin          : provenance des objets (fiche de l'écran d'équipement), special_origins par objet
 #   place, journey, start_label : textes de la page de départ
@@ -305,6 +341,30 @@ BOOK_EQUIPMENT = {
         "place": "l'Hôtel de Ville",
         "journey": "partir pour Kalte",
         "start_label": "Embarquer pour Kalte",
+    },
+    # La page « Équipement » du PDF est celle du tome 5 (Barrakeesh). Liste du tome 4 d'après
+    # l'édition originale (Project Aon, « The Chasm of Doom ») : jusqu'à 6 objets.
+    4: {
+        "gold_base": 10,
+        "items_to_choose": 6,
+        "up_to": True,
+        "items": {
+            "MARTEAU DE GUERRE": ("MARTEAU DE GUERRE", 1),
+            "POIGNARD": ("POIGNARD", 1),
+            "2 POTIONS DE LAUMSPUR": ("POTION DE LAUMSPUR", 2),
+            "ÉPÉE": ("ÉPÉE", 1),
+            "LANCE": ("LANCE", 1),
+            "5 RATIONS SPÉCIALES (5 Repas)": ("REPAS", 5),
+            "MASSE D'ARMES": ("MASSE D'ARMES", 1),
+            "COTTE DE MAILLES": ("COTTE DE MAILLES", 1),
+            "BOUCLIER": ("BOUCLIER", 1),
+        },
+        "special": ["CARTE GÉOGRAPHIQUE"],
+        "origin": "Tome 4 : Armurerie Royale de Holmgard, avant le départ pour Ruanon.",
+        "special_origins": {},
+        "place": "l'Armurerie Royale",
+        "journey": "partir pour Ruanon",
+        "start_label": "Partir pour Ruanon",
     },
 }
 

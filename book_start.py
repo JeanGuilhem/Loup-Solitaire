@@ -158,8 +158,11 @@ def receive_equipment(book: int) -> bool:
         return True
 
     count = equipment["items_to_choose"]
+    up_to = equipment.get("up_to", False)
     options = equipment["items"]
-    chosen = st.multiselect(f"Choisissez {count} objets", list(options), max_selections=count)
+    chosen = st.multiselect(
+        f"Choisissez {'jusqu’à ' if up_to else ''}{count} objets", list(options), max_selections=count
+    )
     items = [options[label] for label in chosen]
     weapons = sum(quantity for name, quantity in items if item_info(name)["type"] == "weapon")
     backpack = sum(
@@ -186,6 +189,8 @@ def receive_equipment(book: int) -> bool:
             f"Vous laissez à {equipment['place']} vos armes actuelles en échange : "
             + ", ".join(current_weapons) + "."
         )
+    if weapons > MAX_WEAPONS:
+        problems.append(f"vous ne pouvez porter que {MAX_WEAPONS} armes")
     if backpack and not st.session_state.has_backpack:
         problems.append("vous n'avez plus de Sac à Dos")
     elif backpack_used() + backpack > MAX_BACKPACK:
@@ -196,7 +201,8 @@ def receive_equipment(book: int) -> bool:
             + ". Vous pouvez aussi jeter des objets depuis votre inventaire ci-dessous, "
             "ou choisir d'autres objets."
         )
-    if st.button("Prendre ces objets", disabled=len(chosen) != count or bool(problems)):
+    wrong_count = len(chosen) > count if up_to else len(chosen) != count
+    if st.button("Prendre ces objets", disabled=wrong_count or bool(problems)):
         for weapon in [current_weapons[index] for index in left_behind]:
             remove_from_inventory(weapon)
         for name, quantity in items:

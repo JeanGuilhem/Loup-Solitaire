@@ -1,0 +1,49 @@
+import streamlit as st
+from combat import combat
+from inventory import (
+    check_inventory,
+    display_inventory,
+    end_page,
+    show_illustrations,
+    show_map,
+)
+from utils import called_cookies, stream_text
+
+if "weapon_mastery" not in st.session_state:
+    # rechargement du navigateur : on restaure la sauvegarde
+    if not called_cookies():
+        st.stop()
+
+check_inventory(current_page_number=133, book=4)
+
+fr_text = """
+Les brigands vous cernent et s'avancent vers vous bien décidés à
+vous tuer. Ils vous attaquent simultanément et vous devrez les
+combattre en les considérant comme un seul et même adversaire.
+"""
+
+tab1, tab2, tab3 = st.tabs(["Page", "Inventaire", "Carte"])
+
+with tab1:
+    st.write(fr_text)
+
+    outcome = combat([("PATROUILLE DE BRIGANDS", 18, 35)], flee_after=0, stop_when_wounded=True)
+    if outcome == "fled":
+        st.write_stream(stream_text('Vous avez le droit de prendre la fuite à tout moment, en courant vers Ruanon. Rendez-vous pour cela au :'))
+        st.page_link("tomes/tome4/page_307.py", label="307", icon="📄")
+    elif outcome == "wounded":
+        st.write_stream(stream_text("Si vous perdez des points d'ENDURANCE au cours de ce combat, rendez-vous au :"))
+        st.page_link("tomes/tome4/page_17.py", label="17", icon="📄")
+    elif outcome == "win":
+        st.write_stream(stream_text("Si vous remportez la victoire, sans perdre un seul point d'ENDURANCE, rendez-vous au :"))
+        st.page_link("tomes/tome4/page_265.py", label="265", icon="📄")
+
+    show_illustrations()
+
+with tab2:
+    display_inventory()
+
+with tab3:
+    show_map()
+
+end_page()

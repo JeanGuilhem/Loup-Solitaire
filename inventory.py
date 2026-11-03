@@ -90,9 +90,7 @@ def item_info(name: str) -> dict:
 
 def item_slots(name: str) -> int:
     """Places prises dans le Sac à Dos (la Corde en prend 2 à Kalte, la Tente 3...)."""
-    slots = item_info(name).get("slots", {})
-    book = st.session_state.get("book", 1)
-    return max((count for since, count in slots.items() if book >= since), default=1)
+    return item_info(name).get("slots", {}).get(st.session_state.get("book", 1), 1)
 
 
 def backpack_used() -> int:

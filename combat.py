@@ -71,8 +71,9 @@ def combat_hability(
     hability_modifier: int = 0,
     psychic_immune: bool = False,
     psychic_attack: bool = False,
+    unarmed: bool = False,
 ) -> tuple:
-    """HABILETÉ de combat du Loup Solitaire et détail des bonus/malus appliqués."""
+    """HABILETÉ de combat du Loup Solitaire et détail des bonus/malus appliqués (unarmed : à mains nues)."""
     hability = st.session_state.hability
     details = [f"HABILETÉ de base : {hability}"]
 
@@ -83,12 +84,14 @@ def combat_hability(
 
     if hability_modifier:
         apply(hability_modifier, "Situation")
-    weapons = combat_weapons()
+    weapons = [] if unarmed else combat_weapons()
     if not weapons:
         apply(-4, "Combat à mains nues")
     elif has_kai("La Maîtrise des armes") and any(is_mastered(weapon) for weapon in weapons):
         apply(2, "Maîtrise des armes")
     for item in st.session_state.special:
+        if unarmed and item_info(item).get("weapon"):
+            continue  # le Glaive de Sommer ne sert qu'en main
         if item_info(item).get("combat_bonus"):
             apply(item_info(item)["combat_bonus"], item.capitalize())
     if has_kai("Puissance psychique"):
@@ -123,6 +126,7 @@ def combat(
     key: str = "combat",
     hability_modifier: int = 0,
     first_round_modifier: int = 0,
+    first_rounds: int = 1,
     psychic_immune: bool = False,
     psychic_attack: bool = False,
     psychic_attack_from_round: int = 1,
@@ -134,12 +138,16 @@ def combat(
     ls_immune_rounds: int = 0,
     potions_allowed: bool = True,
     ally_damage: int = 0,
+    extra_loss: int = 0,
+    extra_loss_after: int = 0,
+    unarmed_rounds: int = 0,
 ):
     """
     enemies               : [(NOM, HABILETÉ, ENDURANCE), ...] combattus l'un après l'autre.
     key                   : identifiant unique si la page contient plusieurs combats.
     hability_modifier     : bonus/malus d'HABILETÉ imposé par le texte pour tout le combat.
-    first_round_modifier  : bonus/malus supplémentaire pour le premier assaut seulement.
+    first_round_modifier  : bonus/malus supplémentaire pour le premier assaut seulement (ou pour les
+                            `first_rounds` premiers assauts : « -2 pendant les 3 premiers assauts »).
     psychic_immune        : l'ennemi est insensible à la Puissance psychique.
     psychic_attack        : l'ennemi attaque par la pensée (-2 HABILETÉ sans Bouclier psychique).
     psychic_attack_from_round : assaut à partir duquel l'attaque psychique s'applique.
@@ -154,6 +162,9 @@ def combat(
     ls_immune_rounds      : le Loup Solitaire ne perd aucun point d'ENDURANCE pendant les N premiers
                             assauts (ennemi surpris, incapable de se défendre).
     potions_allowed       : False si le texte interdit d'avaler une potion avant le combat (Alether...).
+    extra_loss            : ENDURANCE perdue en plus par le Loup Solitaire à chaque assaut au-delà des
+    extra_loss_after        `extra_loss_after` premiers (manque d'oxygène...), sans protection possible.
+    unarmed_rounds        : le Loup Solitaire combat à mains nues pendant les N premiers assauts.
     ally_damage           : ENDURANCE perdue en plus par l'ennemi à chaque assaut, blessé par un allié
                             (« Fenor lui fait perdre 3 points d'ENDURANCE à chaque assaut »).
     """
@@ -171,17 +182,20 @@ def combat(
         }
     fight = st.session_state[state_key]
     hability, details = combat_hability(hability_modifier, psychic_immune, False)
+    unarmed_hability = combat_hability(hability_modifier, psychic_immune, False, unarmed=True)[0]
     psychic_malus = psychic_attack and not protected_from_magic()
     rules = {
         "psychic_damage": 0 if protected_from_magic() else psychic_damage,
         "enemy_multiplier": 2 if undead and has_item(SOMMERSWERD) else 1,
         "ls_immune_rounds": ls_immune_rounds,
         "ally_damage": ally_damage,
+        "extra_loss": extra_loss,
+        "extra_loss_after": extra_loss_after,
     }
 
     def round_hability(round_number: int) -> int:
-        value = hability + fight["item_bonus"]
-        if round_number == 1:
+        value = (unarmed_hability if round_number <= unarmed_rounds else hability) + fight["item_bonus"]
+        if round_number <= first_rounds:
             value += first_round_modifier
         if psychic_malus and round_number >= psychic_attack_from_round:
             value -= 2
@@ -198,7 +212,8 @@ def combat(
                 + (f" (à partir de l'assaut {psychic_attack_from_round})" if psychic_attack_from_round > 1 else "")
             )
         if first_round_modifier:
-            details.append(f"Premier assaut : {first_round_modifier:+d}")
+            when = "Premier assaut" if first_rounds == 1 else f"{first_rounds} premiers assauts"
+            details.append(f"{when} : {first_round_modifier:+d}")
         if psychic_damage:
             details.append(
                 f"Force Mentale ennemie : -{psychic_damage} ENDURANCE par assaut"
@@ -207,6 +222,10 @@ def combat(
             )
         if rules["enemy_multiplier"] > 1:
             details.append("Glaive de Sommer : pertes du mort vivant ×2")
+        if unarmed_rounds:
+            details.append(f"{unarmed_rounds} premiers assauts à mains nues : HABILETÉ {unarmed_hability}")
+        if extra_loss:
+            details.append(f"Au-delà de {extra_loss_after} assauts : -{extra_loss} ENDURANCE par assaut")
         if ally_damage:
             details.append(f"Votre allié blesse l'ennemi : -{ally_damage} ENDURANCE par assaut")
         if ls_immune_rounds:
@@ -317,6 +336,8 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
         ls_loss = st.session_state.endurance
     else:
         ls_loss += rules.get("psychic_damage", 0)
+        if fight["round"] > rules.get("extra_loss_after", 0):
+            ls_loss += rules.get("extra_loss", 0)
     if fleeing:
         enemy_loss = 0  # en fuyant, seul le Loup Solitaire subit des pertes
     elif enemy_loss is KILL:
