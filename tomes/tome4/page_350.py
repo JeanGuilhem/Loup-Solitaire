@@ -67,8 +67,9 @@ with tab1:
     st.success(
         "**Mission accomplie !** Barraka est mort et le sacrifice de Madelon a été empêché : Vashna et ses "
         "légions de guerriers morts demeurent prisonniers du Gouffre Maudit. "
-        "L'aventure se poursuivra dans le tome 5 (pas encore adapté)."
+        "Le Loup Solitaire peut reprendre la route dans le tome 5, *Le Tyran du Désert*."
     )
+    st.page_link("tomes/tome5/debut.py", label="Continuer avec le tome 5", icon="📜")
     st.page_link("accueil.py", label="Retour à l'accueil", icon="🏠")
 
     show_illustrations()

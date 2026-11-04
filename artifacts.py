@@ -48,6 +48,12 @@ RARITY = {
     "PIERRE RAYONNANTE": "unique",
     "MÉDAILLON D'ONYX": "unique",
     "ÉPÉE DE GAYAL": "unique",
+    "HERBE D'OEDE": "unique",
+    "PRISME": "unique",
+    "MASQUE D'HERBES": "unique",
+    "CLÉS DU GEÔLIER": "unique",
+    "CUBE DE CRISTAL NOIR": "unique",
+    "MASSE D'ARMES INCRUSTÉE": "unique",
     "EAU BÉNITE": "unique",
     "ROULEAU DE PARCHEMIN": "unique",
     "CLÉ DE CUIVRE": "unique",
@@ -55,6 +61,7 @@ RARITY = {
     # Légendaire
     "GLAIVE DE SOMMER": "legendaire",
     "POIGNARD DE VASHNA": "legendaire",
+    "LIVRE DU MAGNAKAÏ": "legendaire",
 }
 
 LORE = {
@@ -103,7 +110,7 @@ ICONS = {
 
 
 # Noms propres que str.capitalize() écraserait
-PROPER_NAMES = ["Hammardal", "Sommer", "Étoile de Cristal", "Prince", "Glok", "Gayal", "Vashna"]
+PROPER_NAMES = ["Hammardal", "Sommer", "Étoile de Cristal", "Prince", "Glok", "Gayal", "Vashna", "Magnakaï", "Oede"]
 
 
 def display_name(item: str) -> str:

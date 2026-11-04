@@ -15,8 +15,9 @@ import streamlit as st
 AMBIANCES_FILE = "ambiances.json"
 
 
-def _svg(body: str, width: int, height: int) -> str:
-    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" preserveAspectRatio="none">{body}</svg>'
+def _svg(body: str, width: int, height: int, aspect: str = "none") -> str:
+    """aspect : "none" étire le motif (frises répétées), "xMidYMax slice" garde les proportions d'une scène."""
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" preserveAspectRatio="{aspect}">{body}</svg>'
     return "data:image/svg+xml;base64," + base64.b64encode(svg.encode()).decode()
 
 
@@ -166,6 +167,137 @@ ICE = _svg(
     400, 300,
 )
 
+def _house(x: int, width: int, top: int, fill: str) -> str:
+    """Maison cubique en grès, toit plat, porte et fenêtres carrées (village du désert)."""
+    door = f'<rect x="{x + width / 2 - 5}" y="{300 - 18}" width="10" height="18" fill="#1a120a"/>'
+    windows = "".join(
+        f'<rect x="{x + wx}" y="{top + 10}" width="7" height="7" fill="#1a120a"/>'
+        for wx in range(6, width - 9, 16)
+    )
+    return (f'<rect x="{x}" y="{top}" width="{width}" height="{300 - top}" fill="{fill}"/>'
+            f'<rect x="{x - 2}" y="{top}" width="{width + 4}" height="4" fill="#3a2b18"/>{windows}{door}')
+
+
+DESERT_CITY = _svg(
+    # minaret et coupole au loin
+    '<g fill="#4a3621"><rect x="300" y="120" width="14" height="180"/><path d="M296 120h22l-11-22z"/>'
+    '<path d="M60 300v-95a40 40 0 0 1 80 0v95z"/></g>'
+    + _house(0, 46, 230, "#6b5030") + _house(44, 38, 200, "#5e4529") + _house(84, 60, 222, "#6b5030")
+    + _house(98, 30, 182, "#5e4529")  # étage en retrait
+    + _house(146, 42, 240, "#76593a") + _house(190, 54, 210, "#6b5030") + _house(246, 36, 236, "#5e4529")
+    + _house(284, 62, 218, "#6b5030") + _house(300, 28, 190, "#76593a") + _house(348, 52, 232, "#5e4529"),
+    400, 300,
+)
+
+
+def _brick_arch(x: int) -> str:
+    """Voûte de briques d'un égout : un arc de 200 px de large."""
+    return (f'<path d="M{x} 0h200v120a100 100 0 0 0-200 0z" fill="#141a14"/>'
+            f'<path d="M{x + 8} 120a92 92 0 0 1 184 0" stroke="#2c3326" stroke-width="10" fill="none" '
+            f'stroke-dasharray="14 4"/>')
+
+
+SEWER = _svg(
+    _brick_arch(0) + _brick_arch(200)
+    + '<g fill="#141a14"><rect x="0" y="120" width="14" height="180"/><rect x="186" y="120" width="28" height="180"/>'
+    '<rect x="386" y="120" width="14" height="180"/></g>'
+    # gouttes d'eau croupie
+    + '<g fill="#5d6b3c" opacity=".7"><path d="M60 140q3 8 0 10q-3-2 0-10z"/><path d="M290 150q3 8 0 10q-3-2 0-10z"/></g>'
+    # quai de pierre et canal d'eau verdâtre
+    + '<rect y="236" width="400" height="10" fill="#22281f"/>'
+    + '<path d="M0 252q25-6 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0V300H0z" fill="#2f3a22"/>'
+    + '<path d="M0 270q25-5 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0V300H0z" fill="#1f2817"/>'
+    + '<g stroke="#6f7f45" stroke-width="1.5" opacity=".35"><path d="M30 262h40M170 278h50M300 266h35"/></g>',
+    400, 300,
+)
+
+PRISON_BARS = _svg(
+    # un barreau et sa traverse, répétés sur toute la largeur
+    '<rect x="34" y="0" width="12" height="300" fill="#1b1b1d"/>'
+    '<rect x="37" y="0" width="3" height="300" fill="#4a4a4e"/>'
+    '<rect x="0" y="54" width="80" height="10" fill="#1b1b1d"/><rect x="0" y="56" width="80" height="2" fill="#4a4a4e"/>'
+    '<rect x="0" y="236" width="80" height="10" fill="#1b1b1d"/><rect x="0" y="238" width="80" height="2" fill="#4a4a4e"/>',
+    80, 300,
+)
+
+
+def _cloud(x: int, y: int, scale: float, fill: str) -> str:
+    """Nuage : grappe de cercles sur une base en ellipse aplatie."""
+    puffs = "".join(
+        f'<circle cx="{x + dx * scale}" cy="{y - dy * scale}" r="{r * scale}"/>'
+        for dx, dy, r in [(-30, 2, 16), (-8, 14, 22), (18, 22, 27), (46, 12, 21), (66, 2, 15)]
+    )
+    return f'<g fill="{fill}">{puffs}<ellipse cx="{x + 18 * scale}" cy="{y + 4 * scale}" rx="{58 * scale}" ry="{12 * scale}"/></g>'
+
+
+SKY = _svg(
+    _cloud(60, 150, 1.1, "#5b5f78") + _cloud(260, 135, 1.3, "#5b5f78") + _cloud(440, 160, 1.0, "#5b5f78")
+    + _dunes(205, 18, "#474b63", width=600)
+    + _cloud(150, 220, 1.4, "#34374b") + _cloud(390, 232, 1.2, "#34374b") + _cloud(515, 224, .9, "#34374b")
+    + _dunes(262, 14, "#262838", width=600),
+    600, 300,
+)
+
+
+GOLD = "#c9a65a"
+
+
+def _glyphs(x: int, y: int) -> str:
+    """Une ligne de hiéroglyphes gravés (ankh, œil, oiseau, roseau, vagues) sur une colonne de 56 px."""
+    g = (f'<ellipse cx="{x + 6}" cy="{y + 4}" rx="3" ry="4"/><path d="M{x + 6} {y + 8}v10M{x + 1} {y + 11}h10"/>'
+         f'<path d="M{x + 17} {y + 9}q7-6 14 0q-7 6-14 0z"/><path d="M{x + 23} {y + 14}l-2 5"/>'
+         f'<path d="M{x + 36} {y + 18}q2-12 9-12q5 0 4 5l4 1-4 2q-2 4-8 4z"/>'
+         f'<path d="M{x + 3} {y + 30}v-8m4 8v-8m4 8v-8"/>'
+         f'<path d="M{x + 18} {y + 27}l3-3 3 3 3-3 3 3 3-3 3 3"/><circle cx="{x + 45}" cy="{y + 26}" r="4"/>')
+    return f'<g stroke="{GOLD}" stroke-width="1.6" fill="none" opacity=".55">{g}</g>'
+
+
+def _hieroglyph_column(x: int) -> str:
+    """Colonne couverte de hiéroglyphes, chapiteau en lotus et socle."""
+    rows = "".join(_glyphs(x + 8, y) for y in range(150, 500, 42))
+    return (f'<rect x="{x}" y="120" width="72" height="420" fill="#4c381d"/>'
+            f'<path d="M{x - 14} 120l12-34h96l12 34z" fill="#5a4222"/>'
+            f'<rect x="{x - 6}" y="78" width="84" height="10" fill="#6a4e28"/>'
+            f'<rect x="{x - 8}" y="536" width="88" height="14" fill="#3a2a16"/>'
+            f'<rect x="{x}" y="140" width="72" height="3" fill="{GOLD}" opacity=".6"/>'
+            f'<rect x="{x}" y="512" width="72" height="3" fill="{GOLD}" opacity=".6"/>{rows}')
+
+
+def _brazier(x: int) -> str:
+    return (f'<path d="M{x - 18} 470h36l-8 20h-20z" fill="#2a1f12"/><rect x="{x - 3}" y="490" width="6" height="60" fill="#2a1f12"/>'
+            f'<path d="M{x - 14} 470q4-26 14-40q10 14 14 40z" fill="#c9772f" opacity=".75"/>'
+            f'<path d="M{x - 7} 470q2-14 7-22q5 8 7 22z" fill="#f0c060" opacity=".8"/>')
+
+
+SARCOPHAGUS = (
+    '<rect x="300" y="500" width="200" height="50" fill="#2e2213"/><rect x="290" y="494" width="220" height="10" fill="#4a3820"/>'
+    # cuve
+    '<path d="M330 494V380q0-18 18-22h104q18 4 18 22v114z" fill="#3a2a16"/>'
+    # couvercle en forme de momie : tête coiffée du némès, visage, bras croisés
+    '<path d="M352 300q48-30 96 0v44q12 6 12 30v104h-120V374q0-24 12-30z" fill="#6a4e28"/>'
+    f'<path d="M352 300q48-30 96 0l-10 46h-76z" fill="#2a3a5a"/>'
+    f'<g stroke="{GOLD}" stroke-width="3" opacity=".8"><path d="M360 306l8 36M376 296l4 46M400 292v52M424 296l-4 46M440 306l-8 36"/></g>'
+    f'<ellipse cx="400" cy="322" rx="18" ry="22" fill="{GOLD}"/>'
+    '<rect x="395" y="344" width="10" height="16" fill="#2a3a5a"/>'
+    f'<path d="M362 392l76 34M438 392l-76 34" stroke="{GOLD}" stroke-width="7" stroke-linecap="round"/>'
+    f'<g fill="none" stroke="{GOLD}" stroke-width="2" opacity=".7"><path d="M348 448h104M348 462h104"/>'
+    '<path d="M360 474h80"/></g>'
+)
+
+TOMB = _svg(
+    '<rect width="800" height="600" fill="#1f160c"/>'
+    # frise de hiéroglyphes en haut et dalles du sol
+    + '<rect width="800" height="60" fill="#2a1f12"/><rect y="60" width="800" height="6" fill="#8a6a30"/>'
+    + "".join(_glyphs(x, 16) for x in range(10, 800, 64))
+    + '<rect y="550" width="800" height="50" fill="#140e07"/>'
+    + '<g stroke="#3a2a16" stroke-width="2"><path d="M0 550h800M100 550v50M220 550v50M340 550v50M460 550v50M580 550v50M700 550v50"/></g>'
+    # lueur des braseros sur le tombeau
+    + '<ellipse cx="400" cy="430" rx="260" ry="140" fill="#6a4a22" opacity=".35"/>'
+    + _hieroglyph_column(30) + _hieroglyph_column(150) + _hieroglyph_column(578) + _hieroglyph_column(698)
+    + _brazier(268) + _brazier(532) + SARCOPHAGUS,
+    800, 600, aspect="xMidYMax slice",
+)
+
 ENVIRONMENTS = {
     "foret": {
         "label": "Forêt",
@@ -214,6 +346,36 @@ ENVIRONMENTS = {
         "sky": "linear-gradient(180deg, #2b4052 0%, #3a556b 50%, #557389 85%, #44607a 100%)",
         "band": ICE, "band_position": "bottom", "band_height": "34vh", "tile": "800px",
         "accent": "#2c4a5c", "accent_dark": "#a9c7d8", "panel": "#f3f7f9", "panel_dark": "#171e24",
+    },
+    "ville_desert": {
+        "label": "Ville du désert",
+        "sky": "linear-gradient(180deg, #3a2a1c 0%, #5e4026 45%, #8a5c30 80%, #a06a34 100%)",
+        "band": DESERT_CITY, "band_position": "bottom", "band_height": "36vh",
+        "accent": "#7a4a1f", "accent_dark": "#d9a86c", "panel": "#fbf5ea", "panel_dark": "#241b13",
+    },
+    "egouts": {
+        "label": "Égouts",
+        "sky": "radial-gradient(ellipse at 50% 45%, #3c4630 0%, #262d1e 55%, #11150e 100%)",
+        "band": SEWER, "band_position": "bottom", "band_height": "100vh",
+        "accent": "#4a5a2a", "accent_dark": "#a8b97a", "panel": "#f4f5ee", "panel_dark": "#1a1f16",
+    },
+    "prison": {
+        "label": "Prison du palais",
+        "sky": "linear-gradient(180deg, #8a7a52 0%, #6c6550 14%, #4a4a4c 40%, #333335 75%, #262628 100%)",
+        "band": PRISON_BARS, "band_position": "bottom", "band_height": "100vh", "tile": "120px",
+        "accent": "#4a4a4e", "accent_dark": "#c8c2a8", "panel": "#f5f4f0", "panel_dark": "#1f1f21",
+    },
+    "ciel": {
+        "label": "Dans les nuages",
+        "sky": "linear-gradient(180deg, #1c1f33 0%, #353a5a 40%, #6b5c6e 75%, #a0705a 100%)",
+        "band": SKY, "band_position": "bottom", "band_height": "40vh", "tile": "900px",
+        "accent": "#3c4270", "accent_dark": "#b3b9e0", "panel": "#f5f6fa", "panel_dark": "#1b1d2a",
+    },
+    "tombeau": {
+        "label": "Tombeau",
+        "sky": "radial-gradient(ellipse at 50% 40%, #6a4a22 0%, #3c2a14 50%, #1a1209 100%)",
+        "band": TOMB, "band_position": "bottom", "band_height": "100vh", "tile": "100%",
+        "accent": "#8a6a30", "accent_dark": "#e0c07a", "panel": "#fbf6ea", "panel_dark": "#231a10",
     },
 }
 

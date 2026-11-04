@@ -32,6 +32,7 @@ SAVED_KEYS = [
     "current_page_number",
     "book",  # tome en cours
     "story_flags",
+    "confiscated",  # équipement confisqué, à retrouver (inventory.confiscate_equipment)
     "completed_books",
     "game_id",  # statistiques (cf. game_stats.py)
     "pages_visited",

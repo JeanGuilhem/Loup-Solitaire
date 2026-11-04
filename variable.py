@@ -227,6 +227,40 @@ ITEMS = {
         "type": "backpack",
         "description": "Un petit poisson de bois, symbole de l'Ordre Saint des Rédempteurs.",
     },
+    # --- Tome 5 ---
+    "GRANDE ÉPÉE": {"type": "weapon", "mastery": "ÉPÉE", "description": "Arme."},
+    "HUILE DE LARNUMA": {"type": "backpack", "heal": 2, "description": "Huile de Larnuma : 2 points d'ENDURANCE par dose."},
+    "ÉLIXIR DE RENDALIM": {"type": "backpack", "heal": 6, "description": "Élixir de Rendalim : 6 points d'ENDURANCE par dose."},
+    "KOURSHAH": {"type": "backpack", "heal": 4, "description": "Une bouteille de Kourshah : 4 points d'ENDURANCE."},
+    "POTION D'HERBE À POTENCE": {"type": "backpack", "description": "Chaque dose procure un sommeil d'une ou deux heures."},
+    "TEINTURE DE CALACENA": {"type": "backpack", "description": "Une dose produit de terribles hallucinations pendant une heure ou deux."},
+    "SARBACANE": {"type": "backpack", "description": "Une sarbacane de guerrier vassagonien."},
+    "FLÈCHE DE SOMMEIL": {"type": "backpack", "description": "Une fléchette de sarbacane enduite d'un puissant somnifère."},
+    "SERVIETTE": {"type": "backpack", "slots": {5: 2}, "description": "Une grande serviette de bain. Elle prend la place de 2 objets."},
+    "PEIGNE D'ARGENT": {"type": "backpack", "description": "Un peigne d'argent."},
+    "SIFFLET DE CUIVRE": {"type": "backpack", "description": "Un sifflet de cuivre attaché à une chaîne."},
+    "GOURDE": {"type": "backpack", "description": "Une gourde d'eau."},
+    "PALETOT": {"type": "backpack", "description": "Un paletot criard en toile grossière, à rayures roses et orange."},
+    "HERBE D'OEDE": {
+        "type": "special",
+        "heal": 10,
+        "description": "Herbe d'Oede : elle guérit de nombreuses maladies mortelles, ou rend 10 points d'ENDURANCE.",
+    },
+    "BRASSARD NOIR": {"type": "special", "description": "Un brassard de crêpe noir, porté en signe de deuil."},
+    "PRISME": {"type": "special", "description": "Un prisme de cristal."},
+    "MASQUE D'HERBES": {"type": "special", "description": "Un petit masque d'herbes à l'odeur agréable, qui protège la bouche."},
+    "CLÉS DU GEÔLIER": {"type": "special", "description": "Les clés du geôlier, accrochées à votre ceinture."},
+    "CUBE DE CRISTAL NOIR": {"type": "special", "description": "Un cube de cristal noir trouvé sur un Drakkar."},
+    "MASSE D'ARMES INCRUSTÉE": {
+        "type": "special",
+        "weapon": True,
+        "mastery": "MASSE D'ARMES",
+        "description": "Une masse d'armes incrustée de pierreries : une arme magique.",
+    },
+    "LIVRE DU MAGNAKAÏ": {
+        "type": "special",
+        "description": "Le Livre du Magnakaï, recueil perdu de la sagesse des grands Maîtres Kaï.",
+    },
     # --- Tome 4 : Objets Spéciaux ---
     "MÉDAILLON D'ONYX": {"type": "special", "description": "Un magnifique médaillon d'onyx, arraché à l'armure d'un guerrier ennemi."},
     "EAU BÉNITE": {"type": "special", "description": "Un petit flacon de terre cuite rempli d'Eau Bénite."},
@@ -282,6 +316,7 @@ BOOKS = {
     2: {"title": "La Traversée Infernale", "final_page": 350},
     3: {"title": "Les Grottes de Kalte", "final_page": 350},
     4: {"title": "Le Gouffre Maudit", "final_page": 350},
+    5: {"title": "Le Tyran du Désert", "final_page": 400},
 }
 
 # Équipement reçu au début de chaque tome à partir du 2 (cf. « Équipement »), par les héros venus
@@ -365,6 +400,26 @@ BOOK_EQUIPMENT = {
         "place": "l'Armurerie Royale",
         "journey": "partir pour Ruanon",
         "start_label": "Partir pour Ruanon",
+    },
+    5: {
+        "gold_base": 10,
+        "items_to_choose": 6,
+        "up_to": True,
+        "items": {
+            "POIGNARD": ("POIGNARD", 1),
+            "POTION DE LAUMSPUR": ("POTION DE LAUMSPUR", 1),
+            "ÉPÉE": ("ÉPÉE", 1),
+            "LANCE": ("LANCE", 1),
+            "2 RATIONS SPÉCIALES (2 Repas)": ("REPAS", 2),
+            "MASSE D'ARMES": ("MASSE D'ARMES", 1),
+            "BOUCLIER": ("BOUCLIER", 1),
+        },
+        "special": ["CARTE GÉOGRAPHIQUE"],  # une carte de la Vassagonie
+        "origin": "Tome 5 : remis à Holmgard, avant le départ pour Barrakeesh.",
+        "special_origins": {},
+        "place": "Holmgard",
+        "journey": "partir pour Barrakeesh",
+        "start_label": "Embarquer pour Barrakeesh",
     },
 }
 

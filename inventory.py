@@ -23,6 +23,8 @@ from utils import ls_death, show_adventure_stats, track_lowest_endurance
 from variable import BOOKS, ITEMS, KAI, MAX_BACKPACK, MAX_PURSE, MAX_WEAPONS
 
 BACKPACK_ITEM = "SAC À DOS"
+# Fait retenu « blessure infectée » (tome 5, §63) : -2 ENDURANCE par paragraphe jusqu'à une Potion de Laumspur
+POISONED = "blessure infectée"
 MAX_VISIBILITY_FLAGS = 10
 
 DEFAULT_STATE = {
@@ -207,6 +209,9 @@ def check_inventory(is_fighting: bool = False, current_page_number: int = 0, boo
     if is_new_page():
         _reset_page_flags()
         st.session_state.page_has_fight = is_fighting or _page_has_fight(book, current_page_number)
+        if has_flag(POISONED):
+            st.error("*Votre blessure s'infecte : vous perdez 2 points d'ENDURANCE (buvez une Potion de Laumspur).*")
+            change_endurance(-2)
         _apply_healing()
 
 
@@ -274,6 +279,11 @@ def set_flag(name: str) -> None:
     flags = st.session_state.setdefault("story_flags", [])
     if name not in flags:
         flags.append(name)
+
+
+def clear_flag(name: str) -> None:
+    if name in st.session_state.get("story_flags", []):
+        st.session_state.story_flags.remove(name)
 
 
 def has_flag(name: str) -> bool:
@@ -405,6 +415,44 @@ def lose_special_items() -> None:
         remove_from_inventory(item)
 
 
+def confiscate_equipment() -> None:
+    """
+    « On vous prend votre Sac à Dos, vos armes, vos Objets Spéciaux et votre Or » : l'équipement est
+    gardé de côté (st.session_state.confiscated) et pourra être retrouvé (restore_confiscated).
+    """
+    st.session_state.confiscated = {
+        "weapons": list(st.session_state.weapons),
+        "backpack": list(st.session_state.backpack),
+        "has_backpack": st.session_state.has_backpack,
+        "special": list(st.session_state.special),
+        "purse": st.session_state.purse,
+    }
+    lose_gold()
+    lose_backpack()
+    lose_all_weapons()
+    lose_special_items()
+
+
+def restore_confiscated() -> bool:
+    """Le héros retrouve l'équipement confisqué (ajouté à ce qu'il a déjà). False s'il n'y avait rien."""
+    saved = st.session_state.get("confiscated")
+    if not saved:
+        return False
+    st.session_state.confiscated = None
+    st.session_state.weapons += saved["weapons"]
+    st.session_state.has_backpack = st.session_state.has_backpack or saved["has_backpack"]
+    st.session_state.backpack += saved["backpack"]
+    for item in saved["special"]:
+        add_to_inventory(item, origin=st.session_state.get("provenance", {}).get(item))
+    add_gold(saved["purse"])
+    return True
+
+
+def overloaded() -> bool:
+    """Plus d'armes ou d'objets dans le Sac à Dos que le héros ne peut en porter."""
+    return len(st.session_state.weapons) > MAX_WEAPONS or backpack_used() > MAX_BACKPACK
+
+
 def lose_everything() -> None:
     """« On vous a tout volé : Or, Sac à Dos, Armes, ainsi que tous vos Objets Spéciaux »."""
     lose_gold()
@@ -501,6 +549,9 @@ def use_item(name: str) -> bool:
         return False
     remove_from_inventory(item)
     change_endurance(heal)
+    if item == "POTION DE LAUMSPUR" and has_flag(POISONED):
+        clear_flag(POISONED)
+        st.success("La Potion de Laumspur a guéri votre blessure infectée.")
     return True
 
 

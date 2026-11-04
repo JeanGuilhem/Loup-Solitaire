@@ -141,6 +141,9 @@ def combat(
     extra_loss: int = 0,
     extra_loss_after: int = 0,
     unarmed_rounds: int = 0,
+    enemy_loss_multiplier: int = 1,
+    enemy_immune_rounds: int = 0,
+    knockout: bool = False,
 ):
     """
     enemies               : [(NOM, HABILETÉ, ENDURANCE), ...] combattus l'un après l'autre.
@@ -165,6 +168,10 @@ def combat(
     extra_loss            : ENDURANCE perdue en plus par le Loup Solitaire à chaque assaut au-delà des
     extra_loss_after        `extra_loss_after` premiers (manque d'oxygène...), sans protection possible.
     unarmed_rounds        : le Loup Solitaire combat à mains nues pendant les N premiers assauts.
+    enemy_loss_multiplier : « multipliez par deux les points d'ENDURANCE perdus par l'ennemi » (hors morts vivants).
+    enemy_immune_rounds   : l'ennemi ne perd aucun point d'ENDURANCE pendant les N premiers assauts.
+    knockout              : « si vous perdez le combat, rendez-vous au N » : à 0 d'ENDURANCE le héros ne meurt
+                            pas, il retrouve la moitié des points perdus pendant le combat (issue "lost").
     ally_damage           : ENDURANCE perdue en plus par l'ennemi à chaque assaut, blessé par un allié
                             (« Fenor lui fait perdre 3 points d'ENDURANCE à chaque assaut »).
     """
@@ -186,11 +193,13 @@ def combat(
     psychic_malus = psychic_attack and not protected_from_magic()
     rules = {
         "psychic_damage": 0 if protected_from_magic() else psychic_damage,
-        "enemy_multiplier": 2 if undead and has_item(SOMMERSWERD) else 1,
+        "enemy_multiplier": enemy_loss_multiplier * (2 if undead and has_item(SOMMERSWERD) else 1),
         "ls_immune_rounds": ls_immune_rounds,
         "ally_damage": ally_damage,
         "extra_loss": extra_loss,
         "extra_loss_after": extra_loss_after,
+        "enemy_immune_rounds": enemy_immune_rounds,
+        "knockout": knockout,
     }
 
     def round_hability(round_number: int) -> int:
@@ -220,8 +229,10 @@ def combat(
                 if rules["psychic_damage"]
                 else "Force Mentale ennemie : sans effet sur vous"
             )
-        if rules["enemy_multiplier"] > 1:
+        if undead and has_item(SOMMERSWERD):
             details.append("Glaive de Sommer : pertes du mort vivant ×2")
+        if enemy_loss_multiplier > 1:
+            details.append(f"Pertes de l'ennemi ×{enemy_loss_multiplier}")
         if unarmed_rounds:
             details.append(f"{unarmed_rounds} premiers assauts à mains nues : HABILETÉ {unarmed_hability}")
         if extra_loss:
@@ -249,6 +260,7 @@ def combat(
                 if remove_from_inventory(item):
                     fight["item_bonus"] += item_info(item)["combat_hability"]
             fight["status"] = "fighting"
+            fight["start_endurance"] = st.session_state.endurance
             st.session_state.fights = st.session_state.get("fights", 0) + 1  # bilan du tome
             st.rerun()
         if flee_after == 0 and col2.button("🏃 Prendre la fuite", key=f"{state_key}_flee_now"):
@@ -292,6 +304,7 @@ def combat(
         "fled": ("warning", "Vous prenez la fuite."),
         "rounds_over": ("info", "Votre adversaire est toujours en vie."),
         "wounded": ("warning", "Vous avez été blessé au cours du combat."),
+        "lost": ("error", "Vous avez perdu le combat. Vous retrouvez la moitié des points d'ENDURANCE perdus."),
     }
     level, message = messages[fight["outcome"]]
     getattr(st, level)(message)
@@ -338,7 +351,7 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
         ls_loss += rules.get("psychic_damage", 0)
         if fight["round"] > rules.get("extra_loss_after", 0):
             ls_loss += rules.get("extra_loss", 0)
-    if fleeing:
+    if fleeing or fight["round"] <= rules.get("enemy_immune_rounds", 0):
         enemy_loss = 0  # en fuyant, seul le Loup Solitaire subit des pertes
     elif enemy_loss is KILL:
         enemy_loss = fight["enemy_endurance"]
@@ -352,7 +365,12 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
     entry = {"round": fight["round"], "enemy": name, "enemy_index": enemy_index, "quotient": quotient, "dice": dice,
              "ls_loss": ls_loss, "enemy_loss": enemy_loss, "fleeing": fleeing}
     fight["log"].append(entry)
-    _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wounded)
+    if rules.get("knockout") and st.session_state.endurance <= 0:
+        # combat perdu sans mourir : la moitié des points perdus pendant le combat revient
+        st.session_state.endurance = max(1, fight.get("start_endurance", 2) // 2)
+        fight["status"], fight["outcome"] = "over", "lost"
+    else:
+        _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wounded)
     return entry
 
 

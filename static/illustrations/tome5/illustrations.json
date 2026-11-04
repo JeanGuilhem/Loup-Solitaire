@@ -1,0 +1,776 @@
+[
+ {
+  "file": "p7_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 7,
+  "pdf_page": 29,
+  "size": [
+   318,
+   137
+  ]
+ },
+ {
+  "file": "p9_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 9,
+  "pdf_page": 30,
+  "size": [
+   308,
+   92
+  ]
+ },
+ {
+  "file": "p12_planche.jpeg",
+  "type": "planche",
+  "paragraph": 12,
+  "pdf_page": 32,
+  "size": [
+   457,
+   823
+  ],
+  "caption": "Vous combattez sous l'eau la redoutable sangsue géante."
+ },
+ {
+  "file": "p15_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 15,
+  "pdf_page": 34,
+  "size": [
+   207,
+   189
+  ]
+ },
+ {
+  "file": "p20_planche.jpeg",
+  "type": "planche",
+  "paragraph": 20,
+  "pdf_page": 37,
+  "size": [
+   471,
+   853
+  ],
+  "caption": "Le guerrier tire avec frénésie sur les rênes."
+ },
+ {
+  "file": "p21_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 21,
+  "pdf_page": 38,
+  "size": [
+   317,
+   137
+  ]
+ },
+ {
+  "file": "p32_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 32,
+  "pdf_page": 42,
+  "size": [
+   337,
+   132
+  ]
+ },
+ {
+  "file": "p38_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 38,
+  "pdf_page": 45,
+  "size": [
+   323,
+   123
+  ]
+ },
+ {
+  "file": "p42_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 42,
+  "pdf_page": 46,
+  "size": [
+   125,
+   175
+  ]
+ },
+ {
+  "file": "p54_planche.jpeg",
+  "type": "planche",
+  "paragraph": 54,
+  "pdf_page": 51,
+  "size": [
+   748,
+   1224
+  ],
+  "caption": "Sur les piques sont empalées des têtes."
+ },
+ {
+  "file": "p54_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 54,
+  "pdf_page": 52,
+  "size": [
+   321,
+   106
+  ]
+ },
+ {
+  "file": "p64_planche.jpeg",
+  "type": "planche",
+  "paragraph": 64,
+  "pdf_page": 57,
+  "size": [
+   769,
+   1298
+  ],
+  "caption": "Sur le trottoir apparaît l'énorme masse d'un Kwaraz."
+ },
+ {
+  "file": "p67_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 67,
+  "pdf_page": 60,
+  "size": [
+   273,
+   188
+  ]
+ },
+ {
+  "file": "p69_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 69,
+  "pdf_page": 62,
+  "size": [
+   208,
+   190
+  ]
+ },
+ {
+  "file": "p87_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 87,
+  "pdf_page": 69,
+  "size": [
+   317,
+   136
+  ]
+ },
+ {
+  "file": "p90_planche.jpeg",
+  "type": "planche",
+  "paragraph": 90,
+  "pdf_page": 71,
+  "size": [
+   474,
+   841
+  ],
+  "caption": "Un homme vêtu de blanc est assis au fond de la pièce."
+ },
+ {
+  "file": "p91_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 91,
+  "pdf_page": 72,
+  "size": [
+   321,
+   106
+  ]
+ },
+ {
+  "file": "p102_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 102,
+  "pdf_page": 78,
+  "size": [
+   312,
+   92
+  ]
+ },
+ {
+  "file": "p106_planche.jpeg",
+  "type": "planche",
+  "paragraph": 106,
+  "pdf_page": 80,
+  "size": [
+   470,
+   815
+  ],
+  "caption": "Le Messager dégaine son épée alors que vous êtes encore au sol."
+ },
+ {
+  "file": "p113_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 113,
+  "pdf_page": 83,
+  "size": [
+   326,
+   110
+  ]
+ },
+ {
+  "file": "p117_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 117,
+  "pdf_page": 84,
+  "size": [
+   125,
+   175
+  ]
+ },
+ {
+  "file": "p123_planche.jpeg",
+  "type": "planche",
+  "paragraph": 123,
+  "pdf_page": 87,
+  "size": [
+   705,
+   1250
+  ],
+  "caption": "L'Officier, un grand guerrier au cou de taureau, passe à l'attaque."
+ },
+ {
+  "file": "p127_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 127,
+  "pdf_page": 89,
+  "size": [
+   210,
+   190
+  ]
+ },
+ {
+  "file": "p130_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 130,
+  "pdf_page": 91,
+  "size": [
+   269,
+   188
+  ]
+ },
+ {
+  "file": "p131_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 131,
+  "pdf_page": 92,
+  "size": [
+   296,
+   143
+  ]
+ },
+ {
+  "file": "p135_planche.jpeg",
+  "type": "planche",
+  "paragraph": 135,
+  "pdf_page": 94,
+  "size": [
+   494,
+   834
+  ],
+  "caption": "Un des hommes de Maouk surgit de l'ombre."
+ },
+ {
+  "file": "p140_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 140,
+  "pdf_page": 96,
+  "size": [
+   337,
+   132
+  ]
+ },
+ {
+  "file": "p143_planche.jpeg",
+  "type": "planche",
+  "paragraph": 143,
+  "pdf_page": 98,
+  "size": [
+   491,
+   848
+  ],
+  "caption": "La foule s'enfuit en hurlant dans la rue."
+ },
+ {
+  "file": "p158_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 158,
+  "pdf_page": 106,
+  "size": [
+   319,
+   121
+  ]
+ },
+ {
+  "file": "p162_planche.jpeg",
+  "type": "planche",
+  "paragraph": 162,
+  "pdf_page": 109,
+  "size": [
+   811,
+   1292
+  ],
+  "caption": "Des Araignées monstrueuses rampent sur vos bras."
+ },
+ {
+  "file": "p172_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 172,
+  "pdf_page": 114,
+  "size": [
+   323,
+   106
+  ]
+ },
+ {
+  "file": "p177_planche.jpeg",
+  "type": "planche",
+  "paragraph": 177,
+  "pdf_page": 117,
+  "size": [
+   493,
+   823
+  ],
+  "caption": "Trois Sharnazims émergent avec difficulté des eaux sombres."
+ },
+ {
+  "file": "p190_planche.jpeg",
+  "type": "planche",
+  "paragraph": 190,
+  "pdf_page": 123,
+  "size": [
+   475,
+   803
+  ],
+  "caption": "L'Armurier géant brandit un lourd marteau."
+ },
+ {
+  "file": "p196_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 196,
+  "pdf_page": 126,
+  "size": [
+   215,
+   97
+  ]
+ },
+ {
+  "file": "p198_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 198,
+  "pdf_page": 127,
+  "size": [
+   320,
+   137
+  ]
+ },
+ {
+  "file": "p207_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 207,
+  "pdf_page": 133,
+  "size": [
+   207,
+   189
+  ]
+ },
+ {
+  "file": "p209_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 209,
+  "pdf_page": 134,
+  "size": [
+   203,
+   67
+  ]
+ },
+ {
+  "file": "p211_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 211,
+  "pdf_page": 135,
+  "size": [
+   308,
+   92
+  ]
+ },
+ {
+  "file": "p215_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 215,
+  "pdf_page": 137,
+  "size": [
+   317,
+   137
+  ]
+ },
+ {
+  "file": "p216_planche.jpeg",
+  "type": "planche",
+  "paragraph": 216,
+  "pdf_page": 138,
+  "size": [
+   761,
+   1312
+  ],
+  "caption": "Les discours de l'homme amènent les spectateurs au paroxysme de leur agitation."
+ },
+ {
+  "file": "p223_planche.jpeg",
+  "type": "planche",
+  "paragraph": 223,
+  "pdf_page": 141,
+  "size": [
+   765,
+   1259
+  ],
+  "caption": "Bientôt des ailes et des tentacules se déploient de toutes parts."
+ },
+ {
+  "file": "p227_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 227,
+  "pdf_page": 143,
+  "size": [
+   329,
+   91
+  ]
+ },
+ {
+  "file": "p234_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 234,
+  "pdf_page": 147,
+  "size": [
+   349,
+   133
+  ]
+ },
+ {
+  "file": "p237_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 237,
+  "pdf_page": 148,
+  "size": [
+   252,
+   103
+  ]
+ },
+ {
+  "file": "p243_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 243,
+  "pdf_page": 151,
+  "size": [
+   322,
+   105
+  ]
+ },
+ {
+  "file": "p247_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 247,
+  "pdf_page": 154,
+  "size": [
+   125,
+   175
+  ]
+ },
+ {
+  "file": "p252_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 252,
+  "pdf_page": 156,
+  "size": [
+   145,
+   72
+  ]
+ },
+ {
+  "file": "p253_planche.jpeg",
+  "type": "planche",
+  "paragraph": 253,
+  "pdf_page": 157,
+  "size": [
+   766,
+   1283
+  ],
+  "caption": "Ce qui n'était qu'illusion devient à présent cauchemar vivant !"
+ },
+ {
+  "file": "p257_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 257,
+  "pdf_page": 159,
+  "size": [
+   125,
+   175
+  ]
+ },
+ {
+  "file": "p260_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 260,
+  "pdf_page": 161,
+  "size": [
+   308,
+   93
+  ]
+ },
+ {
+  "file": "p264_planche.jpeg",
+  "type": "planche",
+  "paragraph": 264,
+  "pdf_page": 162,
+  "size": [
+   476,
+   831
+  ],
+  "caption": "Le Vordak enfonce profondément ses doigts de squelette dans la chair de votre monture."
+ },
+ {
+  "file": "p267_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 267,
+  "pdf_page": 164,
+  "size": [
+   323,
+   137
+  ]
+ },
+ {
+  "file": "p274_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 274,
+  "pdf_page": 168,
+  "size": [
+   207,
+   189
+  ]
+ },
+ {
+  "file": "p275_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 275,
+  "pdf_page": 168,
+  "size": [
+   266,
+   160
+  ]
+ },
+ {
+  "file": "p282_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 282,
+  "pdf_page": 172,
+  "size": [
+   338,
+   94
+  ]
+ },
+ {
+  "file": "p285_planche.jpeg",
+  "type": "planche",
+  "paragraph": 285,
+  "pdf_page": 173,
+  "size": [
+   689,
+   1261
+  ],
+  "caption": "Un Drakkar s'avance en levant son épée au-dessus de son heaume à tête de mort."
+ },
+ {
+  "file": "p289_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 289,
+  "pdf_page": 176,
+  "size": [
+   331,
+   122
+  ]
+ },
+ {
+  "file": "p293_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 293,
+  "pdf_page": 178,
+  "size": [
+   268,
+   189
+  ]
+ },
+ {
+  "file": "p303_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 303,
+  "pdf_page": 183,
+  "size": [
+   285,
+   135
+  ]
+ },
+ {
+  "file": "p304_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 304,
+  "pdf_page": 183,
+  "size": [
+   244,
+   216
+  ]
+ },
+ {
+  "file": "p306_planche.jpeg",
+  "type": "planche",
+  "paragraph": 306,
+  "pdf_page": 185,
+  "size": [
+   482,
+   868
+  ],
+  "caption": "« Coup du pirate ! » crie Banedon à ses Nains."
+ },
+ {
+  "file": "p323_planche.jpeg",
+  "type": "planche",
+  "paragraph": 323,
+  "pdf_page": 194,
+  "size": [
+   494,
+   855
+  ],
+  "caption": "Le visage grimaçant d'un Nain apparaît au hublot de la cabine."
+ },
+ {
+  "file": "p334_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 334,
+  "pdf_page": 199,
+  "size": [
+   308,
+   92
+  ]
+ },
+ {
+  "file": "p340_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 340,
+  "pdf_page": 203,
+  "size": [
+   208,
+   191
+  ]
+ },
+ {
+  "file": "p343_planche.jpeg",
+  "type": "planche",
+  "paragraph": 343,
+  "pdf_page": 205,
+  "size": [
+   475,
+   854
+  ],
+  "caption": "Vous voyez un guerrier Drakkar tomber de la plate-forme vers une mort certaine."
+ },
+ {
+  "file": "p343_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 343,
+  "pdf_page": 206,
+  "size": [
+   178,
+   179
+  ]
+ },
+ {
+  "file": "p353_planche.jpeg",
+  "type": "planche",
+  "paragraph": 353,
+  "pdf_page": 211,
+  "size": [
+   727,
+   1261
+  ],
+  "caption": "Le Glaive de Sommer brille d'une lumière de feu mais aucun éclair ne jaillit de sa pointe."
+ },
+ {
+  "file": "p354_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 354,
+  "pdf_page": 213,
+  "size": [
+   308,
+   183
+  ]
+ },
+ {
+  "file": "p357_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 357,
+  "pdf_page": 214,
+  "size": [
+   228,
+   92
+  ]
+ },
+ {
+  "file": "p368_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 368,
+  "pdf_page": 218,
+  "size": [
+   250,
+   79
+  ]
+ },
+ {
+  "file": "p375_planche.jpeg",
+  "type": "planche",
+  "paragraph": 375,
+  "pdf_page": 222,
+  "size": [
+   515,
+   836
+  ],
+  "caption": "L'autre Garde dégaine une masse d'armes et se rue sur vous avec des éclairs dans les yeux."
+ },
+ {
+  "file": "p380_planche.jpeg",
+  "type": "planche",
+  "paragraph": 380,
+  "pdf_page": 225,
+  "size": [
+   771,
+   1303
+  ],
+  "caption": "Perchés sur d'immenses colonnes de pierre se trouvent des Kraans et des Drakkars qui scrutent la vallée à l'aide de longues-vues."
+ },
+ {
+  "file": "p380_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 380,
+  "pdf_page": 226,
+  "size": [
+   308,
+   181
+  ]
+ },
+ {
+  "file": "p390_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 390,
+  "pdf_page": 230,
+  "size": [
+   311,
+   93
+  ]
+ },
+ {
+  "file": "p400_planche.jpeg",
+  "type": "planche",
+  "paragraph": 400,
+  "pdf_page": 236,
+  "size": [
+   764,
+   1295
+  ],
+  "caption": "Le Livre du Magnakaï, grand ouvert, est posé sur un piédestal et offre ses secrets à vos yeux émerveillés."
+ }
+]
