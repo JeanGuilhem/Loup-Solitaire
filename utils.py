@@ -132,6 +132,32 @@ def hazard_roll(
     return st.session_state[state_key]
 
 
+def bow_shot(key: str = "arrow", label: str = "🏹 Tirer une flèche (Table de Hasard)"):
+    """
+    Tir à l'Arc : il faut un Arc, un Carquois et une flèche. Le bouton raye une flèche et tire sur la
+    Table de Hasard, +3 avec la Science des Armes à l'Arc. Une seule fois par visite de la page.
+    Renvoie le total (0 à 12), ou None tant que le joueur n'a pas tiré (ou ne peut pas tirer).
+    """
+    from inventory import bow_bonus, can_shoot, use_arrow
+
+    state_key = f"bow_{key}"
+    if state_key not in st.session_state:
+        if not can_shoot():
+            st.warning("Il vous faut un Arc, un Carquois et au moins une flèche pour tirer.")
+            return None
+        if not st.button(label, key=f"{state_key}_button"):
+            return None
+        use_arrow()
+        roll = table_des_hasards() % 10
+        st.session_state[state_key] = (roll, bow_bonus())
+        st.rerun()
+    roll, bonus = st.session_state[state_key]
+    detail = f" + {bonus} (Science des Armes) = **{roll + bonus}**" if bonus else ""
+    st.write(f"*Vous décochez une flèche : vous avez tiré le {roll}*{detail}. "
+             f"Il vous reste {st.session_state.get('arrows', 0)} flèche(s).")
+    return roll + bonus
+
+
 def stream_text(text: str, time_to_sleep: float = 0.03):
     """
     Affiche le texte mot à mot, une seule fois par visite de la page : lors des reruns
@@ -154,15 +180,14 @@ def handle_repas(penalty: int = 3, gold_cost: int = 0, hunting: bool = True):
     paie `gold_cost` Couronnes s'il le peut (repas à l'auberge), et à défaut il perd `penalty` points
     d'ENDURANCE.
     """
-    from inventory import change_endurance, has_kai, is_new_page, remove_from_inventory, spend_gold
+    from inventory import change_endurance, has_discipline, is_new_page, magnakai_series, remove_from_inventory, spend_gold
 
     if not is_new_page():
         return
 
-    if hunting and has_kai("La Chasse"):
-        st.success(
-            "*Grâce à votre Discipline Kaï de la Chasse, vous trouvez votre nourriture par vous-même.*"
-        )
+    if hunting and has_discipline("La Chasse", "Art de la Chasse"):
+        name = "Discipline Magnakaï de l'Art de la Chasse" if magnakai_series() else "Discipline Kaï de la Chasse"
+        st.success(f"*Grâce à votre {name}, vous trouvez votre nourriture par vous-même.*")
     elif remove_from_inventory("REPAS"):
         st.success("Vous avez mangé. 1 Repas vous a été retiré.")
     elif remove_from_inventory("MOISSON DE LAUMSPUR"):

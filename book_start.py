@@ -6,13 +6,17 @@ Trois façons d'y arriver :
     new      : un nouveau héros vient d'être créé pour ce tome (crafting_hero.py).
 Les deux premiers gardent tout et choisissent une Discipline Kaï de plus. Tous retrouvent leur
 ENDURANCE maximale et reçoivent l'équipement du tome (cf. BOOK_EQUIPMENT).
+À partir du tome 6 (série Magnakaï), tous choisissent les Disciplines Magnakaï qui leur manquent
+(3 au tome 6, une de plus par tome) et, avec la Science des Armes, leurs armes.
 """
 import streamlit as st
 
 from game_stats import record_start
 from inventory import (
+    add_arrows,
     add_gold,
     add_to_inventory,
+    apply_lore_circles,
     backpack_used,
     display_inventory,
     has_item,
@@ -28,6 +32,14 @@ from variable import (
     BOOK_EQUIPMENT,
     BOOKS,
     KAI,
+    LORE_CIRCLES,
+    MAGNAKAI,
+    MAGNAKAI_CARDS,
+    MAGNAKAI_FROM,
+    MAGNAKAI_RANKS,
+    MAGNAKAI_START,
+    MAGNAKAI_WEAPON_TABLE,
+    MAGNAKAI_WEAPONS_START,
     MAX_BACKPACK,
     MAX_PURSE,
     MAX_WEAPONS,
@@ -35,6 +47,7 @@ from variable import (
 )
 
 WEAPON_MASTERY = "La Maîtrise des armes"
+WEAPONSKILL = "Science des Armes"
 
 
 def has_finished_previous_book(state, book: int) -> bool:
@@ -106,6 +119,10 @@ def show_hero() -> None:
     st.write("**Disciplines Kaï :** " + ", ".join(st.session_state.kai))
     if st.session_state.weapon_mastery:
         st.write(f"**Arme maîtrisée :** {st.session_state.weapon_mastery[0]}")
+    if st.session_state.get("magnakai"):
+        st.write("**Disciplines Magnakaï :** " + ", ".join(st.session_state.magnakai))
+    if st.session_state.get("magnakai_weapons"):
+        st.write("**Science des Armes :** " + ", ".join(st.session_state.magnakai_weapons))
 
 
 def choose_new_discipline() -> bool:
@@ -137,6 +154,78 @@ def choose_new_discipline() -> bool:
         if choice == WEAPON_MASTERY:
             st.session_state.weapon_mastery_roll = table_des_hasards() % 10
             st.session_state.weapon_mastery = [WEAPON_MASTERY_TABLE[st.session_state.weapon_mastery_roll]]
+        st.rerun()
+    return False
+
+
+def magnakai_needed(book: int) -> tuple:
+    """(Disciplines Magnakaï, armes de la Science des Armes) qu'un héros doit avoir au début de ce tome."""
+    return MAGNAKAI_START + book - MAGNAKAI_FROM, MAGNAKAI_WEAPONS_START + book - MAGNAKAI_FROM
+
+
+def choose_magnakai(book: int) -> bool:
+    """Le héros choisit les Disciplines Magnakaï qui lui manquent, puis ses armes. True une fois fait."""
+    disciplines_needed, weapons_needed = magnakai_needed(book)
+    current = st.session_state.setdefault("magnakai", [])
+    if "magnakai_done" in st.session_state:
+        st.write("Disciplines Magnakaï : **" + ", ".join(current) + f"** ({MAGNAKAI_RANKS[len(current)]})")
+        if st.session_state.get("magnakai_weapons"):
+            st.write("Science des Armes : **" + ", ".join(st.session_state.magnakai_weapons) + "**")
+        for circle, (needed, hability, endurance) in LORE_CIRCLES.items():
+            if set(needed) <= set(current):
+                st.success(f"**{circle}** complet : +{hability} HABILETÉ, +{endurance} ENDURANCE.")
+        return True
+
+    if "magnakai_pending" not in st.session_state:
+        missing = disciplines_needed - len(current)
+        if missing <= 0:
+            st.session_state.magnakai_pending = list(current)
+            st.rerun()
+        if current:
+            st.write(
+                "Votre maîtrise du Magnakaï a progressé au cours de votre dernière mission : choisissez "
+                f"{missing} nouvelle(s) Discipline(s) Magnakaï."
+            )
+        else:
+            st.write(
+                "Après avoir étudié le Livre du Magnakaï, vous avez atteint le rang de "
+                f"**{MAGNAKAI_RANKS[disciplines_needed]}** : choisissez {missing} Disciplines Magnakaï. "
+                "Dans cette série, seules vos Disciplines Magnakaï comptent."
+            )
+        choices = [name for name in MAGNAKAI if name not in current]
+        picked = choose_disciplines(choices, missing, key="magnakai_cards", cards=MAGNAKAI_CARDS)
+        with st.expander("Les Cercles de Savoir"):
+            st.write(
+                "Si vous maîtrisez toutes les Disciplines d'un Cercle de Savoir, vous ajoutez des points "
+                "à vos totaux d'HABILETÉ et d'ENDURANCE."
+            )
+            for circle, (needed, hability, endurance) in LORE_CIRCLES.items():
+                st.write(f"**{circle}** ({', '.join(needed)}) : +{hability} HABILETÉ, +{endurance} ENDURANCE")
+        valid = len(picked) == missing
+        if st.button("Valider mes Disciplines Magnakaï", type="primary", disabled=not valid) and valid:
+            st.session_state.magnakai_pending = current + picked
+            st.rerun()
+        return False
+
+    # puis, avec la Science des Armes, les armes qui manquent
+    picked = st.session_state.magnakai_pending
+    st.write("Disciplines Magnakaï : **" + ", ".join(picked) + "**")
+    weapons = list(st.session_state.get("magnakai_weapons", []))
+    missing_weapons = weapons_needed - len(weapons) if WEAPONSKILL in picked else 0
+    if missing_weapons > 0:
+        weapons += st.multiselect(
+            f"Science des Armes : choisissez {missing_weapons} arme(s) dont vous avez la parfaite maîtrise",
+            [weapon for weapon in MAGNAKAI_WEAPON_TABLE if weapon not in weapons],
+            max_selections=missing_weapons,
+            key="magnakai_weapons_choice",
+        )
+    ready = WEAPONSKILL not in picked or len(weapons) == weapons_needed
+    if missing_weapons <= 0 or st.button("Valider mes armes", type="primary", disabled=not ready):
+        st.session_state.magnakai = picked
+        st.session_state.magnakai_weapons = weapons if WEAPONSKILL in picked else []
+        apply_lore_circles()
+        st.session_state.magnakai_done = True
+        st.session_state.pop("magnakai_pending")
         st.rerun()
     return False
 
@@ -206,7 +295,8 @@ def receive_equipment(book: int) -> bool:
         for weapon in [current_weapons[index] for index in left_behind]:
             remove_from_inventory(weapon)
         for name, quantity in items:
-            add_to_inventory(name, quantity=quantity, origin=equipment["origin"])
+            if add_to_inventory(name, quantity=quantity, origin=equipment["origin"]) and item_info(name).get("arrows"):
+                add_arrows(item_info(name)["arrows"])  # le Carquois est remis plein
         for item in equipment["special"]:
             if not has_item(item):
                 add_to_inventory(item, origin=equipment["special_origins"].get(item, equipment["origin"]))
@@ -225,7 +315,9 @@ def start_book(book: int) -> None:
     st.session_state.game_phase = "playing"
     st.session_state.checkpoint_pending = True  # écrit par la page d'introduction du tome
     record_start(continued=mode != "new", items=st.session_state.start_items)
-    for key in ("transition", "creation_book", "endurance_restored", "new_kai", "start_gold_roll", "start_items"):
+    for key in (
+        "transition", "creation_book", "endurance_restored", "new_kai", "magnakai_done", "magnakai_pending", "start_gold_roll", "start_items"
+    ):
         st.session_state.pop(key, None)
     st.switch_page(f"tomes/tome{book}/pages_intro.py")
 
@@ -247,7 +339,12 @@ def book_start(book: int) -> None:
     show_hero()
     st.divider()
 
-    if mode in ("continue", "import"):
+    if book >= MAGNAKAI_FROM:
+        st.subheader("Les Disciplines Magnakaï")
+        if not choose_magnakai(book):
+            st.stop()
+        st.divider()
+    elif mode in ("continue", "import"):
         st.subheader("Une nouvelle Discipline Kaï")
         if not choose_new_discipline():
             st.stop()

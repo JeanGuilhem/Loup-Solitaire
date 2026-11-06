@@ -13,7 +13,7 @@ from text import (
     second_fr_kai_mastery,
 )
 from utils import stream_text, table_des_hasards
-from variable import KAI, STARTING_ITEM_TABLE, WEAPON_MASTERY_TABLE
+from variable import KAI, MAGNAKAI_FROM, STARTING_ITEM_TABLE, WEAPON_MASTERY_TABLE
 
 # Une nouvelle partie commence à chaque fois qu'on arrive sur cette page depuis ailleurs.
 # Les reruns de la page (clics sur les boutons) ne doivent pas tout effacer.
@@ -110,6 +110,17 @@ def determine_kai_mastery() -> bool:
     return False
 
 
+def kai_master() -> bool:
+    """Série Magnakaï : le nouveau héros est un Maître Kaï, il maîtrise déjà les dix Disciplines Kaï."""
+    if not st.session_state.kai:
+        st.session_state.kai = list(KAI)
+    st.write(
+        "Vous êtes un **Maître Kaï** : vous maîtrisez les dix Disciplines Kaï. Vos Disciplines "
+        "Magnakaï seront choisies au début du tome."
+    )
+    return True
+
+
 STARTING_KIT = "Tome 1 : équipement de départ du Seigneur Kaï."
 MONASTERY = "Tome 1 : trouvé dans les ruines du monastère Kaï."
 
@@ -182,7 +193,8 @@ tab1, tab2 = st.tabs(["Loup Solitaire", "Maîtrise Kaï"])
 with tab1:
     if determine_endurance_ability():
         st.divider()
-        if determine_kai_mastery():
+        magnakai = st.session_state.creation_book >= MAGNAKAI_FROM
+        if kai_master() if magnakai else determine_kai_mastery():
             st.divider()
             if st.session_state.creation_book > 1:
                 # l'équipement des tomes suivants est remis sur leur page de départ

@@ -15,15 +15,19 @@ import streamlit as st
 
 from inventory import (
     change_endurance,
+    has_discipline,
     has_item,
-    has_kai,
+    has_magnakai,
     is_mastered,
     item_info,
+    magnakai_series,
     remove_from_inventory,
 )
 from utils import table_des_hasards, track_lowest_endurance
 
 SOMMERSWERD = "GLAIVE DE SOMMER"
+PSI_SURGE = "Foudroiement Psychique"
+PSI_SURGE_MIN_ENDURANCE = 7  # « ne peut pas être utilisé si votre ENDURANCE est de 6 points ou moins »
 
 KILL = None  # « T » dans la table : tué sur le coup
 
@@ -70,6 +74,7 @@ def table_coups(quotient_attaque: int, dice_number: int) -> tuple:
 def combat_hability(
     hability_modifier: int = 0,
     psychic_immune: bool = False,
+    psychic_power_immune: bool = False,
     psychic_attack: bool = False,
     unarmed: bool = False,
 ) -> tuple:
@@ -87,21 +92,29 @@ def combat_hability(
     weapons = [] if unarmed else combat_weapons()
     if not weapons:
         apply(-4, "Combat à mains nues")
-    elif has_kai("La Maîtrise des armes") and any(is_mastered(weapon) for weapon in weapons):
-        apply(2, "Maîtrise des armes")
+    elif any(is_mastered(weapon) for weapon in weapons):
+        if magnakai_series():
+            apply(3, "Science des Armes")
+        else:
+            apply(2, "Maîtrise des armes")
+    # arme d'exception portée en main (Marteau de Guerre de Bronin : +1)
+    weapon_bonus = max((item_info(w).get("combat_bonus", 0) for w in weapons if w in st.session_state.weapons), default=0)
+    if weapon_bonus:
+        apply(weapon_bonus, "Arme")
     for item in st.session_state.special:
         if unarmed and item_info(item).get("weapon"):
             continue  # le Glaive de Sommer ne sert qu'en main
         if item_info(item).get("combat_bonus"):
             apply(item_info(item)["combat_bonus"], item.capitalize())
-    if has_kai("Puissance psychique"):
-        if psychic_immune:
+    # en Magnakaï, le Foudroiement Psychique donne au moins la Puissance Psychique (+2, sans perte)
+    if has_discipline("Puissance psychique", PSI_SURGE):
+        if psychic_immune or psychic_power_immune:
             details.append("Puissance psychique : sans effet sur cet ennemi")
         else:
             apply(2, "Puissance psychique")
     if psychic_attack:
-        if has_kai("Bouclier psychique"):
-            details.append("Bouclier psychique : vous protège de l'attaque mentale")
+        if has_discipline("Bouclier psychique", "Écran Psychique"):
+            details.append(f"{shield_name()} : vous protège de l'attaque mentale")
         elif has_item(SOMMERSWERD):
             details.append("Glaive de Sommer : vous protège de la magie ennemie")
         else:
@@ -110,15 +123,32 @@ def combat_hability(
 
 
 def combat_weapons() -> list:
-    """Armes utilisables en combat : la case Armes, plus les Objets Spéciaux qui sont des armes."""
-    return st.session_state.weapons + [
+    """
+    Armes utilisables au corps à corps : la case Armes (sauf l'Arc, qui oblige à combattre à mains
+    nues), plus les Objets Spéciaux qui sont des armes.
+    """
+    return [weapon for weapon in st.session_state.weapons if not item_info(weapon).get("ranged")] + [
         item for item in st.session_state.special if item_info(item).get("weapon")
     ]
 
 
+def shield_name() -> str:
+    return "Écran Psychique" if magnakai_series() else "Bouclier psychique"
+
+
 def protected_from_magic() -> bool:
-    """Bouclier psychique, ou Glaive de Sommer qui « rend nulle toute pratique magique »."""
-    return has_kai("Bouclier psychique") or has_item(SOMMERSWERD)
+    """Bouclier psychique (Écran Psychique en Magnakaï), ou Glaive de Sommer qui « rend nulle toute pratique magique »."""
+    return has_discipline("Bouclier psychique", "Écran Psychique") or has_item(SOMMERSWERD)
+
+
+def can_surge(psychic_immune: bool) -> bool:
+    """Foudroiement Psychique possible : la Discipline, un ennemi sensible et assez d'ENDURANCE."""
+    return (
+        magnakai_series()
+        and has_magnakai(PSI_SURGE)
+        and not psychic_immune
+        and st.session_state.endurance >= PSI_SURGE_MIN_ENDURANCE
+    )
 
 
 def combat(
@@ -128,6 +158,7 @@ def combat(
     first_round_modifier: int = 0,
     first_rounds: int = 1,
     psychic_immune: bool = False,
+    psychic_power_immune: bool = False,
     psychic_attack: bool = False,
     psychic_attack_from_round: int = 1,
     flee_after: int = None,
@@ -144,6 +175,7 @@ def combat(
     enemy_loss_multiplier: int = 1,
     enemy_immune_rounds: int = 0,
     knockout: bool = False,
+    enemy_stop_at: int = None,
 ):
     """
     enemies               : [(NOM, HABILETÉ, ENDURANCE), ...] combattus l'un après l'autre.
@@ -151,7 +183,9 @@ def combat(
     hability_modifier     : bonus/malus d'HABILETÉ imposé par le texte pour tout le combat.
     first_round_modifier  : bonus/malus supplémentaire pour le premier assaut seulement (ou pour les
                             `first_rounds` premiers assauts : « -2 pendant les 3 premiers assauts »).
-    psychic_immune        : l'ennemi est insensible à la Puissance psychique.
+    psychic_immune        : l'ennemi est insensible à la Puissance psychique (et au Foudroiement Psychique).
+    psychic_power_immune  : insensible à la Puissance Psychique mais pas au Foudroiement (Magnakaï) : seul le
+                            Foudroiement compte, avec ses +4.
     psychic_attack        : l'ennemi attaque par la pensée (-2 HABILETÉ sans Bouclier psychique).
     psychic_attack_from_round : assaut à partir duquel l'attaque psychique s'applique.
     flee_after            : None = fuite impossible, 0 = à tout moment, N = après N assauts.
@@ -172,6 +206,7 @@ def combat(
     enemy_immune_rounds   : l'ennemi ne perd aucun point d'ENDURANCE pendant les N premiers assauts.
     knockout              : « si vous perdez le combat, rendez-vous au N » : à 0 d'ENDURANCE le héros ne meurt
                             pas, il retrouve la moitié des points perdus pendant le combat (issue "lost").
+    enemy_stop_at         : « cessez le combat dès que son ENDURANCE tombe à N » : l'ennemi est vaincu à N points.
     ally_damage           : ENDURANCE perdue en plus par l'ennemi à chaque assaut, blessé par un allié
                             (« Fenor lui fait perdre 3 points d'ENDURANCE à chaque assaut »).
     """
@@ -188,8 +223,8 @@ def combat(
             "outcome": None,
         }
     fight = st.session_state[state_key]
-    hability, details = combat_hability(hability_modifier, psychic_immune, False)
-    unarmed_hability = combat_hability(hability_modifier, psychic_immune, False, unarmed=True)[0]
+    hability, details = combat_hability(hability_modifier, psychic_immune, psychic_power_immune)
+    unarmed_hability = combat_hability(hability_modifier, psychic_immune, psychic_power_immune, unarmed=True)[0]
     psychic_malus = psychic_attack and not protected_from_magic()
     rules = {
         "psychic_damage": 0 if protected_from_magic() else psychic_damage,
@@ -200,10 +235,18 @@ def combat(
         "extra_loss_after": extra_loss_after,
         "enemy_immune_rounds": enemy_immune_rounds,
         "knockout": knockout,
+        "enemy_stop_at": enemy_stop_at or 0,
     }
+
+    def surging() -> bool:
+        return fight.get("surge", False) and can_surge(psychic_immune)
+
+    rules["surging"] = surging
 
     def round_hability(round_number: int) -> int:
         value = (unarmed_hability if round_number <= unarmed_rounds else hability) + fight["item_bonus"]
+        if surging():
+            value += 4 if psychic_power_immune else 2  # Foudroiement : +4 au lieu des +2 de la Puissance Psychique
         if round_number <= first_rounds:
             value += first_round_modifier
         if psychic_malus and round_number >= psychic_attack_from_round:
@@ -215,7 +258,7 @@ def combat(
     if fight["status"] == "setup":
         if psychic_attack:
             details.append(
-                "Bouclier psychique : vous protège de l'attaque mentale"
+                f"{shield_name()} : vous protège de l'attaque mentale"
                 if not psychic_malus
                 else "Attaque psychique ennemie : -2"
                 + (f" (à partir de l'assaut {psychic_attack_from_round})" if psychic_attack_from_round > 1 else "")
@@ -239,6 +282,8 @@ def combat(
             details.append(f"Au-delà de {extra_loss_after} assauts : -{extra_loss} ENDURANCE par assaut")
         if ally_damage:
             details.append(f"Votre allié blesse l'ennemi : -{ally_damage} ENDURANCE par assaut")
+        if enemy_stop_at:
+            details.append(f"Le combat cesse dès que l'ENDURANCE de l'ennemi tombe à {enemy_stop_at}")
         if ls_immune_rounds:
             details.append(f"Effet de surprise : aucune perte d'ENDURANCE pendant {ls_immune_rounds} assaut(s)")
         st.caption(" · ".join(details))
@@ -254,6 +299,7 @@ def combat(
             if st.checkbox(f"Utiliser {item} ({bonus:+d} HABILETÉ pour ce combat)", key=f"{state_key}_item_{index}"):
                 chosen.append(item)
 
+        _surge_toggle(fight, state_key, psychic_immune)
         col1, col2 = st.columns(2)
         if col1.button("⚔️ Commencer le combat", key=f"{state_key}_start", type="primary"):
             for item in chosen:
@@ -275,6 +321,7 @@ def combat(
         st.toast(feedback["text"], icon=feedback["icon"])
 
     if fight["status"] == "fighting":
+        _surge_toggle(fight, state_key, psychic_immune)
         can_flee = flee_after is not None and fight["round"] >= flee_after
         col1, col2, col3 = st.columns(3)
         if col1.button("⚔️ Assaut suivant", key=f"{state_key}_round", type="primary"):
@@ -311,6 +358,20 @@ def combat(
     return fight["outcome"]
 
 
+def _surge_toggle(fight, state_key, psychic_immune) -> None:
+    """Interrupteur du Foudroiement Psychique (Magnakaï) : +4 HABILETÉ au lieu de +2, -2 ENDURANCE par assaut."""
+    if not (magnakai_series() and has_magnakai(PSI_SURGE)) or psychic_immune:
+        return
+    allowed = st.session_state.endurance >= PSI_SURGE_MIN_ENDURANCE
+    fight["surge"] = st.toggle(
+        "🧠 Foudroiement Psychique (+4 HABILETÉ au lieu de +2, -2 ENDURANCE par assaut)",
+        value=fight.get("surge", False) and allowed,
+        key=f"{state_key}_surge",
+        disabled=not allowed,
+        help=None if allowed else "Impossible avec 6 points d'ENDURANCE ou moins.",
+    )
+
+
 def _set_feedback(fight, entries) -> None:
     """Prépare le pop-up affiché après un ou plusieurs assauts (montré au rendu suivant)."""
     ls_loss = sum(entry["ls_loss"] for entry in entries)
@@ -338,11 +399,12 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
     enemy_index = fight["enemy"]
     name, enemy_hability, _ = enemies[enemy_index]
     hability = round_hability(fight["round"])
+    rules = rules or {}
+    surge_cost = 2 if rules.get("surging", lambda: False)() else 0
     quotient = hability - enemy_hability
     dice = table_des_hasards() % 10
     enemy_loss, ls_loss = table_coups(quotient, dice)
 
-    rules = rules or {}
     if fight["round"] <= rules.get("ls_immune_rounds", 0):
         ls_loss = 0
     elif ls_loss is KILL:
@@ -357,7 +419,8 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
         enemy_loss = fight["enemy_endurance"]
     else:
         enemy_loss = enemy_loss * rules.get("enemy_multiplier", 1) + rules.get("ally_damage", 0)
-    enemy_loss = min(enemy_loss, fight["enemy_endurance"])
+    enemy_loss = min(enemy_loss, fight["enemy_endurance"] - rules.get("enemy_stop_at", 0))
+    ls_loss = min(ls_loss + surge_cost, st.session_state.endurance)  # le Foudroiement coûte 2 ENDURANCE
 
     st.session_state.endurance = max(0, st.session_state.endurance - ls_loss)
     track_lowest_endurance()
@@ -370,11 +433,11 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
         st.session_state.endurance = max(1, fight.get("start_endurance", 2) // 2)
         fight["status"], fight["outcome"] = "over", "lost"
     else:
-        _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wounded)
+        _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wounded, rules)
     return entry
 
 
-def _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wounded) -> None:
+def _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wounded, rules=None) -> None:
     """Détermine si le combat continue après l'assaut qui vient d'être joué."""
     if st.session_state.endurance <= 0:
         fight["status"], fight["outcome"] = "over", "dead"
@@ -385,7 +448,8 @@ def _update_status(fight, enemies, ls_loss, fleeing, max_rounds, stop_when_wound
     if fleeing:
         fight["status"], fight["outcome"] = "over", "fled"
         return
-    if fight["enemy_endurance"] <= 0:
+    rules = rules or {}
+    if fight["enemy_endurance"] <= rules.get("enemy_stop_at", 0):
         st.session_state.enemies_defeated = st.session_state.get("enemies_defeated", 0) + 1
         fight["enemy"] += 1
         if fight["enemy"] >= len(enemies):

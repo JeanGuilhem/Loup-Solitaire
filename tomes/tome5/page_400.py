@@ -64,8 +64,9 @@ with tab1:
     st.success(
         "**Mission accomplie !** Haakon s'est volatilisé et le Livre du Magnakaï est entre vos mains : "
         "le Kaï est ressuscité et le Magnamund est libéré de l'ombre du Seigneur des Ténèbres. "
-        "L'aventure se poursuivra dans le tome 6, premier volume du cycle Magnakaï (pas encore adapté)."
+        "L'aventure se poursuit dans le tome 6, *La Pierre de la Sagesse*, premier volume du cycle Magnakaï."
     )
+    st.page_link("tomes/tome6/debut.py", label="Continuer avec le tome 6", icon="📜")
     st.page_link("accueil.py", label="Retour à l'accueil", icon="🏠")
 
     show_illustrations()

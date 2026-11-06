@@ -23,14 +23,14 @@ def _card_selector(*args, **kwargs):
     return card_selector_module.card_selector(*args, **kwargs)
 
 
-def choose_disciplines(options: list, count: int, key: str) -> list:
+def choose_disciplines(options: list, count: int, key: str, cards: dict = KAI_CARDS) -> list:
     """
     Cartes des Disciplines `options` ; renvoie les Disciplines sélectionnées (une liste, même pour
     count = 1). Le composant ne limite pas le nombre de cartes : le compteur et le message le font,
     la page n'accepte la sélection que si elle compte exactement `count` Disciplines.
     """
     items = [
-        {"icon": KAI_CARDS[name][0], "title": name, "description": KAI_CARDS[name][1]} for name in options
+        {"icon": cards[name][0], "title": name, "description": cards[name][1]} for name in options
     ]
     if count == 1:
         index = _card_selector(items, key=key)

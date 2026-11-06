@@ -1,0 +1,631 @@
+[
+ {
+  "file": "p1_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 1,
+  "pdf_page": 30,
+  "size": [
+   313,
+   122
+  ]
+ },
+ {
+  "file": "p5_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 5,
+  "pdf_page": 33,
+  "size": [
+   210,
+   121
+  ]
+ },
+ {
+  "file": "p6_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 6,
+  "pdf_page": 34,
+  "size": [
+   252,
+   44
+  ]
+ },
+ {
+  "file": "p11_planche.jpeg",
+  "type": "planche",
+  "paragraph": 11,
+  "pdf_page": 36,
+  "size": [
+   469,
+   837
+  ],
+  "caption": "La Ville d'Eula a été transformée en un gigantesque camp militaire."
+ },
+ {
+  "file": "p26_planche.jpeg",
+  "type": "planche",
+  "paragraph": 26,
+  "pdf_page": 44,
+  "size": [
+   426,
+   816
+  ],
+  "caption": "Altan manie avec une adresse remarquable son arc en bois de Toa."
+ },
+ {
+  "file": "p26_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 26,
+  "pdf_page": 45,
+  "size": [
+   320,
+   178
+  ]
+ },
+ {
+  "file": "p27_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 27,
+  "pdf_page": 46,
+  "size": [
+   315,
+   102
+  ]
+ },
+ {
+  "file": "p31_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 31,
+  "pdf_page": 47,
+  "size": [
+   239,
+   165
+  ]
+ },
+ {
+  "file": "p36_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 36,
+  "pdf_page": 50,
+  "size": [
+   316,
+   70
+  ]
+ },
+ {
+  "file": "p39_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 39,
+  "pdf_page": 51,
+  "size": [
+   290,
+   154
+  ]
+ },
+ {
+  "file": "p41_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 41,
+  "pdf_page": 52,
+  "size": [
+   302,
+   68
+  ]
+ },
+ {
+  "file": "p43_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 43,
+  "pdf_page": 53,
+  "size": [
+   247,
+   164
+  ]
+ },
+ {
+  "file": "p47_planche.jpeg",
+  "type": "planche",
+  "paragraph": 47,
+  "pdf_page": 55,
+  "size": [
+   723,
+   1289
+  ],
+  "caption": "L'un des gardes du corps porte une épaisse lanière hérissée de pointes d'acier."
+ },
+ {
+  "file": "p48_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 48,
+  "pdf_page": 56,
+  "size": [
+   298,
+   71
+  ]
+ },
+ {
+  "file": "p55_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 55,
+  "pdf_page": 59,
+  "size": [
+   321,
+   72
+  ]
+ },
+ {
+  "file": "p63_planche.jpeg",
+  "type": "planche",
+  "paragraph": 63,
+  "pdf_page": 62,
+  "size": [
+   725,
+   1324
+  ],
+  "caption": "L'impressionnant à-pic qui surplombe le Château de Taunor projette une ombre sinistre sur le donjon."
+ },
+ {
+  "file": "p65_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 65,
+  "pdf_page": 64,
+  "size": [
+   338,
+   105
+  ]
+ },
+ {
+  "file": "p68_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 68,
+  "pdf_page": 65,
+  "size": [
+   236,
+   159
+  ]
+ },
+ {
+  "file": "p73_planche.jpeg",
+  "type": "planche",
+  "paragraph": 73,
+  "pdf_page": 67,
+  "size": [
+   446,
+   842
+  ],
+  "caption": "Barbenoire tire une épée à large lame de sous son manteau en peau d'ours."
+ },
+ {
+  "file": "p77_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 77,
+  "pdf_page": 70,
+  "size": [
+   298,
+   75
+  ]
+ },
+ {
+  "file": "p77_planche.jpeg",
+  "type": "planche",
+  "paragraph": 77,
+  "pdf_page": 71,
+  "size": [
+   675,
+   1271
+  ],
+  "caption": "Armé d'une longue épée, le Capitaine se bat comme un tigre contre les pirates."
+ },
+ {
+  "file": "p78_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 78,
+  "pdf_page": 72,
+  "size": [
+   347,
+   42
+  ]
+ },
+ {
+  "file": "p81_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 81,
+  "pdf_page": 74,
+  "size": [
+   275,
+   148
+  ]
+ },
+ {
+  "file": "p82_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 82,
+  "pdf_page": 74,
+  "size": [
+   218,
+   155
+  ]
+ },
+ {
+  "file": "p84_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 84,
+  "pdf_page": 76,
+  "size": [
+   294,
+   154
+  ]
+ },
+ {
+  "file": "p87_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 87,
+  "pdf_page": 77,
+  "size": [
+   242,
+   88
+  ]
+ },
+ {
+  "file": "p91_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 91,
+  "pdf_page": 79,
+  "size": [
+   318,
+   70
+  ]
+ },
+ {
+  "file": "p95_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 95,
+  "pdf_page": 80,
+  "size": [
+   333,
+   106
+  ]
+ },
+ {
+  "file": "p97_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 97,
+  "pdf_page": 80,
+  "size": [
+   318,
+   103
+  ]
+ },
+ {
+  "file": "p100_planche.jpeg",
+  "type": "planche",
+  "paragraph": 100,
+  "pdf_page": 83,
+  "size": [
+   512,
+   840
+  ],
+  "caption": "D'énormes dragons sculptés dans la pierre serpentent le long des remparts de Varetta."
+ },
+ {
+  "file": "p102_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 102,
+  "pdf_page": 85,
+  "size": [
+   307,
+   89
+  ]
+ },
+ {
+  "file": "p106_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 106,
+  "pdf_page": 86,
+  "size": [
+   307,
+   89
+  ]
+ },
+ {
+  "file": "p116_planche.jpeg",
+  "type": "planche",
+  "paragraph": 116,
+  "pdf_page": 90,
+  "size": [
+   481,
+   856
+  ],
+  "caption": "Un chien de guerre à l'aspect féroce fait irruption dans la pièce."
+ },
+ {
+  "file": "p127_planche.jpeg",
+  "type": "planche",
+  "paragraph": 127,
+  "pdf_page": 97,
+  "size": [
+   481,
+   851
+  ],
+  "caption": "Autour d'une grande table ronde, plusieurs vieillards sont penchés au-dessus de livres et de cartes astronomiques."
+ },
+ {
+  "file": "p129_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 129,
+  "pdf_page": 99,
+  "size": [
+   340,
+   114
+  ]
+ },
+ {
+  "file": "p151_planche.jpeg",
+  "type": "planche",
+  "paragraph": 151,
+  "pdf_page": 109,
+  "size": [
+   487,
+   845
+  ],
+  "caption": "Le chef de la procession vous interpelle d'une voix aussi glaciale que son regard."
+ },
+ {
+  "file": "p158_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 158,
+  "pdf_page": 113,
+  "size": [
+   277,
+   164
+  ]
+ },
+ {
+  "file": "p164_planche.jpeg",
+  "type": "planche",
+  "paragraph": 164,
+  "pdf_page": 116,
+  "size": [
+   681,
+   1321
+  ],
+  "caption": "A travers la visière du heaume, une voix étouffée vous parvient : « A mort, homme du Nord ! »"
+ },
+ {
+  "file": "p219_planche.jpeg",
+  "type": "planche",
+  "paragraph": 219,
+  "pdf_page": 139,
+  "size": [
+   476,
+   829
+  ],
+  "caption": "Le jeune seigneur se penche sur le pauvre vieillard, la main sur la garde de son épée."
+ },
+ {
+  "file": "p232_planche.jpeg",
+  "type": "planche",
+  "paragraph": 232,
+  "pdf_page": 145,
+  "size": [
+   723,
+   1314
+  ],
+  "caption": "L'aubergiste, un petit homme gras aux yeux porcins, vous accueille avec un sourire forcé."
+ },
+ {
+  "file": "p247_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 247,
+  "pdf_page": 152,
+  "size": [
+   174,
+   165
+  ]
+ },
+ {
+  "file": "p251_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 251,
+  "pdf_page": 154,
+  "size": [
+   302,
+   68
+  ]
+ },
+ {
+  "file": "p252_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 252,
+  "pdf_page": 154,
+  "size": [
+   210,
+   48
+  ]
+ },
+ {
+  "file": "p258_planche.jpeg",
+  "type": "planche",
+  "paragraph": 258,
+  "pdf_page": 157,
+  "size": [
+   482,
+   828
+  ],
+  "caption": "Un guerrier vêtu d'une armure noir et or, monté sur un grand destrier, pointe son arbalète dans votre direction."
+ },
+ {
+  "file": "p270_planche.jpeg",
+  "type": "planche",
+  "paragraph": 270,
+  "pdf_page": 162,
+  "size": [
+   490,
+   835
+  ],
+  "caption": "Des fissures apparaissent dans le sol et de nombreuses mains décharnées en surgissent..."
+ },
+ {
+  "file": "p279_planche.jpeg",
+  "type": "planche",
+  "paragraph": 279,
+  "pdf_page": 166,
+  "size": [
+   484,
+   835
+  ],
+  "caption": "Les cavaliers doivent transpercer un fruit posé sur la tête d'un soldat, avec la pointe de leur lance."
+ },
+ {
+  "file": "p279_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 279,
+  "pdf_page": 167,
+  "size": [
+   319,
+   71
+  ]
+ },
+ {
+  "file": "p282_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 282,
+  "pdf_page": 169,
+  "size": [
+   318,
+   70
+  ]
+ },
+ {
+  "file": "p286_planche.jpeg",
+  "type": "planche",
+  "paragraph": 286,
+  "pdf_page": 171,
+  "size": [
+   450,
+   794
+  ],
+  "caption": "Le pirate tire une nouvelle lame et lève le bras, prêt à projeter son arme."
+ },
+ {
+  "file": "p290_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 290,
+  "pdf_page": 174,
+  "size": [
+   323,
+   130
+  ]
+ },
+ {
+  "file": "p301_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 301,
+  "pdf_page": 178,
+  "size": [
+   323,
+   130
+  ]
+ },
+ {
+  "file": "p317_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 317,
+  "pdf_page": 184,
+  "size": [
+   313,
+   85
+  ]
+ },
+ {
+  "file": "p320_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 320,
+  "pdf_page": 185,
+  "size": [
+   214,
+   54
+  ]
+ },
+ {
+  "file": "p322_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 322,
+  "pdf_page": 187,
+  "size": [
+   241,
+   166
+  ]
+ },
+ {
+  "file": "p324_planche.jpeg",
+  "type": "planche",
+  "paragraph": 324,
+  "pdf_page": 188,
+  "size": [
+   461,
+   830
+  ],
+  "caption": "Pendues à des crochets fixés au plafond se balancent des carcasses d'animaux."
+ },
+ {
+  "file": "p327_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 327,
+  "pdf_page": 190,
+  "size": [
+   225,
+   100
+  ]
+ },
+ {
+  "file": "p338_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 338,
+  "pdf_page": 194,
+  "size": [
+   221,
+   182
+  ]
+ },
+ {
+  "file": "p342_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 342,
+  "pdf_page": 196,
+  "size": [
+   298,
+   74
+  ]
+ },
+ {
+  "file": "p344_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 344,
+  "pdf_page": 197,
+  "size": [
+   245,
+   172
+  ]
+ },
+ {
+  "file": "p345_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 345,
+  "pdf_page": 197,
+  "size": [
+   288,
+   97
+  ]
+ },
+ {
+  "file": "p350_planche.jpeg",
+  "type": "planche",
+  "paragraph": 350,
+  "pdf_page": 200,
+  "size": [
+   575,
+   689
+  ],
+  "caption": "La peau de la tête du Dakomyd se plisse et se craquèle, comme si une vague déferlait sous l'épaisse carapace de son crâne."
+ }
+]

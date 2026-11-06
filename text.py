@@ -1,6 +1,7 @@
 fr_presentation = "Vous vous apprêtez à démarrer une aventure, qui je l'espère vous fera voyager autant que le petit garcon que j'étais, découvrant pour la première fois le monde fantastique des Livre Dont Vous Etes le Heros."
 
 fr_unkown_kai = """*Cette maitrise vous est inconnue*"""
+fr_unknown_magnakai = """*Cette Discipline Magnakaï vous est inconnue*"""
 
 fr_hazard_item = """
 Dans les ruines fumantes du monastère détruit, vous avez

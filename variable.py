@@ -14,6 +14,8 @@ MAX_PURSE = 50
 #   combat_bonus    : bonus d'HABILETÉ à chaque combat tant que l'objet est porté (non consommé)
 #   endurance_bonus : bonus au total d'ENDURANCE tant que l'objet est porté
 #   slots           : {tome: places} places prises dans le Sac à Dos dans ce tome (1 sinon)
+#   ranged          : arme de tir (Arc) : inutile au corps à corps
+#   bow_bonus       : arc qui ajoute ce bonus au chiffre de la Table de Hasard à chaque tir
 ITEMS = {
     # --- Armes ---
     "POIGNARD": {"type": "weapon", "mastery": "POIGNARD", "description": "Arme."},
@@ -280,6 +282,68 @@ ITEMS = {
         "combat_hability": 2,
         "description": "Augmente votre HABILETÉ de 2 points pendant toute la durée d'un affrontement. Une seule dose.",
     },
+    # --- Tome 6 ---
+    "ARC": {
+        "type": "weapon",
+        "mastery": "ARC",
+        "ranged": True,
+        "description": "Arme de tir : il faut un Carquois et des flèches. Au corps à corps, il ne sert à rien "
+        "(vous combattez à mains nues, -4 HABILETÉ).",
+    },
+    "CARQUOIS": {
+        "type": "special",
+        "arrows": 6,
+        "description": "Il contient des flèches pour votre Arc (6 au plus). Vous le portez en bandoulière.",
+    },
+    "CUIRASSE DE CUIR": {
+        "type": "special",
+        "endurance_bonus": 2,
+        "description": "Elle ajoute 2 points d'ENDURANCE à votre total. Vous la portez sur vous.",
+    },
+    "ARC EN CHÊNE": {
+        "type": "weapon",
+        "mastery": "ARC",
+        "ranged": True,
+        "bow_bonus": 3,
+        "description": "Le prix du tournoi de tir à l'arc (l'« Arc en Argent » de Duadon) : +3 au chiffre de la "
+        "Table de Hasard à chaque tir.",
+    },
+    "MARTEAU DE GUERRE DE BRONIN": {
+        "type": "weapon",
+        "mastery": "MARTEAU DE GUERRE",
+        "combat_bonus": 1,
+        "description": "Un marteau en bronin, métal qui ne se ternit jamais : +1 HABILETÉ quand vous combattez avec.",
+    },
+    "EAU DE TAUNOR": {
+        "type": "backpack",
+        "heal": 6,
+        "description": "Un flacon d'eau de la source de Taunor, aux vertus régénérantes : 6 points d'ENDURANCE.",
+    },
+    "FLACON DE LAUMSPUR": {
+        "type": "backpack",
+        "heal": 3,
+        "description": "Un flacon de Potion de Laumspur trouvé sur Chanda : 3 points d'ENDURANCE.",
+    },
+    "BAIES D'ALETHER": {
+        "type": "backpack",
+        "combat_hability": 2,
+        "description": "Une poignée de baies d'Alether : +2 HABILETÉ pour un combat (une poignée par combat).",
+    },
+    "CONCENTRÉ DE CHIENDENT DES CIMETIÈRES": {"type": "backpack", "description": "Un poison foudroyant."},
+    "PASS": {"type": "special", "description": "Un carton bleu daté du jour : il donne accès à Amory pour la journée."},
+    "CLÉ EN ARGENT": {"type": "special", "description": "La clé que vous a remise Gwynian."},
+    "PLAN DE VARETTA": {"type": "special", "description": "Un plan de la ville de Varetta."},
+    "PLAN DE TEKARO": {"type": "backpack", "description": "Un plan de la ville de Tekaro, dans un étui de cuir."},
+    "CARTE DE TEKARO": {"type": "backpack", "description": "Une carte de Tekaro, achetée à Luyen."},
+    "CARTE DE LUYEN": {"type": "backpack", "description": "Une carte de Luyen."},
+    "CARTE DU SOMMERLUND": {"type": "backpack", "description": "Une carte du Sommerlund."},
+    "BAGUE EN RUBIS": {"type": "special", "description": "Une bague ornée d'un rubis."},
+    "BROCHE EN ARGENT": {"type": "special", "description": "Une broche en argent."},
+    "BOUTEILLE DE VIN": {"type": "backpack", "description": "Une bouteille de vin."},
+    "MIROIR": {"type": "backpack", "description": "Un petit miroir."},
+    "BILLET POUR LUYEN": {"type": "special", "description": "Billet du bateau Kazonara, de Soren à Luyen."},
+    "BILLET POUR RHEM": {"type": "special", "description": "Billet du bateau Kazonara, de Soren à Rhem."},
+    "BILLET POUR EULA": {"type": "special", "description": "Billet du bateau Kazonara, de Soren à Eula."},
 }
 
 # Table de Hasard (0 à 9) -> arme maîtrisée (cf. "La Maîtrise des armes")
@@ -317,6 +381,7 @@ BOOKS = {
     3: {"title": "Les Grottes de Kalte", "final_page": 350},
     4: {"title": "Le Gouffre Maudit", "final_page": 350},
     5: {"title": "Le Tyran du Désert", "final_page": 400},
+    6: {"title": "La Pierre de la Sagesse", "final_page": 350},
 }
 
 # Équipement reçu au début de chaque tome à partir du 2 (cf. « Équipement »), par les héros venus
@@ -420,6 +485,31 @@ BOOK_EQUIPMENT = {
         "place": "Holmgard",
         "journey": "partir pour Barrakeesh",
         "start_label": "Embarquer pour Barrakeesh",
+    },
+    6: {
+        "gold_base": 10,
+        "items_to_choose": 6,
+        "up_to": True,
+        "items": {
+            "ÉPÉE": ("ÉPÉE", 1),
+            "POTION DE LAUMSPUR": ("POTION DE LAUMSPUR", 1),
+            "MARTEAU DE GUERRE": ("MARTEAU DE GUERRE", 1),
+            "ARC": ("ARC", 1),
+            "CARQUOIS (6 flèches)": ("CARQUOIS", 1),
+            "4 RATIONS SPÉCIALES (4 Repas)": ("REPAS", 4),
+            "BÂTON": ("BÂTON", 1),
+            "CUIRASSE DE CUIR": ("CUIRASSE DE CUIR", 1),
+            "CORDE": ("CORDE", 1),
+            "POIGNARD": ("POIGNARD", 1),
+            "BRIQUET À AMADOU": ("BRIQUET À AMADOU", 1),
+            "HACHE": ("HACHE", 1),
+        },
+        "special": ["CARTE GÉOGRAPHIQUE"],  # une carte des pays de la Storn
+        "origin": "Tome 6 : acheté au Sommerlund, avant le départ pour Varetta.",
+        "special_origins": {},
+        "place": "Holmgard",
+        "journey": "partir en quête de la Pierre de la Sagesse",
+        "start_label": "Partir pour les pays de la Storn",
     },
 }
 
@@ -538,6 +628,102 @@ KAI_CARDS = {
     "Puissance psychique": ("🧠", "+2 HABILETÉ en combat en frappant aussi par la pensée."),
     "Communication Animale": ("🐺", "Comprendre certains animaux et leur parler."),
     "Maîtrise Psychique de la Matière": ("🔮", "Déplacer de petits objets par la seule force de l'esprit."),
+}
+
+# --------------------------------------------------------------------------------------
+# Série Magnakaï (à partir du tome 6) : seules les Disciplines Magnakaï comptent, les Disciplines
+# Kaï restent sur la Feuille d'Aventure sans effet (règle officielle).
+# --------------------------------------------------------------------------------------
+MAGNAKAI_FROM = 6
+MAGNAKAI_START = 3  # Disciplines Magnakaï au tome 6, une de plus par tome terminé
+MAGNAKAI_WEAPONS_START = 3  # armes de la Science des Armes au tome 6, une de plus par tome terminé
+MAGNAKAI_WEAPON_TABLE = [
+    "POIGNARD", "LANCE", "MASSE D'ARMES", "SABRE", "MARTEAU DE GUERRE",
+    "ARC", "HACHE", "ÉPÉE", "BÂTON", "GLAIVE",
+]
+MAGNAKAI = {
+    "Science des Armes": """Cette Discipline permet à un Maître Kaï d'être habile au
+maniement de toutes sortes d'armes. Le rang de Maître Kaï Supérieur qui est le vôtre au début
+de cette série des Magnakaï indique que vous avez la parfaite maîtrise de trois armes, à choisir
+parmi : le poignard, la lance, la masse d'armes, le sabre, le marteau de guerre, l'arc, la hache,
+l'épée, le bâton et le glaive.
+
+**Chaque fois que vous combattrez avec l'une de ces armes, vous aurez droit à 3 points
+d'HABILETÉ supplémentaires.** Avec l'Arc, ajoutez 3 au chiffre tiré dans la Table de Hasard.
+
+A chaque fois que vous accomplirez avec succès une mission de la série des Magnakaï, vous
+pourrez ajouter une arme à votre liste.""",
+    "Contrôle Animal": """Grâce à cette technique, un Maître Kaï peut communiquer avec
+certains animaux et deviner les intentions de certains autres. Il peut, en outre, combattre à
+cheval dans des conditions très avantageuses.""",
+    "Science Médicale": """Cette Discipline donne la faculté de récupérer des points
+d'ENDURANCE perdus lors d'un combat. Elle permet aussi à un Maître Kaï de soigner certaines
+maladies, de guérir la cécité et toutes sortes de blessures, et lui fait connaître les propriétés
+des plantes, des herbes, des racines et des potions.
+
+**1 point d'ENDURANCE pour chaque paragraphe parcouru sans combat (automatiquement rendu)**.""",
+    "Invisibilité": """Cette technique permet au Maître Kaï de se fondre dans le
+paysage, même dans les terrains les plus exposés. Elle lui donne la possibilité de masquer la
+chaleur et l'odeur de son corps, d'adopter les mœurs et de parler le dialecte de n'importe quelle
+ville qu'il visite.""",
+    "Art de la Chasse": """Cette Discipline donne au Maître Kaï l'assurance qu'il ne mourra
+jamais de faim, même dans les déserts et autres régions arides. Par ailleurs, elle lui permet de
+se déplacer très vite et avec agilité, et lui évite de perdre des points d'HABILETÉ lors d'une
+attaque surprise ou d'une embuscade.
+
+**Vous êtes dispensé de Repas chaque fois qu'il est obligatoire de manger.**""",
+    "Exploration": """C'est la technique qui permet à un Maître Kaï de toujours choisir
+le bon chemin, même en territoire inconnu ; il pourra aussi lire les langues étrangères,
+décrypter les symboles, reconnaître les empreintes et autres traces et déceler la présence de la
+plupart des pièges. Enfin, elle lui permettra de repérer intuitivement le nord.""",
+    "Foudroiement Psychique": """Grâce à cette technique, le Maître Kaï peut attaquer un
+ennemi par la seule force de son esprit.
+
+**Puissance Psychique : +2 points d'HABILETÉ, sans perte d'ENDURANCE.**
+
+**Foudroiement Psychique : +4 points d'HABILETÉ, mais vous perdez 2 points d'ENDURANCE à chaque
+Assaut.** Il ne peut pas être utilisé si votre ENDURANCE est de 6 points ou moins.
+
+Il n'est pas forcément efficace contre toutes les créatures : il se peut que certaines d'entre
+elles y soient insensibles. Si le cas se présente, vous en serez averti.""",
+    "Écran Psychique": """Certaines créatures malfaisantes de Magnamund ont la faculté de
+vous atteindre en faisant usage de leur force psychique.
+
+**Cette Discipline vous évite de perdre des points d'ENDURANCE lors d'une semblable
+agression** et elle augmente vos moyens de défense contre l'hypnose et les illusions
+supranaturelles.""",
+    "Nexus": """La Maîtrise de cette Discipline donne à un Maître Kaï la faculté de
+supporter des chaleurs et des froids extrêmes sans perte de point d'ENDURANCE et permet de
+déplacer les objets par le seul pouvoir de la concentration mentale.""",
+    "Intuition": """C'est la technique qui permet au Maître Kaï de deviner les dangers
+imminents qui le menacent et les intentions véritables d'un inconnu ou la nature d'un objet
+étrange. L'Intuition donne également la possibilité de communiquer par télépathie avec une autre
+personne et de sentir si une créature dispose de pouvoirs psychiques.""",
+}
+MAGNAKAI_CARDS = {
+    "Science des Armes": ("⚔️", "+3 HABILETÉ avec les 3 armes que vous choisissez."),
+    "Contrôle Animal": ("🐎", "Parler aux animaux et combattre à cheval."),
+    "Science Médicale": ("🌿", "Regagner 1 point d'ENDURANCE à chaque paragraphe sans combat, et soigner."),
+    "Invisibilité": ("🍃", "Vous fondre dans le paysage ou passer pour un habitant."),
+    "Art de la Chasse": ("🏹", "Ne jamais manquer de nourriture, ni être surpris."),
+    "Exploration": ("🧭", "Trouver le bon chemin, lire les langues et déceler les pièges."),
+    "Foudroiement Psychique": ("🧠", "+2 HABILETÉ par la pensée, ou +4 au prix de 2 ENDURANCE par assaut."),
+    "Écran Psychique": ("🛡️", "Ne rien perdre face aux attaques mentales de l'ennemi."),
+    "Nexus": ("🔥", "Résister au feu et au froid, déplacer les objets par l'esprit."),
+    "Intuition": ("👁️", "Pressentir les dangers, deviner les intentions, télépathie."),
+}
+# Cercles de Savoir : Disciplines nécessaires, bonus (HABILETÉ, ENDURANCE) ajoutés aux totaux
+LORE_CIRCLES = {
+    "Cercle de Feu": (["Art de la Chasse", "Science des Armes"], 1, 2),
+    "Cercle de la Lumière": (["Contrôle Animal", "Science Médicale"], 0, 3),
+    "Cercle de Solaris": (["Invisibilité", "Art de la Chasse", "Exploration"], 1, 3),
+    "Cercle de l'Esprit": (["Foudroiement Psychique", "Écran Psychique", "Nexus", "Intuition"], 3, 3),
+}
+# Rangs Magnakaï (nombre de Disciplines -> titre)
+MAGNAKAI_RANKS = {
+    1: "Maître Kaï", 2: "Maître Kaï d'ordre intermédiaire", 3: "Maître Kaï d'ordre supérieur",
+    4: "Maître primat", 5: "Maître tutélaire", 6: "Maître principal", 7: "Maître mentor",
+    8: "Maître éminent", 9: "Maître transcendant", 10: "Grand Maître Kaï",
 }
 AI_INSTRUCTION = """
 Vous êtes un expert Python/Streamlit. 

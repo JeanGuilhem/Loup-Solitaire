@@ -298,6 +298,160 @@ TOMB = _svg(
     800, 600, aspect="xMidYMax slice",
 )
 
+def _leafy_tree(x: int, base: int, height: int, fill: str) -> str:
+    """Arbre feuillu : un tronc et une couronne de trois cercles."""
+    r = height * .28
+    top = base - height
+    return (f'<g fill="{fill}"><rect x="{x - 3}" y="{top + r}" width="6" height="{height - r}"/>'
+            f'<circle cx="{x}" cy="{top + r}" r="{r}"/><circle cx="{x - r * .7}" cy="{top + r * 1.5}" r="{r * .8}"/>'
+            f'<circle cx="{x + r * .7}" cy="{top + r * 1.4}" r="{r * .85}"/></g>')
+
+
+def _reeds(x: int, base: int, fill: str) -> str:
+    blades = "".join(f'<path d="M{x + i * 4} {base}q{(-1) ** i * 3} -{18 + i % 3 * 7} {(-1) ** i * 5} -{28 + i % 3 * 9}"/>'
+                     for i in range(7))
+    return f'<g stroke="{fill}" stroke-width="2" fill="none" stroke-linecap="round">{blades}</g>'
+
+
+RIVER = _svg(
+    # berge d'en face : collines vertes et arbres
+    _dunes(150, 16, "#2f3d2a", width=800)
+    + _leafy_tree(70, 160, 70, "#26331f") + _leafy_tree(110, 158, 52, "#2b3a24") + _leafy_tree(330, 160, 80, "#26331f")
+    + _leafy_tree(520, 158, 60, "#2b3a24") + _leafy_tree(560, 160, 74, "#26331f") + _leafy_tree(700, 158, 56, "#2b3a24")
+    + '<rect y="158" width="800" height="8" fill="#1f2a1b"/>'
+    # le fleuve et ses reflets
+    + '<rect y="166" width="800" height="134" fill="#3b5560"/>'
+    + '<rect y="166" width="800" height="18" fill="#2c434d"/>'
+    + '<g stroke="#9cb8c0" stroke-width="2" opacity=".35" stroke-linecap="round">'
+    '<path d="M30 196h70M160 214h110M330 190h60M450 222h90M600 202h80M720 232h50M90 246h80M380 252h70M560 262h60"/></g>'
+    # une barge au loin
+    + '<path d="M400 196h120l-14 14h-92z" fill="#1d2420"/><rect x="452" y="166" width="3" height="30" fill="#1d2420"/>'
+    + '<path d="M455 168l26 22h-26z" fill="#4a4a3a"/>'
+    # berge proche : roseaux et saules
+    + _dunes(274, 10, "#1f2a18", width=800)
+    + _leafy_tree(150, 282, 120, "#1a2614") + _leafy_tree(205, 282, 84, "#1d2a16") + _leafy_tree(640, 282, 130, "#1a2614")
+    + _reeds(30, 284, "#2d3b22") + _reeds(250, 286, "#2d3b22") + _reeds(420, 284, "#2d3b22") + _reeds(760, 286, "#2d3b22"),
+    800, 300,
+)
+
+
+def _hanging(x: int, length: int, item: str) -> str:
+    """Objet pendu à la poutre par une corde : bouquet d'herbes, jambon, lanterne, marmite ou épée."""
+    rope = f'<path d="M{x} 34v{length}" stroke="#2a1d10" stroke-width="2"/>'
+    y = 34 + length
+    leaves = "".join(
+        f'<ellipse cx="{x + dx}" cy="{y + 22}" rx="5" ry="20" transform="rotate({-dx * 2} {x} {y})"/>'
+        for dx in (-10, -5, 0, 5, 10)
+    )
+    shapes = {
+        "herbes": f'<g fill="#4c5a2c">{leaves}</g><rect x="{x - 6}" y="{y - 2}" width="12" height="5" fill="#8a6a40"/>',
+        "jambon": f'<path d="M{x - 4} {y}h8l14 46q-18 14-36 0z" fill="#6e3a24"/><rect x="{x - 4}" y="{y}" width="8" height="8" fill="#d9c49a"/>',
+        "lanterne": f'<circle cx="{x}" cy="{y + 3}" r="4" fill="none" stroke="#2a1d10" stroke-width="2"/>'
+                    f'<path d="M{x - 12} {y + 13}l12-6 12 6z" fill="#2a1d10"/>'
+                    f'<rect x="{x - 10}" y="{y + 13}" width="20" height="26" fill="#f0b648" opacity=".9"/>'
+                    f'<g fill="#2a1d10"><rect x="{x - 11}" y="{y + 13}" width="1.5" height="26"/>'
+                    f'<rect x="{x + 9.5}" y="{y + 13}" width="1.5" height="26"/>'
+                    f'<rect x="{x - 13}" y="{y + 39}" width="26" height="4"/></g>',
+        "marmite": f'<path d="M{x - 20} {y + 6}h40v8q0 22-20 22t-20-22z" fill="#262626"/>'
+                   f'<path d="M{x - 16} {y + 6}q16-14 32 0" stroke="#262626" stroke-width="3" fill="none"/>',
+        "epee": f'<path d="M{x - 2} {y}h4v56l-2 8-2-8z" fill="#9a9a9a"/><rect x="{x - 10}" y="{y + 10}" width="20" height="4" fill="#5a3a1a"/>',
+    }
+    return rope + shapes[item]
+
+
+def _shelf(x: int, y: int, width: int, items: str) -> str:
+    """Planche murale et sa rangée de pots, fioles et boîtes."""
+    return f'<rect x="{x}" y="{y}" width="{width}" height="8" fill="#3a2614"/>' + items
+
+
+def _jars(x: int, y: int, count: int) -> str:
+    colors = ["#5a7a5a", "#8a5a2a", "#4a5a7a", "#7a3a3a", "#a08040"]
+    out = []
+    for i in range(count):
+        cx = x + 14 + i * 30
+        color = colors[i % len(colors)]
+        if i % 3 == 0:  # fiole
+            out.append(f'<path d="M{cx - 3} {y - 34}h6v10q8 4 8 12v12h-22v-12q0-8 8-12z" fill="{color}"/>')
+        elif i % 3 == 1:  # pot
+            out.append(f'<rect x="{cx - 10}" y="{y - 26}" width="20" height="26" rx="4" fill="{color}"/>'
+                       f'<rect x="{cx - 11}" y="{y - 30}" width="22" height="5" fill="#2a1d10"/>')
+        else:  # boîte
+            out.append(f'<rect x="{cx - 12}" y="{y - 20}" width="24" height="20" fill="{color}"/>')
+    return "".join(out)
+
+
+def _weapon_rack(x: int, y: int) -> str:
+    """Présentoir mural d'armes médiévales : planche, bouclier, épées croisées, hache, lance et masse."""
+    steel, wood, dark = "#a0a4a8", "#5a3a1a", "#1a1109"
+    sword = (lambda cx, angle: f'<g transform="rotate({angle} {cx} {y + 60})">'
+             f'<path d="M{cx - 3} {y}h6v92l-3 10-3-10z" fill="{steel}"/>'
+             f'<rect x="{cx - 14}" y="{y + 92}" width="28" height="5" fill="{wood}"/>'
+             f'<rect x="{cx - 3}" y="{y + 97}" width="6" height="18" fill="{wood}"/>'
+             f'<circle cx="{cx}" cy="{y + 118}" r="4" fill="{steel}"/></g>')
+    return (
+        f'<rect x="{x}" y="{y - 10}" width="260" height="140" rx="4" fill="#3a2614"/>'
+        f'<rect x="{x}" y="{y - 10}" width="260" height="6" fill="{dark}"/>'
+        # épées croisées derrière un bouclier
+        + sword(x + 80, -28) + sword(x + 80, 28)
+        + f'<path d="M{x + 55} {y + 30}h50v34q0 30-25 42q-25-12-25-42z" fill="#6b2a20" stroke="{steel}" stroke-width="3"/>'
+        f'<path d="M{x + 80} {y + 34}v66M{x + 59} {y + 58}h42" stroke="#c9a040" stroke-width="4"/>'
+        # hache
+        f'<rect x="{x + 150}" y="{y + 4}" width="6" height="112" fill="{wood}"/>'
+        f'<path d="M{x + 156} {y + 10}q26 4 30 26q-4 22-30 26z" fill="{steel}"/>'
+        # lance
+        f'<rect x="{x + 190}" y="{y - 2}" width="4" height="124" fill="{wood}"/>'
+        f'<path d="M{x + 192} {y - 22}l7 20h-14z" fill="{steel}"/>'
+        # masse d'armes
+        f'<rect x="{x + 226}" y="{y + 40}" width="6" height="80" fill="{wood}"/>'
+        f'<circle cx="{x + 229}" cy="{y + 36}" r="13" fill="{steel}"/>'
+        f'<path d="M{x + 229} {y + 18}v-6M{x + 211} {y + 36}h-6M{x + 247} {y + 36}h6M{x + 216} {y + 23}l-5-5M{x + 242} {y + 23}l5-5" '
+        f'stroke="{steel}" stroke-width="4"/>'
+    )
+
+
+def _counter_potions(x: int, base: int) -> str:
+    """Fioles et flacons posés sur le comptoir, avec un reflet."""
+    out = []
+    for i, (color, kind) in enumerate([("#7a2a3a", "ronde"), ("#3a6a4a", "haute"), ("#4a5a9a", "ronde"),
+                                       ("#a07a2a", "haute"), ("#6a3a8a", "ronde")]):
+        cx = x + i * 26
+        if kind == "ronde":
+            out.append(f'<circle cx="{cx}" cy="{base - 12}" r="12" fill="{color}"/>'
+                       f'<rect x="{cx - 3}" y="{base - 34}" width="6" height="12" fill="{color}"/>')
+        else:
+            out.append(f'<rect x="{cx - 8}" y="{base - 30}" width="16" height="30" rx="3" fill="{color}"/>'
+                       f'<rect x="{cx - 3}" y="{base - 40}" width="6" height="10" fill="{color}"/>')
+        out.append(f'<rect x="{cx - 4}" y="{base - 44 if kind == "haute" else base - 38}" width="8" height="5" fill="#8a6a40"/>'
+                   f'<rect x="{cx - 5}" y="{base - 24}" width="3" height="10" fill="#fff" opacity=".35"/>')
+    return "".join(out)
+
+
+SHOP = _svg(
+    '<rect width="800" height="450" fill="#2a1c10"/>'
+    # mur de planches
+    + "".join(f'<rect x="{x}" y="0" width="2" height="450" fill="#1f150b"/>' for x in range(0, 800, 40))
+    # poutre du plafond et objets pendus
+    + '<rect y="20" width="800" height="16" fill="#1a1109"/>'
+    + _hanging(110, 24, "herbes") + _hanging(180, 40, "jambon") + _hanging(250, 16, "lanterne")
+    + _hanging(560, 20, "marmite") + _hanging(630, 36, "herbes") + _hanging(700, 14, "lanterne") + _hanging(760, 24, "epee")
+    # présentoirs muraux, à gauche et à droite
+    + _shelf(20, 190, 190, _jars(20, 190, 6)) + _shelf(20, 270, 190, _jars(20, 270, 6))
+    + _shelf(590, 190, 190, _jars(590, 190, 6)) + _shelf(590, 270, 190, _jars(590, 270, 6))
+    # présentoir d'armes au mur, au-dessus du comptoir
+    + _weapon_rack(270, 222)
+    # comptoir au premier plan, avec une balance, des potions et des pièces
+    + '<rect x="0" y="360" width="800" height="16" fill="#4a3018"/>'
+    + '<rect x="0" y="376" width="800" height="74" fill="#33210f"/>'
+    + "".join(f'<rect x="{x}" y="376" width="3" height="74" fill="#24170a"/>' for x in range(60, 800, 120))
+    + '<g transform="translate(-270 0)"><g fill="#8a6a30"><rect x="396" y="310" width="6" height="50"/>'
+    '<rect x="350" y="308" width="98" height="4"/><path d="M340 330h40l-6 10h-28zM418 330h40l-6 10h-28z"/></g>'
+    '<g stroke="#8a6a30" stroke-width="1.5"><path d="M354 310l-8 20M354 310l20 20M444 310l-20 20M444 310l8 20"/></g></g>'
+    + '<g fill="#c9a040"><circle cx="560" cy="354" r="6"/><circle cx="574" cy="356" r="6"/><circle cx="567" cy="348" r="6"/></g>'
+    + _counter_potions(210, 360) + _counter_potions(600, 360),
+    800, 450, aspect="xMidYMax slice",
+)
+
+
 ENVIRONMENTS = {
     "foret": {
         "label": "Forêt",
@@ -376,6 +530,18 @@ ENVIRONMENTS = {
         "sky": "radial-gradient(ellipse at 50% 40%, #6a4a22 0%, #3c2a14 50%, #1a1209 100%)",
         "band": TOMB, "band_position": "bottom", "band_height": "100vh", "tile": "100%",
         "accent": "#8a6a30", "accent_dark": "#e0c07a", "panel": "#fbf6ea", "panel_dark": "#231a10",
+    },
+    "fleuve": {
+        "label": "Au bord du fleuve",
+        "sky": "linear-gradient(180deg, #1c2a2c 0%, #2e4446 45%, #56705f 80%, #6f8566 100%)",
+        "band": RIVER, "band_position": "bottom", "band_height": "40vh", "tile": "900px",
+        "accent": "#2f5a52", "accent_dark": "#94c2b4", "panel": "#f5f9f6", "panel_dark": "#18211f",
+    },
+    "boutique": {
+        "label": "Boutique",
+        "sky": "radial-gradient(ellipse at 50% 35%, #6a4a26 0%, #3e2a14 55%, #1c1209 100%)",
+        "band": SHOP, "band_position": "bottom", "band_height": "100vh", "tile": "100%",
+        "accent": "#7a5020", "accent_dark": "#e0b070", "panel": "#fcf6ec", "panel_dark": "#241a10",
     },
 }
 

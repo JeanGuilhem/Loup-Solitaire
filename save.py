@@ -29,6 +29,10 @@ SAVED_KEYS = [
     "special",
     "kai",
     "weapon_mastery",
+    "magnakai",
+    "magnakai_weapons",
+    "lore_bonus",
+    "arrows",
     "current_page_number",
     "book",  # tome en cours
     "story_flags",

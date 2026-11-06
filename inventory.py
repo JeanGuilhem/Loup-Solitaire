@@ -20,7 +20,18 @@ from environments import apply_page_environment
 from game_stats import record_page
 from save import delete_save, page_path, save_game
 from utils import ls_death, show_adventure_stats, track_lowest_endurance
-from variable import BOOKS, ITEMS, KAI, MAX_BACKPACK, MAX_PURSE, MAX_WEAPONS
+from variable import (
+    BOOKS,
+    ITEMS,
+    KAI,
+    LORE_CIRCLES,
+    MAGNAKAI,
+    MAGNAKAI_FROM,
+    MAGNAKAI_RANKS,
+    MAX_BACKPACK,
+    MAX_PURSE,
+    MAX_WEAPONS,
+)
 
 BACKPACK_ITEM = "SAC À DOS"
 # Fait retenu « blessure infectée » (tome 5, §63) : -2 ENDURANCE par paragraphe jusqu'à une Potion de Laumspur
@@ -38,6 +49,10 @@ DEFAULT_STATE = {
     "special": [],
     "kai": [],
     "weapon_mastery": [],
+    "magnakai": [],  # Disciplines Magnakaï (à partir du tome 6)
+    "magnakai_weapons": [],  # armes de la Science des Armes
+    "lore_bonus": [0, 0],  # (HABILETÉ, ENDURANCE) déjà ajoutés par les Cercles de Savoir
+    "arrows": 0,  # flèches du Carquois
     "current_page_number": 0,
     "last_page_number": 0,
     "book": 1,  # tome en cours
@@ -70,6 +85,7 @@ def _strip_article(text: str) -> str:
 
 _ITEM_INDEX = {_normalize(name): name for name in ITEMS}
 _KAI_INDEX = {_strip_article(_normalize(name)): name for name in KAI}
+_MAGNAKAI_INDEX = {_strip_article(_normalize(name)): name for name in MAGNAKAI}
 
 
 def canonical_item(name: str) -> str:
@@ -104,6 +120,10 @@ def canonical_kai(name: str):
     return _KAI_INDEX.get(_strip_article(_normalize(name)))
 
 
+def canonical_magnakai(name: str):
+    return _MAGNAKAI_INDEX.get(_strip_article(_normalize(name)))
+
+
 # --------------------------------------------------------------------------------------
 # État
 # --------------------------------------------------------------------------------------
@@ -133,7 +153,7 @@ def _reset_page_flags() -> None:
             st.session_state[key] = False
         elif key.startswith("done_fighting"):
             st.session_state[key] = False
-        elif key.startswith(("combat_", "hazard_")):
+        elif key.startswith(("combat_", "hazard_", "bow_")):
             del st.session_state[key]
     st.session_state.pop("artifact_choice", None)  # objet examiné dans l'écran d'équipement
     for key in [key for key in st.session_state if key.startswith("inv_section_")]:
@@ -216,15 +236,15 @@ def check_inventory(is_fighting: bool = False, current_page_number: int = 0, boo
 
 
 def _apply_healing() -> None:
-    """Guérison : +1 ENDURANCE par paragraphe traversé sans combat, sous le total initial."""
+    """Guérison (Science Médicale en Magnakaï) : +1 ENDURANCE par paragraphe sans combat, sous le total initial."""
     if (
         not st.session_state.page_has_fight
-        and has_kai("La Guérison")
+        and has_discipline("La Guérison", "Science Médicale")
         and st.session_state.endurance < st.session_state.total_endurance
     ):
         st.session_state.endurance += 1
         st.toast(
-            f"**Guérison : +1 ENDURANCE** "
+            f"**{'Science Médicale' if magnakai_series() else 'Guérison'} : +1 ENDURANCE** "
             f"({st.session_state.endurance}/{st.session_state.total_endurance})",
             icon="🌿",
         )
@@ -269,6 +289,92 @@ def has_kai(name: str) -> bool:
     """has_kai("Le Sixième Sens"), has_kai("Sixième Sens") et has_kai("sixieme sens") sont équivalents."""
     discipline = canonical_kai(name)
     return discipline is not None and discipline in st.session_state.kai
+
+
+# --------------------------------------------------------------------------------------
+# Disciplines Magnakaï (à partir du tome 6, les Disciplines Kaï n'ont plus d'effet)
+# --------------------------------------------------------------------------------------
+def magnakai_series() -> bool:
+    return st.session_state.get("book", 1) >= MAGNAKAI_FROM
+
+
+def has_magnakai(name: str) -> bool:
+    """has_magnakai("Science Médicale"), has_magnakai("la science medicale") sont équivalents."""
+    discipline = canonical_magnakai(name)
+    return discipline is not None and discipline in st.session_state.get("magnakai", [])
+
+
+def has_discipline(kai: str, magnakai: str) -> bool:
+    """La Discipline qui compte dans la série en cours : has_discipline("La Chasse", "Art de la Chasse")."""
+    return has_magnakai(magnakai) if magnakai_series() else has_kai(kai)
+
+
+def magnakai_rank() -> int:
+    """Nombre de Disciplines Magnakaï maîtrisées (3 = Maître Kaï d'ordre supérieur, 4 = Maître primat...)."""
+    return len(st.session_state.get("magnakai", []))
+
+
+def magnakai_title() -> str:
+    return MAGNAKAI_RANKS.get(magnakai_rank(), "")
+
+
+def completed_lore_circles() -> list:
+    disciplines = set(st.session_state.get("magnakai", []))
+    return [name for name, (needed, _, _) in LORE_CIRCLES.items() if set(needed) <= disciplines]
+
+
+def apply_lore_circles() -> None:
+    """Les Cercles de Savoir complets ajoutent leurs points aux totaux d'HABILETÉ et d'ENDURANCE (une fois)."""
+    hability = sum(LORE_CIRCLES[name][1] for name in completed_lore_circles())
+    endurance = sum(LORE_CIRCLES[name][2] for name in completed_lore_circles())
+    applied = st.session_state.get("lore_bonus", [0, 0])
+    st.session_state.hability += hability - applied[0]
+    st.session_state.total_endurance += endurance - applied[1]
+    st.session_state.endurance += endurance - applied[1]
+    st.session_state.lore_bonus = [hability, endurance]
+
+
+# --------------------------------------------------------------------------------------
+# Arc et flèches
+# --------------------------------------------------------------------------------------
+QUIVER = "CARQUOIS"
+MAX_ARROWS = 6
+
+
+def add_arrows(count: int) -> int:
+    """Remplit le Carquois (6 flèches au plus). Renvoie le nombre de flèches réellement ajoutées."""
+    if not has_item(QUIVER):
+        return 0
+    added = max(0, min(count, MAX_ARROWS - st.session_state.get("arrows", 0)))
+    st.session_state.arrows = st.session_state.get("arrows", 0) + added
+    return added
+
+
+def bows() -> list:
+    """Les arcs que porte le héros (ARC, ARC EN CHÊNE...)."""
+    return [weapon for weapon in st.session_state.weapons if item_info(weapon).get("mastery") == "ARC"]
+
+
+def can_shoot() -> bool:
+    """Un Arc, un Carquois et au moins une flèche."""
+    return bool(bows()) and has_item(QUIVER) and st.session_state.get("arrows", 0) > 0
+
+
+def use_arrow() -> bool:
+    """Raye une flèche de la Feuille d'Aventure. Renvoie False s'il n'y en avait plus."""
+    if st.session_state.get("arrows", 0) <= 0:
+        return False
+    st.session_state.arrows -= 1
+    return True
+
+
+def bow_bonus() -> int:
+    """
+    « Si vous maîtrisez la Science des Armes [avec l'Arc], ajoutez 3 au chiffre tiré », plus le bonus du
+    meilleur arc porté (l'Arc en Chêne : +3).
+    """
+    mastery = 3 if magnakai_series() and is_mastered("ARC") else 0
+    return mastery + max((item_info(bow).get("bow_bonus", 0) for bow in bows()), default=0)
 
 
 # --------------------------------------------------------------------------------------
@@ -379,6 +485,8 @@ def remove_from_inventory(name: str, quantity: int = 1) -> bool:
             if item in st.session_state[container]:
                 st.session_state[container].remove(item)
                 if container == "special":
+                    if item == QUIVER and QUIVER not in st.session_state.special:
+                        st.session_state.arrows = 0
                     bonus = item_info(item).get("endurance_bonus", 0)
                     st.session_state.total_endurance -= bonus
                     st.session_state.endurance = min(
@@ -426,6 +534,7 @@ def confiscate_equipment() -> None:
         "has_backpack": st.session_state.has_backpack,
         "special": list(st.session_state.special),
         "purse": st.session_state.purse,
+        "arrows": st.session_state.get("arrows", 0),
     }
     lose_gold()
     lose_backpack()
@@ -445,6 +554,7 @@ def restore_confiscated() -> bool:
     for item in saved["special"]:
         add_to_inventory(item, origin=st.session_state.get("provenance", {}).get(item))
     add_gold(saved["purse"])
+    add_arrows(saved.get("arrows", 0))
     return True
 
 
@@ -730,7 +840,13 @@ def display_inventory(collapsible: bool = True) -> None:
             if col2.button("Jeter", key=f"drop_weapon_{index}"):
                 st.session_state.weapons.pop(index)
                 st.rerun()
-        if st.session_state.weapon_mastery:
+        if magnakai_series():
+            if has_magnakai("Science des Armes") and st.session_state.get("magnakai_weapons"):
+                st.caption(
+                    f"Science des Armes : {', '.join(st.session_state.magnakai_weapons)}. Combattre avec "
+                    "l'une de ces armes augmente votre HABILETÉ de 3 points."
+                )
+        elif st.session_state.weapon_mastery:
             st.caption(
                 f"Vous maîtrisez : {', '.join(st.session_state.weapon_mastery)}. Combattre avec "
                 "une arme que vous maîtrisez augmente votre HABILETÉ de 2 points."
@@ -766,7 +882,8 @@ def display_inventory(collapsible: bool = True) -> None:
         for index, item in enumerate(st.session_state.special):
             info = item_info(item)
             col1, col2, col3 = st.columns([2, 1, 1])
-            col1.write(f"**{item}**")
+            arrows = f" — {st.session_state.get('arrows', 0)}/{MAX_ARROWS} flèches" if item == QUIVER else ""
+            col1.write(f"**{item}**{arrows}")
             if info.get("description"):
                 col1.caption(info["description"])
             if info.get("heal"):
@@ -777,12 +894,29 @@ def display_inventory(collapsible: bool = True) -> None:
                 remove_from_inventory(item)
                 st.rerun()
 
+    if magnakai_series():
+        title = f"Disciplines Magnakaï ({magnakai_rank()}) — {magnakai_title()}"
+        with _inventory_section(title, "🌟", "magnakai", collapsible):
+            for discipline in st.session_state.get("magnakai", []):
+                st.write(f"**{discipline}**")
+                st.caption(MAGNAKAI.get(discipline))
+            for circle in completed_lore_circles():
+                _, hability, endurance = LORE_CIRCLES[circle]
+                st.success(f"**{circle}** complet : +{hability} HABILETÉ, +{endurance} ENDURANCE (déjà comptés).")
+
     title = f"Disciplines Kaï ({len(st.session_state.kai)})"
     with _inventory_section(title, "🐺", "kai", collapsible):
+        if magnakai_series():
+            st.caption("Maître Kaï, vous avez appris les Disciplines Kaï : dans la série Magnakaï, seules vos "
+                       "Disciplines Magnakaï comptent.")
         for discipline in st.session_state.kai:
             st.write(f"**{discipline}**")
             st.caption(KAI.get(discipline))
 
 
 def is_mastered(weapon: str) -> bool:
-    return item_info(weapon).get("mastery") in st.session_state.weapon_mastery
+    """Maîtrise des armes (Kaï, +2) ou Science des Armes (Magnakaï, +3) pour cette arme."""
+    mastery = item_info(weapon).get("mastery")
+    if magnakai_series():
+        return has_magnakai("Science des Armes") and mastery in st.session_state.get("magnakai_weapons", [])
+    return mastery in st.session_state.weapon_mastery
