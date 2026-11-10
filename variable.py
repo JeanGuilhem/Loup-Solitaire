@@ -46,6 +46,7 @@ ITEMS = {
         "description": "Herbe rare aux vertus curatives. Chaque dose vous rend 3 points d'ENDURANCE.",
     },
     "TORCHE": {"type": "backpack", "description": "Un fagot de branches enduit de poix."},
+    "LANTERNE": {"type": "backpack", "description": "Une lanterne pour éclairer les lieux obscurs."},
     "BRIQUET À AMADOU": {"type": "backpack", "description": "Pour allumer un feu ou une torche."},
     "SAVON PARFUMÉ": {"type": "backpack", "description": "Un morceau de savon parfumé."},
     "MESSAGE": {"type": "backpack", "description": "Un message écrit sur une peau d'animal."},
@@ -69,8 +70,8 @@ ITEMS = {
         "description": "Elle ajoute 4 points d'ENDURANCE à votre total. Vous en êtes vêtu.",
     },
     "CLÉ D'ARGENT": {"type": "special", "description": "Une petite clé faite en argent."},
-    "CLÉ D'OR": {"type": "special", "description": "Clé obtenue du Serpent de Pierre."},
-    "PARCHEMIN": {"type": "special", "description": "Un rouleau de parchemin trouvé sur un Glok."},
+    "CLÉ D'OR": {"type": "special", "description": "Une clé en or."},
+    "PARCHEMIN": {"type": "special", "description": "Un rouleau de parchemin."},
     "PENDENTIF À L'ÉTOILE DE CRISTAL": {
         "type": "special",
         "description": "Symbole de la Confrérie de l'Étoile de Cristal, offert par Banedon.",
@@ -344,6 +345,34 @@ ITEMS = {
     "BILLET POUR LUYEN": {"type": "special", "description": "Billet du bateau Kazonara, de Soren à Luyen."},
     "BILLET POUR RHEM": {"type": "special", "description": "Billet du bateau Kazonara, de Soren à Rhem."},
     "BILLET POUR EULA": {"type": "special", "description": "Billet du bateau Kazonara, de Soren à Eula."},
+    # --- Tome 7 ---
+    "GRAINE DE FEU": {
+        "type": "special",
+        "description": "Jetée sur une surface dure, elle explose puis brûle d'un feu vif. Vous les gardez dans votre poche.",
+    },
+    "CLÉ DE POUVOIR": {"type": "special", "description": "Une clé chargée de magie, remise par les Anciens Mages."},
+    "AMULETTE EN PLATINE": {
+        "type": "special",
+        "description": "Portée au poignet, elle vous protège contre toute exposition à de très hautes températures.",
+    },
+    "PASSE-PARTOUT": {"type": "special", "description": "Une clé qui ouvre bien des serrures."},
+    "SIFFLET D'ARGENT": {"type": "special", "description": "Un sifflet d'argent au bout d'une chaîne : aucun son n'en sort."},
+    "BOUTEILLE D'EAU": {"type": "backpack", "description": "Une bouteille d'eau."},
+    "FIOLE DE PILULES BLEUES": {"type": "backpack", "description": "Une fiole de petites pilules bleues."},
+    "SACHET D'HERBES": {"type": "backpack", "description": "Un sachet d'herbes inconnues."},
+    "ADGANA": {
+        "type": "backpack",
+        "combat_hability": 6,
+        "description": "Feuilles d'Adgana : +6 HABILETÉ pour un combat. Elles créent une accoutumance : après le combat, "
+        "un 0 ou un 1 à la Table de Hasard vous fait perdre 4 points d'ENDURANCE définitivement.",
+    },
+    "HABIT ROUGE": {"type": "backpack", "description": "Un habit rouge à capuchon, trouvé sur un mercenaire Kakush."},
+    "FLASQUE DE VIN": {"type": "backpack", "description": "Une flasque de vin."},
+    "POTION DE LAUMSPUR CONCENTRÉE": {
+        "type": "backpack",
+        "heal": 8,
+        "description": "Une grosse bouteille de solution concentrée de Laumspur : 8 points d'ENDURANCE.",
+    },
 }
 
 # Table de Hasard (0 à 9) -> arme maîtrisée (cf. "La Maîtrise des armes")
@@ -382,6 +411,7 @@ BOOKS = {
     4: {"title": "Le Gouffre Maudit", "final_page": 350},
     5: {"title": "Le Tyran du Désert", "final_page": 400},
     6: {"title": "La Pierre de la Sagesse", "final_page": 350},
+    7: {"title": "La Forteresse Maudite", "final_page": 350},
 }
 
 # Équipement reçu au début de chaque tome à partir du 2 (cf. « Équipement »), par les héros venus
@@ -510,6 +540,29 @@ BOOK_EQUIPMENT = {
         "place": "Holmgard",
         "journey": "partir en quête de la Pierre de la Sagesse",
         "start_label": "Partir pour les pays de la Storn",
+    },
+    7: {
+        "gold_base": 10,
+        "items_to_choose": 5,
+        "up_to": True,
+        "items": {
+            "ÉPÉE": ("ÉPÉE", 1),
+            "ARC": ("ARC", 1),
+            "CARQUOIS (6 flèches)": ("CARQUOIS", 1),
+            "POTION DE LAUMSPUR": ("POTION DE LAUMSPUR", 1),
+            "CORDE": ("CORDE", 1),
+            "POIGNARD": ("POIGNARD", 1),
+            "LANTERNE": ("LANTERNE", 1),
+            "MASSE D'ARMES": ("MASSE D'ARMES", 1),
+            "3 RATIONS SPÉCIALES (3 Repas)": ("REPAS", 3),
+            "3 GRAINES DE FEU": ("GRAINE DE FEU", 3),
+        },
+        "special": ["CARTE GÉOGRAPHIQUE"],  # une carte du pays des Anciens Mages
+        "origin": "Tome 7 : offert par les Anciens Mages d'Elzian.",
+        "special_origins": {},
+        "place": "Elzian",
+        "journey": "partir en quête de la Pierre de la Sagesse de Herdos",
+        "start_label": "Partir pour Herdos",
     },
 }
 

@@ -176,6 +176,7 @@ def combat(
     enemy_immune_rounds: int = 0,
     knockout: bool = False,
     enemy_stop_at: int = None,
+    ls_loss_multiplier: int = 1,
 ):
     """
     enemies               : [(NOM, HABILETÉ, ENDURANCE), ...] combattus l'un après l'autre.
@@ -207,6 +208,8 @@ def combat(
     knockout              : « si vous perdez le combat, rendez-vous au N » : à 0 d'ENDURANCE le héros ne meurt
                             pas, il retrouve la moitié des points perdus pendant le combat (issue "lost").
     enemy_stop_at         : « cessez le combat dès que son ENDURANCE tombe à N » : l'ennemi est vaincu à N points.
+    ls_loss_multiplier    : « doublez les points d'ENDURANCE que vous perdez » (venin...) : blessures du Loup Solitaire
+                            multipliées (pas le coût du Foudroiement Psychique).
     ally_damage           : ENDURANCE perdue en plus par l'ennemi à chaque assaut, blessé par un allié
                             (« Fenor lui fait perdre 3 points d'ENDURANCE à chaque assaut »).
     """
@@ -236,6 +239,7 @@ def combat(
         "enemy_immune_rounds": enemy_immune_rounds,
         "knockout": knockout,
         "enemy_stop_at": enemy_stop_at or 0,
+        "ls_loss_multiplier": ls_loss_multiplier,
     }
 
     def surging() -> bool:
@@ -282,6 +286,8 @@ def combat(
             details.append(f"Au-delà de {extra_loss_after} assauts : -{extra_loss} ENDURANCE par assaut")
         if ally_damage:
             details.append(f"Votre allié blesse l'ennemi : -{ally_damage} ENDURANCE par assaut")
+        if ls_loss_multiplier > 1:
+            details.append(f"Vos pertes d'ENDURANCE ×{ls_loss_multiplier}")
         if enemy_stop_at:
             details.append(f"Le combat cesse dès que l'ENDURANCE de l'ennemi tombe à {enemy_stop_at}")
         if ls_immune_rounds:
@@ -410,7 +416,7 @@ def _play_round(fight, enemies, round_hability, max_rounds, stop_when_wounded, f
     elif ls_loss is KILL:
         ls_loss = st.session_state.endurance
     else:
-        ls_loss += rules.get("psychic_damage", 0)
+        ls_loss = ls_loss * rules.get("ls_loss_multiplier", 1) + rules.get("psychic_damage", 0)
         if fight["round"] > rules.get("extra_loss_after", 0):
             ls_loss += rules.get("extra_loss", 0)
     if fleeing or fight["round"] <= rules.get("enemy_immune_rounds", 0):

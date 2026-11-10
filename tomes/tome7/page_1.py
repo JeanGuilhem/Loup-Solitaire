@@ -1,0 +1,162 @@
+import streamlit as st
+from inventory import (
+    add_to_inventory,
+    check_inventory,
+    display_inventory,
+    end_page,
+    is_new_page,
+    show_illustrations,
+    show_map,
+)
+from utils import called_cookies, stream_text
+
+if "weapon_mastery" not in st.session_state:
+    # rechargement du navigateur : on restaure la sauvegarde
+    if not called_cookies():
+        st.stop()
+
+check_inventory(current_page_number=1, book=7)
+
+fr_text = """
+En attendant que sonne l'heure du départ, vous occupez les
+derniers moments qu'il vous reste à passer à Elzian à vérifier
+minutieusement tout votre équipement. Néanmoins, vous avez
+beau essayer de vous concentrer sur ces préparatifs, vous ne
+pouvez vous empêcher de penser continuellement à la
+ténébreuse forteresse de Kazan-Oud, telle qu'elle vous est
+apparue hier soir dans le puits de la Chambre du Conseil. Cette
+vision vous a laissé un sentiment de crainte et un sombre
+pressentiment vous étreint le cœur : qui sait si cet endroit maudit
+ne deviendra pas votre tombe ? Pourtant, au plus profond de
+vous-même, le désir de retrouver la Pierre de la Sagesse de
+Herdos l'emporte sur votre appréhension. Peu avant le lever du
+jour, un léger coup frappé à votre porte vous tire subitement de
+vos pensées : c'est Rimoah qui vient vous chercher. Vous le
+suivez à travers un dédale de couloirs et de galeries sans fin, puis
+vous débouchez sur une plate-forme nichée au creux des tours
+majestueuses qui encadrent le Temple de la Vérité. Un jeune
+homme de fière allure vous y attend. Il est grand, sa peau est
+mate, et son visage, encadré d'une auréole de cheveux blonds et
+soyeux, abrite des yeux au regard perçant comme celui d'un chat.
+Il porte la tunique rouge et or des Vakeros, célèbres Magiciens-Guerriers de Dessi. « Salut à toi, Paido ! » dit Rimoah en
+s'inclinant légèrement devant le noble guerrier. « Salut, ô
+Seigneur Rimoah, répond Paido. Tout est prêt pour le départ ! »
+Les premiers rayons du soleil levant viennent éclairer les flancs
+argentés d'un magnifique vaisseau de l'espace qui plane au-dessus de vous. Tandis que s'élève le vrombissement sourd des
+puissants moteurs, vous remerciez Rimoah de son accueil et
+prenez congé de lui. Puis vous suivez Paido jusqu'à l'échelle
+d'embarquement située au bout de la plate-forme. Vous montez à
+bord et le vaisseau s'élève rapidement dans les airs, laissant
+derrière lui la silhouette de Rimoah qui disparaît bientôt derrière
+les tours rougeoyantes du Temple de la Vérité.
+Au cours de cette ascension, un magnifique spectacle s'offre à vos
+yeux : la ville d'Elzian s'étend à vos pieds avec ses toits aux mille
+nuances et l'enchevêtrement miroitant de ses nombreux canaux.
+Peu après, le vaisseau s'oriente cap au nord, vers la jungle qui
+occupe toute la région centrale de Dessi. Vous arrivez bientôt en
+vue de la faille de Gorgoron, qui déchire l'immensité vert
+émeraude de la forêt comme une sombre cicatrice. Paido vient
+alors vous rejoindre et commence à vous parler des habitants de
+ce pays sauvage et reculé. Grâce à lui, vous apprenez que les
+Anciens Mages sont les derniers représentants d'une illustre
+lignée de magiciens qui régnèrent sur les régions centrales du
+Magnamund, il y a plusieurs milliers d'années. Ces hommes
+sages et puissants connurent un règne glorieux qui prit hélas ! fin
+lorsqu'une épidémie de peste ravagea le pays et anéantit presque
+toute la population. Les quelques magiciens survivants
+trouvèrent refuge à Dessi où ils s'établirent définitivement, entre
+les montagnes et la jungle. Les Vakeros, quant à eux, sont des
+guerriers natifs de Dessi à qui les Anciens ont enseigné l'art
+combiné de la magie et du combat, afin qu'ils défendent la
+frontière nord du pays contre l'invasion de ses belliqueux voisins,
+les Vassagoniens. Lorsque vous apprenez à Paido que vous avez
+dû vous-même livrer bataille à ces féroces guerriers du désert,
+vous sentez une grande tristesse le gagner. « Comme j'aimerais
+que mon frère Kasin soit parmi nous aujourd'hui, reprend-il en
+contemplant l'horizon avec mélancolie. Lui aurait pu nous
+raconter tout ce qu'il savait au sujet des guerres du désert... »
+Vous demandez à Paido ce qu'il est advenu de son frère. « Kazan-Oud ! » répond-il d'une voix étranglée.
+Le pays de Dessi s'étend maintenant au-dessous de vous comme
+une gigantesque carte géographique. Au nord-ouest, vous
+apercevez les contreforts de la chaîne de Carcos et un long ruban
+argenté qui serpente à ses pieds : la Doï. A l'est, un
+amoncellement de nuages noirs avance inexorablement au-dessus de la jungle. C'est peu avant midi que vous apercevez
+enfin votre destination. Les bâtiments en coupole de Herdos se
+profilent à l'horizon, et vous distinguez dans le lointain les eaux
+du lac Khor, entourant l'îlot rocheux sur lequel se dresse Kazan-Oud. Même à cette distance, la vue de la sinistre silhouette de la
+forteresse vous fait froid dans le dos !
+Paido ordonne à l'équipage de se préparer à atterrir et, dans
+l'heure qui suit, le majestueux vaisseau de l'espace projette son
+ombre sur la Grand-Place de Herdos. Quelques instants plus
+tard, vous êtes accueilli par le Seigneur Ardan, Ancien de Herdos,
+et par un détachement de gardes Vakeros. Ils vous escortent à
+travers les rues de la vieille cité, en passant par le quartier des
+pêcheurs et des mineurs aux petites maisons blanches et basses,
+jusqu'à un quai où se dresse une haute tour coiffée d'un dôme de
+verre, qui commande l'accès au port marchand. Au moment où
+vous entrez dans cette tour, vous remarquez que la coupole de
+verre émet une lumière verte qui se distingue très nettement
+malgré l'éclat aveuglant du soleil de midi.
+Dans la soirée, alors que le soleil disparaît lentement derrière les
+sommets des monts Xulun, la lumière émanant de la tour devient
+encore plus intense et semble coiffer le lac Khor d'une ombrelle
+de luminescence fantomatique. Le Seigneur Ardan vous en
+donne l'explication : « Cette tour, ainsi que les cinq autres qui
+encadrent le lac, est génératrice d'une énergie magique qui forme
+un écran autour de Kazan-Oud. Nulle créature, qu'elle soit
+vivante ou non, ne peut entrer ni quitter l'île de Khor tant que
+notre bouclier protecteur demeure intact. Comme nous n'osons
+relâcher notre défense, fût-ce pour quelques minutes, nous avons
+trouvé le moyen de vous faire traverser, sain et sauf, cet écran. »
+Sur ces mots, Paido sort de sa poche une gemme de la taille d'une
+petite pomme, qu'il dépose au creux de votre main. La pierre est
+rouge, translucide, mais elle renferme en son milieu une brume
+tourbillonnante, zébrée d'étincelles d'or et d'argent. « Ceci est
+une Clé de Pouvoir, explique Paido. Gardez-la précieusement car
+tant qu'elle sera en votre possession, il vous sera possible
+d'achever votre quête.
+Mais attention! si vous deviez la perdre, vous ne pourriez plus
+jamais vous échapper de l'île de Khor. » (Inscrivez la Clé de
+Pouvoir dans la case Objets Spéciaux de votre Feuille d'Aventure,
+puis mettez-la dans une de vos poches.) « A minuit, reprend
+Paido, mes Vakeros vous conduiront en bateau jusqu'au seuil de
+l'écran magique. Vous partirez ensuite à bord d'un petit canot
+grâce auquel vous pourrez traverser l'écran et gagner l'île de
+Khor. Nous prierons pour vous, Loup Solitaire ! » Lorsque
+sonnent les douze coups de minuit, vous vous trouvez sur le pont
+d'un bateau de pêche. Le mugissement du vent dans les voiles et
+le grincement des cordages et des agrès sont les seuls sons qui
+vous accompagnent sur les eaux noires du lac Khor. Vous arrivez
+bientôt au pied d'un mur de lumière verte : c'est le bouclier de
+défense que Paido vous a décrit. Les Vakeros vous chuchotent au
+revoir et, après avoir sauté dans le canot, vous franchissez
+l'écran, vous rapprochant un peu plus à chaque coup de rame de
+l'île sinistre qui abrite la forteresse tant redoutée. A trois cents
+mètres de la rive, vous observez que vous pouvez mettre pied à
+terre à deux endroits.
+"""
+
+tab1, tab2, tab3 = st.tabs(["Page", "Inventaire", "Carte"])
+
+with tab1:
+    st.write(fr_text)
+
+    if is_new_page():
+        add_to_inventory("CLÉ DE POUVOIR")
+        st.success("La Clé de Pouvoir est inscrite dans vos Objets Spéciaux.")
+
+    st.write_stream(stream_text("Si vous désirez débarquer sur la jetée en pierre qui s'étend à l'ouest de Kazan-Oud, rendez-vous au :"))
+    st.page_link("tomes/tome7/page_135.py", label="135", icon="📄")
+
+    st.write_stream(stream_text("Si vous préférez accoster dans une petite crique bien abritée, à l'est de Kazan-Oud, rendez-vous au :"))
+    st.page_link("tomes/tome7/page_288.py", label="288", icon="📄")
+
+    show_illustrations()
+
+with tab2:
+    display_inventory()
+
+with tab3:
+    show_map()
+
+end_page()

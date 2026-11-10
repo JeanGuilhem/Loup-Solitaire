@@ -523,23 +523,28 @@ def lose_special_items() -> None:
         remove_from_inventory(item)
 
 
-def confiscate_equipment() -> None:
+def confiscate_equipment(weapons: bool = True, backpack: bool = True, special: bool = True, gold: bool = True) -> None:
     """
     « On vous prend votre Sac à Dos, vos armes, vos Objets Spéciaux et votre Or » : l'équipement est
     gardé de côté (st.session_state.confiscated) et pourra être retrouvé (restore_confiscated).
+    Les paramètres limitent ce qui est pris (« on vous prend vos armes » : backpack=False, special=False, gold=False).
     """
     st.session_state.confiscated = {
-        "weapons": list(st.session_state.weapons),
-        "backpack": list(st.session_state.backpack),
-        "has_backpack": st.session_state.has_backpack,
-        "special": list(st.session_state.special),
-        "purse": st.session_state.purse,
-        "arrows": st.session_state.get("arrows", 0),
+        "weapons": list(st.session_state.weapons) if weapons else [],
+        "backpack": list(st.session_state.backpack) if backpack else [],
+        "has_backpack": st.session_state.has_backpack if backpack else False,
+        "special": list(st.session_state.special) if special else [],
+        "purse": st.session_state.purse if gold else 0,
+        "arrows": st.session_state.get("arrows", 0) if special else 0,
     }
-    lose_gold()
-    lose_backpack()
-    lose_all_weapons()
-    lose_special_items()
+    if gold:
+        lose_gold()
+    if backpack:
+        lose_backpack()
+    if weapons:
+        lose_all_weapons()
+    if special:
+        lose_special_items()
 
 
 def restore_confiscated() -> bool:

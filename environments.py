@@ -452,6 +452,75 @@ SHOP = _svg(
 )
 
 
+def _masonry(width: int, height: int, block: int = 50, row: int = 26) -> str:
+    """Mur de pierres taillées : rangées de blocs décalées d'un demi-bloc."""
+    joints = []
+    for i, y in enumerate(range(0, height, row)):
+        joints.append(f'<rect y="{y}" width="{width}" height="2"/>')
+        offset = 0 if i % 2 else block // 2
+        joints += [f'<rect x="{x}" y="{y}" width="2" height="{row}"/>' for x in range(offset, width, block)]
+    return f'<g fill="#16171c">{"".join(joints)}</g>'
+
+
+def _wall_torch(x: int, y: int) -> str:
+    """Torche fixée au mur : halo, flamme et support en fer."""
+    return (f'<circle cx="{x}" cy="{y - 18}" r="70" fill="#e08a30" opacity=".10"/>'
+            f'<circle cx="{x}" cy="{y - 18}" r="34" fill="#f0a040" opacity=".16"/>'
+            f'<path d="M{x} {y - 40}q12 14 6 24q-6 6-12 0q-6-10 6-24z" fill="#f2b440"/>'
+            f'<path d="M{x} {y - 30}q6 8 2 14q-4 3-6 0q-2-6 4-14z" fill="#fff0b0"/>'
+            f'<path d="M{x - 7} {y - 14}h14l-4 30h-6z" fill="#2a1d10"/>'
+            f'<rect x="{x - 2}" y="{y + 10}" width="4" height="16" fill="#3a3a40"/>')
+
+
+def _banner(x: int, top: int, length: int, fill: str) -> str:
+    """Bannière en lambeaux suspendue à une hampe."""
+    return (f'<rect x="{x - 4}" y="{top}" width="68" height="5" fill="#2a1d10"/>'
+            f'<path d="M{x} {top + 5}h60v{length}l-10-14-10 18-10-12-10 16-10-14-10 10z" fill="{fill}"/>'
+            f'<path d="M{x + 30} {top + 30}l10 18-10 18-10-18z" fill="#c9a040" opacity=".55"/>')
+
+
+def _chain(x: int, length: int) -> str:
+    links = "".join(f'<ellipse cx="{x}" cy="{y}" rx="4" ry="7" fill="none" stroke="#3c3d44" stroke-width="2.5"/>'
+                    for y in range(6, length, 11))
+    return links + f'<path d="M{x - 6} {length + 2}h12v6h-12z" fill="#3c3d44"/>'
+
+
+FORTRESS = _svg(
+    '<defs><linearGradient id="fortress-shade" x1="0" y1="0" x2="0" y2="1">'
+    '<stop offset="0" stop-color="#050508" stop-opacity=".95"/><stop offset=".35" stop-color="#050508" stop-opacity=".6"/>'
+    '<stop offset=".7" stop-color="#050508" stop-opacity=".1"/><stop offset="1" stop-color="#050508" stop-opacity="0"/>'
+    '</linearGradient><radialGradient id="fortress-glow" cx=".5" cy="1" r=".7">'
+    '<stop offset="0" stop-color="#e09040" stop-opacity=".22"/><stop offset="1" stop-color="#e09040" stop-opacity="0"/>'
+    '</radialGradient></defs>'
+    '<rect width="800" height="450" fill="#2a2b33"/>'
+    + _masonry(800, 380)
+    # arches sombres sur les côtés
+    + '<path d="M30 380V200a70 70 0 0 1 140 0v180z" fill="#0d0d11"/>'
+    + '<path d="M630 380V200a70 70 0 0 1 140 0v180z" fill="#0d0d11"/>'
+    + '<path d="M22 380V200a78 78 0 0 1 156 0v180h-8V200a70 70 0 0 0-140 0v180z" fill="#3a3b44"/>'
+    + '<path d="M622 380V200a78 78 0 0 1 156 0v180h-8V200a70 70 0 0 0-140 0v180z" fill="#3a3b44"/>'
+    # plafond dans l'ombre, lumière chaude vers le sol
+    + '<rect width="800" height="450" fill="url(#fortress-glow)"/>'
+    + '<rect width="800" height="450" fill="url(#fortress-shade)"/>'
+    # bannières au-dessus des arches, torches de part et d'autre
+    + _banner(70, 0, 90, "#5a1a1a") + _banner(670, 0, 90, "#1f2a4a")
+    + _wall_torch(225, 290) + _wall_torch(575, 290)
+    # grande porte bardée de fer au centre, encadrée de chaînes
+    + '<path d="M335 380V285a65 65 0 0 1 130 0v95z" fill="#3a2614"/>'
+    + '<g fill="#24170a"><rect x="398" y="222" width="4" height="158"/>'
+    + "".join(f'<rect x="{x}" y="240" width="2" height="140"/>' for x in (352, 375, 425, 448)) + '</g>'
+    + '<g fill="#3c3d44"><rect x="335" y="270" width="130" height="7"/><rect x="335" y="330" width="130" height="7"/></g>'
+    + '<g fill="#8a8c94"><circle cx="388" cy="305" r="5"/><circle cx="412" cy="305" r="5"/></g>'
+    + '<g transform="translate(0 230)">' + _chain(300, 70) + _chain(500, 70) + '</g>'
+    # sol dallé
+    + '<rect y="380" width="800" height="70" fill="#3a3a42"/>'
+    + '<g stroke="#26272e" stroke-width="2"><path d="M0 405h800M0 430h800"/>'
+    + "".join(f'<path d="M{x} 380l{(x - 400) // 6} 70"/>' for x in range(40, 800, 80)) + '</g>'
+    + '<rect y="380" width="800" height="70" fill="url(#fortress-glow)"/>',
+    800, 450, aspect="xMidYMax slice",
+)
+
+
 ENVIRONMENTS = {
     "foret": {
         "label": "Forêt",
@@ -543,6 +612,12 @@ ENVIRONMENTS = {
         "band": SHOP, "band_position": "bottom", "band_height": "100vh", "tile": "100%",
         "accent": "#7a5020", "accent_dark": "#e0b070", "panel": "#fcf6ec", "panel_dark": "#241a10",
     },
+    "forteresse": {
+        "label": "Forteresse",
+        "sky": "linear-gradient(180deg, #050508 0%, #15151b 40%, #2a2a32 100%)",
+        "band": FORTRESS, "band_position": "bottom", "band_height": "100vh", "tile": "100%",
+        "accent": "#5a3a6a", "accent_dark": "#c4a6d6", "panel": "#f5f3f0", "panel_dark": "#1e1d24",
+    },
 }
 
 
@@ -576,6 +651,9 @@ def apply_environment(name: str) -> None:
         panel = light
     else:  # thème inconnu : Streamlit suit alors le réglage du système
         panel = light + f"\n@media (prefers-color-scheme: dark) {{ {dark} }}"
+    # sur mobile, un paysage en bandeau se réduit en bas de l'écran ; un décor plein écran (intérieur) garde sa hauteur
+    full_screen = env["band_height"] == "100vh"
+    mobile_band = "opacity: .8;" if full_screen else "height: 18vh; opacity: .8;"
     st.html(
         f"""<style>
 [data-testid="stApp"] {{ background: {env["sky"]}; background-attachment: fixed; }}
@@ -592,7 +670,7 @@ def apply_environment(name: str) -> None:
 }}
 {panel}
 @media (max-width: 640px) {{
-  [data-testid="stApp"]::before {{ height: 18vh; opacity: .8; }}
+  [data-testid="stApp"]::before {{ {mobile_band} }}
   [data-testid="stMainBlockContainer"] {{ margin-top: 3.5rem; border-radius: 10px; }}
 }}
 </style>"""

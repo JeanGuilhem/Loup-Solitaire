@@ -8,7 +8,7 @@ import os
 
 import streamlit as st
 
-BOOKS = ["tome1", "tome2", "tome3", "tome4", "tome5", "tome6"]
+BOOKS = ["tome1", "tome2", "tome3", "tome4", "tome5", "tome6", "tome7"]
 
 
 def book_pages(book: str) -> list:

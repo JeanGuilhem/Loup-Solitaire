@@ -50,7 +50,7 @@ with tab1:
         "**Mission accomplie !** Le Dakomyd n'est plus que poussière et les pouvoirs de la Pierre de la Sagesse "
         "de Varetta se sont transmis à votre corps et à votre esprit : votre quête du Magnakaï peut se poursuivre."
     )
-    st.info("Le tome 7 n'est pas encore disponible dans l'application : votre héros est sauvegardé en attendant.")
+    st.page_link("tomes/tome7/debut.py", label="Continuer avec le tome 7", icon="📜")
     st.page_link("accueil.py", label="Retour à l'accueil", icon="🏠")
 
     show_illustrations()

@@ -1,0 +1,481 @@
+[
+ {
+  "file": "p7_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 7,
+  "pdf_page": 33,
+  "size": [
+   240,
+   148
+  ]
+ },
+ {
+  "file": "p11_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 11,
+  "pdf_page": 35,
+  "size": [
+   172,
+   98
+  ]
+ },
+ {
+  "file": "p12_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 12,
+  "pdf_page": 36,
+  "size": [
+   301,
+   68
+  ]
+ },
+ {
+  "file": "p13_planche.jpeg",
+  "type": "planche",
+  "paragraph": 13,
+  "pdf_page": 37,
+  "size": [
+   476,
+   834
+  ],
+  "caption": "Dans votre course, vous dérangez une colonie de chauves-souris qui se mettent à voler furieusement autour de vous."
+ },
+ {
+  "file": "p27_planche.jpeg",
+  "type": "planche",
+  "paragraph": 27,
+  "pdf_page": 44,
+  "size": [
+   471,
+   823
+  ],
+  "caption": "Votre agresseur pousse un cri inhumain, puis fait tournoyer son fléau d'armes."
+ },
+ {
+  "file": "p28_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 28,
+  "pdf_page": 46,
+  "size": [
+   220,
+   144
+  ]
+ },
+ {
+  "file": "p43_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 43,
+  "pdf_page": 52,
+  "size": [
+   195,
+   150
+  ]
+ },
+ {
+  "file": "p45_planche.jpeg",
+  "type": "planche",
+  "paragraph": 45,
+  "pdf_page": 53,
+  "size": [
+   482,
+   836
+  ],
+  "caption": "L'arme au poing, vous vous préparez à affronter une horde de rats."
+ },
+ {
+  "file": "p50_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 50,
+  "pdf_page": 55,
+  "size": [
+   164,
+   107
+  ]
+ },
+ {
+  "file": "p58_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 58,
+  "pdf_page": 59,
+  "size": [
+   253,
+   155
+  ]
+ },
+ {
+  "file": "p62_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 62,
+  "pdf_page": 61,
+  "size": [
+   248,
+   155
+  ]
+ },
+ {
+  "file": "p68_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 68,
+  "pdf_page": 63,
+  "size": [
+   217,
+   201
+  ]
+ },
+ {
+  "file": "p74_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 74,
+  "pdf_page": 66,
+  "size": [
+   222,
+   145
+  ]
+ },
+ {
+  "file": "p78_planche.jpeg",
+  "type": "planche",
+  "paragraph": 78,
+  "pdf_page": 68,
+  "size": [
+   482,
+   844
+  ],
+  "caption": "Le Loup de la Mort bondit sur vous et vous envoie rouler à terre..."
+ },
+ {
+  "file": "p83_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 83,
+  "pdf_page": 71,
+  "size": [
+   247,
+   128
+  ]
+ },
+ {
+  "file": "p100_planche.jpeg",
+  "type": "planche",
+  "paragraph": 100,
+  "pdf_page": 78,
+  "size": [
+   461,
+   831
+  ],
+  "caption": "Vous pénétrez dans une pièce où se dresse une statue de bronze d'un Zakhan."
+ },
+ {
+  "file": "p104_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 104,
+  "pdf_page": 80,
+  "size": [
+   222,
+   145
+  ]
+ },
+ {
+  "file": "p110_planche.jpeg",
+  "type": "planche",
+  "paragraph": 110,
+  "pdf_page": 84,
+  "size": [
+   563,
+   831
+  ],
+  "caption": "Lorsque les guerriers font halte, vous réalisez qu'il ne peut s'agir d'êtres humains."
+ },
+ {
+  "file": "p126_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 126,
+  "pdf_page": 91,
+  "size": [
+   231,
+   151
+  ]
+ },
+ {
+  "file": "p138_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 138,
+  "pdf_page": 97,
+  "size": [
+   219,
+   201
+  ]
+ },
+ {
+  "file": "p142_planche.jpeg",
+  "type": "planche",
+  "paragraph": 142,
+  "pdf_page": 99,
+  "size": [
+   484,
+   848
+  ],
+  "caption": "L'entrée est gardée par une créature à l'air féroce, munie d'une grande hache."
+ },
+ {
+  "file": "p144_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 144,
+  "pdf_page": 101,
+  "size": [
+   220,
+   144
+  ]
+ },
+ {
+  "file": "p164_planche.jpeg",
+  "type": "planche",
+  "paragraph": 164,
+  "pdf_page": 110,
+  "size": [
+   473,
+   849
+  ],
+  "caption": "La tête monstrueuse d'un serpent géant se dresse du monticule où vous vous trouvez."
+ },
+ {
+  "file": "p165_planche.jpeg",
+  "type": "planche",
+  "paragraph": 165,
+  "pdf_page": 113,
+  "size": [
+   478,
+   847
+  ],
+  "caption": "Des centaines de silhouettes sombres sont assises sur les gradins."
+ },
+ {
+  "file": "p170_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 170,
+  "pdf_page": 115,
+  "size": [
+   248,
+   155
+  ]
+ },
+ {
+  "file": "p193_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 193,
+  "pdf_page": 124,
+  "size": [
+   196,
+   72
+  ]
+ },
+ {
+  "file": "p198_planche.jpeg",
+  "type": "planche",
+  "paragraph": 198,
+  "pdf_page": 126,
+  "size": [
+   474,
+   853
+  ],
+  "caption": "La main Coupée s'élève à nouveau !"
+ },
+ {
+  "file": "p203_planche.jpeg",
+  "type": "planche",
+  "paragraph": 203,
+  "pdf_page": 130,
+  "size": [
+   472,
+   840
+  ],
+  "caption": "Une espèce de tête de serpent surgit des eaux noires."
+ },
+ {
+  "file": "p204_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 204,
+  "pdf_page": 131,
+  "size": [
+   248,
+   155
+  ]
+ },
+ {
+  "file": "p220_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 220,
+  "pdf_page": 138,
+  "size": [
+   288,
+   91
+  ]
+ },
+ {
+  "file": "p221_planche.jpeg",
+  "type": "planche",
+  "paragraph": 221,
+  "pdf_page": 137,
+  "size": [
+   463,
+   840
+  ],
+  "caption": "La créature vous regarde fixement, puis se met à ramper dans votre direction."
+ },
+ {
+  "file": "p225_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 225,
+  "pdf_page": 139,
+  "size": [
+   246,
+   148
+  ]
+ },
+ {
+  "file": "p244_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 244,
+  "pdf_page": 146,
+  "size": [
+   252,
+   127
+  ]
+ },
+ {
+  "file": "p249_planche.jpeg",
+  "type": "planche",
+  "paragraph": 249,
+  "pdf_page": 148,
+  "size": [
+   482,
+   850
+  ],
+  "caption": "Les Dhax s'apprêtent à vous sauter dessus, le regard féroce brillant d'une lueur rouge."
+ },
+ {
+  "file": "p251_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 251,
+  "pdf_page": 150,
+  "size": [
+   166,
+   152
+  ]
+ },
+ {
+  "file": "p265_planche.jpeg",
+  "type": "planche",
+  "paragraph": 265,
+  "pdf_page": 155,
+  "size": [
+   476,
+   836
+  ],
+  "caption": "Une substance fluorescente et gélatineuse s'écoule de l'œil monstrueux."
+ },
+ {
+  "file": "p280_planche.jpeg",
+  "type": "planche",
+  "paragraph": 280,
+  "pdf_page": 161,
+  "size": [
+   486,
+   836
+  ],
+  "caption": "Tavig est à peine visible à l'intérieur de l'énorme poing."
+ },
+ {
+  "file": "p293_planche.jpeg",
+  "type": "planche",
+  "paragraph": 293,
+  "pdf_page": 168,
+  "size": [
+   480,
+   830
+  ],
+  "caption": "Vous remarquez le corps d'un homme mort allongé dans l'âtre."
+ },
+ {
+  "file": "p294_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 294,
+  "pdf_page": 169,
+  "size": [
+   221,
+   145
+  ]
+ },
+ {
+  "file": "p296_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 296,
+  "pdf_page": 170,
+  "size": [
+   288,
+   91
+  ]
+ },
+ {
+  "file": "p315_planche.jpeg",
+  "type": "planche",
+  "paragraph": 315,
+  "pdf_page": 177,
+  "size": [
+   457,
+   826
+  ],
+  "caption": "Des jets de gaz enflammé jaillissent des fissures du sol..."
+ },
+ {
+  "file": "p338_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 338,
+  "pdf_page": 186,
+  "size": [
+   222,
+   145
+  ]
+ },
+ {
+  "file": "p342_planche.jpeg",
+  "type": "planche",
+  "paragraph": 342,
+  "pdf_page": 189,
+  "size": [
+   465,
+   846
+  ],
+  "caption": "La sphère ressemble à un énorme cerveau couvert de grosses verrues poilues."
+ },
+ {
+  "file": "p347_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 347,
+  "pdf_page": 192,
+  "size": [
+   253,
+   156
+  ]
+ },
+ {
+  "file": "p350_vignette.jpeg",
+  "type": "vignette",
+  "paragraph": 350,
+  "pdf_page": 194,
+  "size": [
+   270,
+   182
+  ]
+ },
+ {
+  "file": "p350_planche.jpeg",
+  "type": "planche",
+  "paragraph": 350,
+  "pdf_page": 195,
+  "size": [
+   510,
+   821
+  ],
+  "caption": "« Nous vous serons toujours reconnaissants, Loup Solitaire », dit Ardan, d'une voix brisée par l'émotion..."
+ }
+]
