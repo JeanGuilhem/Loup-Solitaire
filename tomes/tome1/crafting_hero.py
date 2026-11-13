@@ -71,6 +71,8 @@ def choose_creation_mode() -> bool:
         return True
 
     write_once("text_initiation", fr_initiation)
+    st.subheader("Les Disciplines Kaï")
+    write_once("text_kai_intro", second_fr_kai_mastery)
     st.subheader("Qui êtes-vous ?")
     options = list(CLASS_CARDS)
     picked = choose_disciplines(options, 1, key="class_cards", cards=CLASS_CARDS)
@@ -298,4 +300,6 @@ with tab1:
                     "tomes/tome1/pages_intro.py", label="Commencez votre aventure", icon="📜"
                 )
 with tab2:
+    st.subheader("Les Disciplines Kaï")
+    st.write(second_fr_kai_mastery)
     st.write(fr_kai_mastery)

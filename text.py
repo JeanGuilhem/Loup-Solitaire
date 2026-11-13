@@ -71,9 +71,7 @@ disposiez au départ de votre mission.
 second_fr_kai_mastery = """
 Au cours des siècles, les Moines Kaï ont appris à maîtriser toutes
 les techniques du guerrier. Ces techniques sont connues sous le
-nom de Disciplines Kaï et enseignées aux Seigneurs Kaï. 
-
-Pour
+nom de Disciplines Kaï et enseignées aux Seigneurs Kaï. Pour
 votre part, vous n'avez été initié qu'à cinq des techniques décrites
 ci-dessous. Il vous appartient de choisir vous-même ces cinq
 disciplines. Chaque Discipline Kaï peut vous être utile à un
@@ -92,7 +90,7 @@ rochers et se rendre de cette façon invisible à l'ennemi même s'il
 passe tout près de lui. Dans une ville, cette discipline donnera à
 celui qui l'utilise la faculté d'avoir l'air d'un habitant du cru, tant
 par l'apparence que par l'accent ou la langue employée. On peut
-ainsi trouver un abri où se cacher en toute sécurité..
+ainsi trouver un abri où se cacher en toute sécurité.
 
 
 **La Chasse**
@@ -103,7 +101,6 @@ environnement hostile. Il aura toujours la possibilité de chasser
 pour se procurer de la nourriture, sauf dans les déserts et les
 autres régions arides. Cette technique permet également de se
 déplacer sans bruit en pistant une proie.
-Chasse.
 
 *Vous êtes dispensé de Repas chaque fois
 qu'il est obligatoire de manger.*
