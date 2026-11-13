@@ -118,7 +118,8 @@ def show_hero() -> None:
     col3.metric("Couronnes", f"{st.session_state.purse}/{MAX_PURSE}")
     st.write("**Disciplines Kaï :** " + ", ".join(st.session_state.kai))
     if st.session_state.weapon_mastery:
-        st.write(f"**Arme maîtrisée :** {st.session_state.weapon_mastery[0]}")
+        label = "Armes maîtrisées" if len(st.session_state.weapon_mastery) > 1 else "Arme maîtrisée"
+        st.write(f"**{label} :** {' et '.join(st.session_state.weapon_mastery)}")
     if st.session_state.get("magnakai"):
         st.write("**Disciplines Magnakaï :** " + ", ".join(st.session_state.magnakai))
     if st.session_state.get("magnakai_weapons"):

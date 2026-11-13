@@ -408,11 +408,14 @@ qui commence à l'instant même, de l'autre côté de cette page.
 Alors, bonne chance...
 """
 
-fr_determine_ability_endurance = """
+fr_initiation = """
 Au cours de l'initiation qui vous a permis de devenir un Seigneur
 Kaï, vous avez acquis une force exceptionnelle ; les deux
 éléments essentiels de cette force sont représentés par votre
-HABILETÉ AU COMBAT et VOTRE ENDURANCE. Avant
-d'entreprendre votre mission, il vous faudra mesurer exactement
+HABILETÉ AU COMBAT et VOTRE ENDURANCE.
+"""
+fr_measure_training = """
+Avant d'entreprendre votre mission, il vous faudra mesurer exactement
 le degré d'efficacité de votre entraînement.
 """
+fr_determine_ability_endurance = fr_initiation + fr_measure_training

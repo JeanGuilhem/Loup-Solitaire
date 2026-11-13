@@ -7,6 +7,8 @@ from inventory import add_gold, add_to_inventory, display_inventory, reset_state
 from kai_cards import choose_disciplines
 from text import (
     fr_determine_ability_endurance,
+    fr_initiation,
+    fr_measure_training,
     fr_first_items,
     fr_hazard_item,
     fr_kai_mastery,
@@ -51,7 +53,8 @@ def write_once(key: str, text: str) -> None:
 
 CUSTOM = "Créer mon héros de A à Z"
 CLASS_CARDS = {
-    **{name: (hero["icon"], f"HAB {hero['hability']} · END {hero['endurance']} — {hero['description']}")
+    **{name: (hero["icon"], f"HAB {hero['hability']} · END {hero['endurance']}\n"
+              + "\n".join(f"• {discipline}" for discipline in hero["kai"]))
        for name, hero in HERO_CLASSES.items()},
     CUSTOM: ("🎲", "Tirer HABILETÉ et ENDURANCE au hasard et choisir vous-même vos 5 Disciplines."),
 }
@@ -67,7 +70,8 @@ def choose_creation_mode() -> bool:
     if "hero_class" in st.session_state:
         return True
 
-    st.write("Comment voulez-vous créer votre héros ? Choisissez une classe toute prête, ou créez-le de A à Z.")
+    write_once("text_initiation", fr_initiation)
+    st.subheader("Qui êtes-vous ?")
     options = list(CLASS_CARDS)
     picked = choose_disciplines(options, 1, key="class_cards", cards=CLASS_CARDS)
     choice = picked[0] if picked else None
@@ -77,10 +81,10 @@ def choose_creation_mode() -> bool:
             col1, col2 = st.columns(2)
             col1.metric("Habileté", hero["hability"])
             col2.metric("Endurance", hero["endurance"])
-            for discipline in hero["kai"]:
-                st.write(f"- **{discipline}**")
             if hero["mastery"]:
-                st.write(f"Arme maîtrisée : **{hero['mastery']}**")
+                st.write(f"Armes maîtrisées : **{' et '.join(hero['mastery'])}**")
+            for discipline in hero["kai"]:
+                st.write(f"**{discipline}** — {KAI[discipline].strip()}")
     if st.button("Valider", type="primary", disabled=choice is None):
         if choice == CUSTOM:
             st.session_state.hero_class = None
@@ -97,7 +101,7 @@ def apply_class(name: str) -> None:
     st.session_state.hability = hero["hability"]
     st.session_state.total_endurance = st.session_state.endurance = hero["endurance"]
     st.session_state.kai = list(hero["kai"])
-    st.session_state.weapon_mastery = [hero["mastery"]] if hero["mastery"] else []
+    st.session_state.weapon_mastery = list(hero["mastery"])
 
 
 def show_class() -> bool:
@@ -110,13 +114,14 @@ def show_class() -> bool:
     col2.metric("Endurance", st.session_state.total_endurance)
     st.write("**Disciplines Kaï :** " + ", ".join(st.session_state.kai))
     if st.session_state.weapon_mastery:
-        st.write(f"**Arme maîtrisée :** {st.session_state.weapon_mastery[0]}")
+        st.write(f"**Armes maîtrisées :** {' et '.join(st.session_state.weapon_mastery)}")
     return True
 
 
 def determine_endurance_ability() -> bool:
     """HABILETÉ = 10 + Table de Hasard, ENDURANCE = 20 + Table de Hasard. Un seul tirage chacun."""
-    write_once("text_ability", fr_determine_ability_endurance)
+    with_classes = st.session_state.creation_book <= HERO_CLASSES_UNTIL  # l'initiation a été lue au choix de la classe
+    write_once("text_ability", fr_measure_training if with_classes else fr_determine_ability_endurance)
     col1, col2 = st.columns(2)
 
     with col1:

@@ -5,6 +5,7 @@ création du héros (5 Disciplines), héros recréé (5) et 6e Discipline du tom
 import importlib
 
 import streamlit as st
+import streamlit.components.v2
 import streamlit_extras.card_selector as card_selector_module
 from streamlit.components.v2.get_bidi_component_manager import get_bidi_component_manager
 
@@ -13,13 +14,26 @@ from variable import KAI_CARDS
 COMPONENT_NAME = "streamlit_extras.card_selector"
 
 
+# Les descriptions des cartes peuvent tenir sur plusieurs lignes (liste des Disciplines d'une classe).
+EXTRA_CSS = "\n.card-description { white-space: pre-line; }\n"
+
+
 def _card_selector(*args, **kwargs):
     """
     card_selector de streamlit-extras. Le composant s'enregistre auprès du runtime Streamlit à
     l'import du module : si le runtime a changé depuis (redémarrage, tests), on le réenregistre.
+    Son style est isolé du reste de la page : on le réenregistre sous le même nom avec EXTRA_CSS.
     """
     if get_bidi_component_manager().get(COMPONENT_NAME) is None:
         importlib.reload(card_selector_module)
+    if not getattr(card_selector_module, "_ldvelh_patched", False):
+        card_selector_module._CARD_SELECTOR_COMPONENT = st.components.v2.component(
+            name=COMPONENT_NAME,
+            html='<div id="card-selector-root" class="card-selector-root"></div>',
+            css=card_selector_module._CSS + EXTRA_CSS,
+            js=card_selector_module._JS,
+        )
+        card_selector_module._ldvelh_patched = True
     return card_selector_module.card_selector(*args, **kwargs)
 
 
