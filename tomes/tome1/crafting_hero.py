@@ -13,7 +13,14 @@ from text import (
     second_fr_kai_mastery,
 )
 from utils import stream_text, table_des_hasards
-from variable import KAI, MAGNAKAI_FROM, STARTING_ITEM_TABLE, WEAPON_MASTERY_TABLE
+from variable import (
+    HERO_CLASSES,
+    HERO_CLASSES_UNTIL,
+    KAI,
+    MAGNAKAI_FROM,
+    STARTING_ITEM_TABLE,
+    WEAPON_MASTERY_TABLE,
+)
 
 # Une nouvelle partie commence à chaque fois qu'on arrive sur cette page depuis ailleurs.
 # Les reruns de la page (clics sur les boutons) ne doivent pas tout effacer.
@@ -40,6 +47,71 @@ def write_once(key: str, text: str) -> None:
         st.session_state[key] = True
     else:
         st.write(text)
+
+
+CUSTOM = "Créer mon héros de A à Z"
+CLASS_CARDS = {
+    **{name: (hero["icon"], f"HAB {hero['hability']} · END {hero['endurance']} — {hero['description']}")
+       for name, hero in HERO_CLASSES.items()},
+    CUSTOM: ("🎲", "Tirer HABILETÉ et ENDURANCE au hasard et choisir vous-même vos 5 Disciplines."),
+}
+
+
+def choose_creation_mode() -> bool:
+    """
+    Tomes 1 à 5 : une classe de départ (héros prêt à jouer) ou la création de A à Z.
+    Renvoie True une fois le choix fait (hero_class vaut alors le nom de la classe, ou None).
+    """
+    if st.session_state.creation_book > HERO_CLASSES_UNTIL:
+        st.session_state.hero_class = None
+    if "hero_class" in st.session_state:
+        return True
+
+    st.write("Comment voulez-vous créer votre héros ? Choisissez une classe toute prête, ou créez-le de A à Z.")
+    options = list(CLASS_CARDS)
+    picked = choose_disciplines(options, 1, key="class_cards", cards=CLASS_CARDS)
+    choice = picked[0] if picked else None
+    if choice in HERO_CLASSES:
+        hero = HERO_CLASSES[choice]
+        with st.container(border=True):
+            col1, col2 = st.columns(2)
+            col1.metric("Habileté", hero["hability"])
+            col2.metric("Endurance", hero["endurance"])
+            for discipline in hero["kai"]:
+                st.write(f"- **{discipline}**")
+            if hero["mastery"]:
+                st.write(f"Arme maîtrisée : **{hero['mastery']}**")
+    if st.button("Valider", type="primary", disabled=choice is None):
+        if choice == CUSTOM:
+            st.session_state.hero_class = None
+        else:
+            apply_class(choice)
+        st.rerun()
+    return False
+
+
+def apply_class(name: str) -> None:
+    """Le héros de la classe : caractéristiques, Disciplines et arme maîtrisée (l'équipement reste celui du livre)."""
+    hero = HERO_CLASSES[name]
+    st.session_state.hero_class = name
+    st.session_state.hability = hero["hability"]
+    st.session_state.total_endurance = st.session_state.endurance = hero["endurance"]
+    st.session_state.kai = list(hero["kai"])
+    st.session_state.weapon_mastery = [hero["mastery"]] if hero["mastery"] else []
+
+
+def show_class() -> bool:
+    """Récapitulatif du héros de la classe choisie."""
+    name = st.session_state.hero_class
+    hero = HERO_CLASSES[name]
+    st.subheader(f"{hero['icon']} {name}")
+    col1, col2 = st.columns(2)
+    col1.metric("Habileté", st.session_state.hability)
+    col2.metric("Endurance", st.session_state.total_endurance)
+    st.write("**Disciplines Kaï :** " + ", ".join(st.session_state.kai))
+    if st.session_state.weapon_mastery:
+        st.write(f"**Arme maîtrisée :** {st.session_state.weapon_mastery[0]}")
+    return True
 
 
 def determine_endurance_ability() -> bool:
@@ -179,7 +251,10 @@ def first_inventory_check() -> bool:
         if st.button("Cliquez ici pour fouiller les ruines.."):
             st.session_state.item_roll = roll()
             apply_starting_item(st.session_state.item_roll)
-            record_start(starting_item=STARTING_ITEM_TABLE[st.session_state.item_roll])
+            record_start(
+                starting_item=STARTING_ITEM_TABLE[st.session_state.item_roll],
+                hero_class=st.session_state.hero_class,
+            )
             st.rerun()
         return False
 
@@ -190,11 +265,18 @@ def first_inventory_check() -> bool:
 
 tab1, tab2 = st.tabs(["Loup Solitaire", "Maîtrise Kaï"])
 
+def custom_hero() -> bool:
+    """Création de A à Z : tirages d'HABILETÉ et d'ENDURANCE, puis les Disciplines."""
+    if not determine_endurance_ability():
+        return False
+    st.divider()
+    magnakai = st.session_state.creation_book >= MAGNAKAI_FROM
+    return kai_master() if magnakai else determine_kai_mastery()
+
+
 with tab1:
-    if determine_endurance_ability():
-        st.divider()
-        magnakai = st.session_state.creation_book >= MAGNAKAI_FROM
-        if kai_master() if magnakai else determine_kai_mastery():
+    if choose_creation_mode():
+        if show_class() if st.session_state.hero_class else custom_hero():
             st.divider()
             if st.session_state.creation_book > 1:
                 # l'équipement des tomes suivants est remis sur leur page de départ

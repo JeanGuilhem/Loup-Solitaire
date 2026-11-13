@@ -766,6 +766,38 @@ imminents qui le menacent et les intentions véritables d'un inconnu ou la natur
 étrange. L'Intuition donne également la possibilité de communiquer par télépathie avec une autre
 personne et de sentir si une créature dispose de pouvoirs psychiques.""",
 }
+# Classes de départ (tomes 1 à 5) : un héros prêt à jouer pour les débutants, à la place des tirages.
+#   mastery : arme de la Maîtrise des armes, fixée par la classe (None sans cette Discipline)
+# L'équipement reste celui du livre (Hache et objet tiré au hasard au tome 1, équipement de chaque tome).
+HERO_CLASSES = {
+    "Guerrier": {
+        "icon": "⚔️", "hability": 16, "endurance": 24, "mastery": "ÉPÉE",
+        "kai": ["La Maîtrise des armes", "Bouclier psychique", "La Guérison", "Puissance psychique", "Le Sixième Sens"],
+        "description": "Solide au combat, et il pressent les dangers.",
+    },
+    "Le Bretteur": {
+        "icon": "🗡️", "hability": 17, "endurance": 21, "mastery": "SABRE",
+        "kai": ["La Maîtrise des armes", "Puissance psychique", "La Guérison", "Le Camouflage", "Bouclier psychique"],
+        "description": "Frappe vite et fort, mais encaisse moins.",
+    },
+    "Le Résilient": {
+        "icon": "🛡️", "hability": 14, "endurance": 29, "mastery": "HACHE",
+        "kai": ["La Maîtrise des armes", "Bouclier psychique", "La Guérison", "La Chasse", "L'Orientation"],
+        "description": "Encaisse énormément, et maîtrise la Hache de son équipement.",
+    },
+    "L'Érudit": {
+        "icon": "🔮", "hability": 17, "endurance": 21, "mastery": None,
+        "kai": ["Le Sixième Sens", "La Guérison", "Bouclier psychique", "Puissance psychique", "Communication Animale"],
+        "description": "Ses pouvoirs psychiques ouvrent bien des chemins.",
+    },
+    "Le Rôdeur": {
+        "icon": "🏕️", "hability": 15, "endurance": 26, "mastery": "BÂTON",
+        "kai": ["La Chasse", "Le Camouflage", "L'Orientation", "La Guérison", "La Maîtrise des armes"],
+        "description": "Ne manque jamais de rien et trouve toujours son chemin.",
+    },
+}
+HERO_CLASSES_UNTIL = 5  # au-delà, série Magnakaï : création de A à Z
+
 MAGNAKAI_CARDS = {
     "Science des Armes": ("⚔️", "+3 HABILETÉ avec les 3 armes que vous choisissez."),
     "Contrôle Animal": ("🐎", "Parler aux animaux et combattre à cheval."),
