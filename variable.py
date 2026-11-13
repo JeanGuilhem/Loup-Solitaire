@@ -414,6 +414,19 @@ BOOKS = {
     7: {"title": "La Forteresse Maudite", "final_page": 350},
 }
 
+# Jalons : 3 paragraphes par tome où se croisent la plupart des routes (passages obligés vers la
+# fin du tome, ou à défaut les plus fréquentés). Le héros y est sauvegardé à son arrivée ; s'il meurt
+# plus loin, il peut reprendre au dernier jalon atteint (cf. save.save_milestone).
+MILESTONES = {
+    1: [157, 303, 129],
+    2: [197, 150, 349],
+    3: [235, 323, 56],
+    4: [120, 200, 148],
+    5: [67, 221, 272],
+    6: [39, 127, 249],
+    7: [164, 100, 282],
+}
+
 # Équipement reçu au début de chaque tome à partir du 2 (cf. « Équipement »), par les héros venus
 # du tome précédent comme par les nouveaux (cf. book_start.py).
 #   gold_base       : Couronnes = gold_base + Table de Hasard, ajoutées à celles déjà possédées

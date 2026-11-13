@@ -97,7 +97,7 @@ def choose_hero(book: int) -> None:
         f"tome {previous} ailleurs ou perdu votre sauvegarde, recréez votre Loup Solitaire tel qu'il "
         f"était à la fin du tome {previous}. Sinon, créez un nouveau héros."
     )
-    checkpoint_button(book=book)  # le héros mort dans ce tome peut le retenter
+    checkpoint_button(book=book, milestone=not isinstance(saved, dict))  # le héros mort dans ce tome peut le retenter
     if isinstance(saved, dict) and not has_finished_previous_book(saved, book):
         st.warning("Votre partie en cours sera effacée.")
     col1, col2 = st.columns(2)

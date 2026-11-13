@@ -58,8 +58,9 @@ def ls_death():
         "Vous êtes mort ! Votre aventure s'arrête ici, ainsi que la lignée des Kai."
     )
     show_adventure_stats()
+    st.subheader("Que voulez-vous faire ?")
     checkpoint_button(book=st.session_state.get("book"))
-    st.page_link("tomes/tome1/crafting_hero.py", label="Démarrer mon aventure", icon="⚔️")
+    st.page_link("tomes/tome1/crafting_hero.py", label="Recommencer avec un nouveau héros", icon="⚔️")
     st.stop()
 
 
@@ -86,22 +87,61 @@ def show_adventure_stats() -> None:
     col4.metric("Endurance la plus basse", st.session_state.lowest_endurance)
 
 
-def checkpoint_button(book: int = None) -> None:
+STATS_KEYS = ["pages_visited", "fights", "enemies_defeated", "lowest_endurance", "last_recorded_page"]
+
+
+def milestone_button(book: int = None) -> None:
     """
-    « Recommencer le tome N avec mon héros » : repart du point de reprise (le héros au début du
-    tome, cf. save.CHECKPOINT_COOKIE), s'il y en a un (et s'il est de ce tome quand book est donné).
+    « Reprendre au paragraphe N » : repart du dernier jalon atteint (cf. variable.MILESTONES et
+    save.MILESTONE_COOKIE), s'il y en a un (et s'il est de ce tome quand book est donné).
+    Le paragraphe est rejoué depuis l'arrivée du héros (ses effets s'appliquent de nouveau).
     """
     from game_stats import record_start
     from inventory import init_state
-    from save import apply_save, page_path, read_checkpoint
+    from save import apply_save, page_path, read_milestone
 
-    data = read_checkpoint()
+    data = read_milestone()
     if not isinstance(data, dict) or (book and data.get("book") != book):
         return
-    if st.button(f"Recommencer le tome {data['book']} avec mon héros", icon="🔁", type="primary"):
+    page = data["current_page_number"]
+    if st.button(
+        f"Reprendre au paragraphe {page} avec mon héros (dernière sauvegarde)",
+        icon="💾",
+        type="primary",
+    ):
         st.session_state.pop("death_recorded", None)
         init_state()
         apply_save(data)
+        st.session_state.last_page_number = None  # rejouer le paragraphe comme à l'arrivée
+        st.session_state.game_phase = "playing"
+        record_start(continued=True, retry=True, milestone=page)
+        for key in STATS_KEYS:  # le bilan du tome reprend là où il en était au jalon
+            if data.get(key) is not None:
+                st.session_state[key] = data[key]
+        st.switch_page(page_path(page, data["book"]))
+
+
+def checkpoint_button(book: int = None, milestone: bool = True) -> None:
+    """
+    Reprises possibles du héros mort (ou sans sauvegarde en cours) :
+    - le dernier jalon du tome (cf. milestone_button), si milestone ;
+    - « Recommencer le tome N avec mon héros » : repart du point de reprise (le héros au début du
+      tome, cf. save.CHECKPOINT_COOKIE), s'il y en a un (et s'il est de ce tome quand book est donné).
+    """
+    from game_stats import record_start
+    from inventory import init_state
+    from save import apply_save, delete_milestone, page_path, read_checkpoint
+
+    if milestone:
+        milestone_button(book)
+    data = read_checkpoint()
+    if not isinstance(data, dict) or (book and data.get("book") != book):
+        return
+    if st.button(f"Recommencer le tome {data['book']} depuis le début avec mon héros", icon="🔁"):
+        st.session_state.pop("death_recorded", None)
+        init_state()
+        apply_save(data)
+        delete_milestone()  # repartir de zéro : les jalons de la partie précédente ne valent plus
         st.session_state.game_phase = "playing"
         record_start(continued=True, retry=True)
         st.switch_page(page_path(0, data["book"]))

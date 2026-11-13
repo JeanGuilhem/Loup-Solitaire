@@ -15,6 +15,9 @@ SAVE_COOKIE = "ls_save"
 # Point de reprise : le héros tel qu'il était au début du tome en cours (après l'équipement).
 # Il survit à la mort du héros, qui peut ainsi retenter le tome autant de fois qu'il le veut.
 CHECKPOINT_COOKIE = "ls_checkpoint"
+# Dernier jalon atteint dans le tome en cours (cf. variable.MILESTONES) : le héros tel qu'il était en
+# arrivant sur ce paragraphe. Il survit lui aussi à la mort du héros.
+MILESTONE_COOKIE = "ls_milestone"
 SAVE_VERSION = 1
 
 # Clés de st.session_state qui constituent une partie
@@ -92,6 +95,22 @@ def save_checkpoint() -> None:
     data = _snapshot()
     st.session_state.checkpoint = data
     _write_cookie(CHECKPOINT_COOKIE, data, key="save_checkpoint")
+    delete_milestone()  # nouveau tome ou nouveau héros : les jalons de l'ancienne partie ne valent plus
+
+
+def save_milestone() -> None:
+    """Jalon (cf. MILESTONE_COOKIE), à l'arrivée sur le paragraphe, avant que ses effets ne s'appliquent."""
+    data = _snapshot()
+    st.session_state.milestone = data
+    _write_cookie(MILESTONE_COOKIE, data, key="save_milestone")
+
+
+def delete_milestone() -> None:
+    st.session_state.milestone = None  # None : effacé (le cookie n'est plus relu dans la session)
+    try:
+        _cookie_manager().delete(MILESTONE_COOKIE, key="delete_milestone")
+    except KeyError:
+        pass
 
 
 def delete_save() -> None:
@@ -114,6 +133,13 @@ def read_checkpoint():
     if st.session_state.get("checkpoint"):
         return st.session_state.checkpoint
     return _read_cookie(CHECKPOINT_COOKIE, key="read_checkpoint")
+
+
+def read_milestone():
+    """Le dernier jalon atteint (dict), None s'il n'y en a pas, ou "pending" (cf. read_save)."""
+    if "milestone" in st.session_state:
+        return st.session_state.milestone
+    return _read_cookie(MILESTONE_COOKIE, key="read_milestone")
 
 
 def _read_cookie(name: str, key: str):

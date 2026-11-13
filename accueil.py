@@ -34,7 +34,7 @@ if isinstance(saved_game, dict):
         st.switch_page(page_path(page, book))
     st.caption("Démarrer une nouvelle aventure effacera votre sauvegarde.")
 
-checkpoint_button()
+checkpoint_button(milestone=not isinstance(saved_game, dict))  # jalon : seulement sans partie en cours
 
 st.page_link(
     "tomes/tome1/crafting_hero.py", label=f"Tome 1 — {BOOKS[1]['title']}", icon="⚔️"

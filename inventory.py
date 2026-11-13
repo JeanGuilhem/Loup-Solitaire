@@ -18,7 +18,7 @@ import streamlit as st
 
 from environments import apply_page_environment
 from game_stats import record_page
-from save import delete_save, page_path, save_game
+from save import delete_save, page_path, save_game, save_milestone
 from utils import ls_death, show_adventure_stats, track_lowest_endurance
 from variable import (
     BOOKS,
@@ -31,6 +31,7 @@ from variable import (
     MAX_BACKPACK,
     MAX_PURSE,
     MAX_WEAPONS,
+    MILESTONES,
 )
 
 BACKPACK_ITEM = "SAC À DOS"
@@ -227,6 +228,9 @@ def check_inventory(is_fighting: bool = False, current_page_number: int = 0, boo
     apply_page_environment(book, current_page_number)
     st.header(f"📜 Paragraphe {current_page_number}", divider="gray")
     if is_new_page():
+        if current_page_number in MILESTONES.get(book, []):
+            save_milestone()  # le héros tel qu'il arrive, avant les effets du paragraphe
+            st.toast(f"**Jalon atteint : partie sauvegardée au paragraphe {current_page_number}**", icon="💾")
         _reset_page_flags()
         st.session_state.page_has_fight = is_fighting or _page_has_fight(book, current_page_number)
         if has_flag(POISONED):
