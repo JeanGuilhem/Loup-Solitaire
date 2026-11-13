@@ -147,6 +147,16 @@ def checkpoint_button(book: int = None, milestone: bool = True) -> None:
         st.switch_page(page_path(0, data["book"]))
 
 
+def show_cover(book: int) -> None:
+    """Couverture du tome (static/covers/cover_N.jpg), centrée, sur la page d'introduction du tome."""
+    import os
+
+    path = f"static/covers/cover_{book}.jpg"
+    if os.path.exists(path):
+        _, middle, _ = st.columns([1, 2, 1])
+        middle.image(path, width="stretch")
+
+
 def table_des_hasards() -> int:
     """
     Chose between 0 et 9 (for the book, here 1 to 10)

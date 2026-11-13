@@ -2,7 +2,7 @@ import streamlit as st
 from environments import apply_environment
 from inventory import display_inventory, init_state
 from save import save_checkpoint, save_game
-from utils import called_cookies
+from utils import called_cookies, show_cover
 
 if "weapon_mastery" not in st.session_state:
     # rechargement du navigateur : on restaure la sauvegarde
@@ -90,6 +90,8 @@ le sort de votre peuple repose désormais entre vos seules mains:
 le Loup Silencieux est devenu Loup Solitaire et les envahisseurs
 feront tout pour vous empêcher d'atteindre le Palais du Roi...
 """
+
+show_cover(1)
 
 tab1, tab2 = st.tabs(["Current Page", "Inventory"])
 

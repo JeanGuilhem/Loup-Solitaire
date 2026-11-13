@@ -4,7 +4,7 @@ import streamlit as st
 from environments import apply_environment
 from inventory import display_inventory, init_state
 from save import save_checkpoint, save_game
-from utils import called_cookies
+from utils import called_cookies, show_cover
 from variable import BOOKS
 
 BOOK = 5
@@ -22,6 +22,7 @@ st.session_state.last_page_number = 0
 apply_environment("ville")  # Holmgard, sous la neige, avant l'embarquement
 
 st.title(f"📜 Tome {BOOK} — {BOOKS[BOOK]['title']}")
+show_cover(BOOK)
 
 fr_text = """
 Vous êtes Loup Solitaire, le dernier des Seigneurs Kaï du
