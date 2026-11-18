@@ -771,11 +771,11 @@ personne et de sentir si une créature dispose de pouvoirs psychiques.""",
 # L'équipement reste celui du livre (Hache et objet tiré au hasard au tome 1, équipement de chaque tome).
 HERO_CLASSES = {
     "Le Guerrier": {
-        "icon": "⚔️", "hability": 16, "endurance": 24, "mastery": ["ÉPÉE", "GLAIVE"],
+        "icon": "⚔️", "hability": 15, "endurance": 24, "mastery": ["ÉPÉE", "GLAIVE"],
         "kai": ["La Maîtrise des armes", "Bouclier psychique", "La Guérison", "Puissance psychique", "Le Sixième Sens"],
     },
     "Le Bretteur": {
-        "icon": "🗡️", "hability": 17, "endurance": 21, "mastery": ["SABRE", "LANCE"],
+        "icon": "🗡️", "hability": 16, "endurance": 21, "mastery": ["SABRE", "LANCE"],
         "kai": ["La Maîtrise des armes", "Puissance psychique", "La Guérison", "Le Camouflage", "Bouclier psychique"],
     },
     "Le Résilient": {
@@ -783,11 +783,11 @@ HERO_CLASSES = {
         "kai": ["La Maîtrise des armes", "Bouclier psychique", "La Guérison", "La Chasse", "L'Orientation"],
     },
     "L'Érudit": {
-        "icon": "🔮", "hability": 17, "endurance": 21, "mastery": [],
+        "icon": "🔮", "hability": 16, "endurance": 21, "mastery": [],
         "kai": ["Le Sixième Sens", "La Guérison", "Bouclier psychique", "Puissance psychique", "Communication Animale"],
     },
     "Le Rôdeur": {
-        "icon": "🐺", "hability": 15, "endurance": 26, "mastery": ["BÂTON", "POIGNARD"],
+        "icon": "🐺", "hability": 14, "endurance": 26, "mastery": ["BÂTON", "POIGNARD"],
         "kai": ["La Chasse", "Le Camouflage", "L'Orientation", "La Guérison", "La Maîtrise des armes"],
     },
 }
