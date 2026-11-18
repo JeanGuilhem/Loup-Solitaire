@@ -48,6 +48,7 @@ SAVED_KEYS = [
     "lowest_endurance",
     "last_recorded_page",
     "provenance",
+    "fast_text",  # réglage du joueur : texte instantané
 ]
 
 

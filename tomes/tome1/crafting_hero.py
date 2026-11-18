@@ -14,7 +14,7 @@ from text import (
     fr_kai_mastery,
     second_fr_kai_mastery,
 )
-from utils import stream_text, table_des_hasards
+from utils import stream_text, table_des_hasards, text_speed_toggle
 from variable import (
     HERO_CLASSES,
     HERO_CLASSES_UNTIL,
@@ -270,6 +270,7 @@ def first_inventory_check() -> bool:
     return True
 
 
+text_speed_toggle()
 tab1, tab2 = st.tabs(["Loup Solitaire", "Maîtrise Kaï"])
 
 def custom_hero() -> bool:

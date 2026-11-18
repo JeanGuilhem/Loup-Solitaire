@@ -27,7 +27,7 @@ from inventory import (
 )
 from kai_cards import choose_disciplines
 from save import apply_save, read_save
-from utils import checkpoint_button, table_des_hasards
+from utils import checkpoint_button, table_des_hasards, text_speed_toggle
 from variable import (
     BOOK_EQUIPMENT,
     BOOKS,
@@ -326,6 +326,7 @@ def start_book(book: int) -> None:
 def book_start(book: int) -> None:
     st.set_page_config(page_title=f"Tome {book}", page_icon="📜")
     st.title(f"📜 Tome {book} — {BOOKS[book]['title']}")
+    text_speed_toggle()
 
     mode = transition_mode(book)
     if mode is None:
