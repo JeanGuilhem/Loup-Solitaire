@@ -214,32 +214,13 @@ def stream_text(text: str, time_to_sleep: float = 0.03):
     (clic sur un bouton, sauvegarde...) il est affiché d'un coup.
     """
     streamed = st.session_state.setdefault("streamed_texts", [])
-    if text in streamed or st.session_state.get("fast_text"):
+    if text in streamed:
         yield text
         return
     for word in text.split():
         yield word + " "
         time.sleep(time_to_sleep)
     streamed.append(text)
-
-
-def _copy_text_speed() -> None:
-    st.session_state.fast_text = st.session_state.fast_text_toggle
-
-
-def text_speed_toggle() -> None:
-    """
-    « Texte instantané » : le texte des paragraphes s'affiche d'un coup au lieu de défiler mot à mot.
-    Le réglage est gardé dans fast_text (sauvegardé avec la partie) : la clé du widget, elle, est
-    effacée par Streamlit dès qu'on change de page.
-    """
-    st.toggle(
-        "⚡ Texte instantané",
-        value=bool(st.session_state.get("fast_text")),
-        key="fast_text_toggle",
-        on_change=_copy_text_speed,
-        help="Affiche le texte d'un coup, sans l'effet de machine à écrire.",
-    )
 
 
 def handle_repas(penalty: int = 3, gold_cost: int = 0, hunting: bool = True):

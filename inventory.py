@@ -58,7 +58,6 @@ DEFAULT_STATE = {
     "last_page_number": 0,
     "book": 1,  # tome en cours
     "completed_books": [],
-    "fast_text": False,  # texte affiché d'un coup (cf. utils.text_speed_toggle)
     "provenance": {},  # objet -> d'où il vient (fiche de l'écran d'équipement)
     "story_flags": [],  # faits du tome en cours testés plus loin (ex: "huile de Bakanal")
     "done_fighting": False,
